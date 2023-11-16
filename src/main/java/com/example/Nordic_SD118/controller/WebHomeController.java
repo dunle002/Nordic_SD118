@@ -1,6 +1,8 @@
 package com.example.Nordic_SD118.controller;
 
 import com.example.Nordic_SD118.entity.SanPham;
+
+
 import com.example.Nordic_SD118.repository.LoaiGiayRepository;
 import com.example.Nordic_SD118.repository.SanPhamRepository;
 import org.springframework.beans.factory.annotation.Autowired;
