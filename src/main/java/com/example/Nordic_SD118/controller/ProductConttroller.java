@@ -6,11 +6,17 @@ import com.example.Nordic_SD118.repository.LoaiGiayRepository;
 import com.example.Nordic_SD118.sevice.SanPhamSevice;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 @RequestMapping("/product")
@@ -22,8 +28,9 @@ public class ProductConttroller {
     private LoaiGiayRepository repository;
 
     @RequestMapping("/crud")
-    public String shopHome(Model model) {
-        List<SanPham> list = sevice.getAll();
+    public String shopHome(Model model, @RequestParam(defaultValue = "0", name = "page") Integer num) {
+        Pageable pageable = PageRequest.of(num, 5);
+        Page<SanPham> list = sevice.getAll(pageable);
         List<LoaiGiay> listLoai = repository.findAll();
         model.addAttribute("product", list);
         model.addAttribute("loaiDay", listLoai);
@@ -36,4 +43,11 @@ public class ProductConttroller {
         return "redirect:crud";
     }
 
+    @GetMapping("/get/{id}")
+    public String getOneProduct(Model model, @PathVariable("id") Integer id, @RequestParam(defaultValue = "0", name = "page") Integer num) {
+        SanPham sanPham = sevice.getOne(id);
+        model.addAttribute("productUpdate", sanPham);
+        shopHome(model, num);
+        return "crud";
+    }
 }
