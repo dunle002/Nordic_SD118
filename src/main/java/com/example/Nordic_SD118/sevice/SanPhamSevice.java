@@ -11,5 +11,6 @@ public interface SanPhamSevice {
     public Page<SanPham> getAll(Pageable pageable);
     public SanPham getOne(Integer id);
     public  void delete (SanPham id);
-    public SanPham SaveOrUpdate(SanPham sanPham);
+    public SanPham Save(SanPham sanPham);
+    public SanPham update(SanPham sanPham);
 }
