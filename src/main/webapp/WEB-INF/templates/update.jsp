@@ -12,12 +12,13 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <title>Update</title>
 </head>
 
 <body>
 <h1>Hello</h1>
-<form:form method="post" action="/product/add" modelAttribute="product">
+<form:form method="post" action="/product/update/${id}" modelAttribute="product">
+<%--    Id:<input type="text" name="id" value="${productUpdate.id}" readonly="true"><br>--%>
     Ma:<input type="text" name="ma" value="${productUpdate.ma}"><br>
     Ten: <input type="text" name="tenSanPham" value="${productUpdate.tenSanPham}"><br>
     Loai giay:<select name="loaiGiay">
@@ -29,9 +30,8 @@
     Gia:<input type="text" name="price" value="${productUpdate.price}"><br>
     Trang thai:<input type="text" name="trangThai" value="${productUpdate.trangThai}"><br>
     <br/>
-    <input type="submit"> to upload the file!
+    <input type="submit" value="update"> to upload the file!
 </form:form>
-
 <table class="table">
     <thead>
     <tr>
@@ -60,6 +60,7 @@
     </tbody>
 </table>
 <nav aria-label="Page navigation example">
+
     <ul class="pagination">
         <li class="page-item"><a class="page-link" href="/product/crud?page=0">Fist</a></li>
         <c:forEach begin="0" end="${product.totalPages - 1}" varStatus="loop">
@@ -74,7 +75,6 @@
         </c:forEach>
         <li class="page-item"><a class="page-link" href="/product/crud?page=${product.totalPages-1}">Last</a></li>
     </ul>
-
 </nav>
 
 

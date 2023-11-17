@@ -8,6 +8,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -32,12 +33,26 @@ public class SanPhamImlp implements SanPhamSevice {
     }
 
     @Override
-    public void delete(SanPham id) {
-        repository.delete(id);
+    public void delete(SanPham sanPham) {
+        Integer idSanPham = sanPham.getId();
+        Boolean idSpNoExis= repository.existsById(idSanPham);
+        if (idSpNoExis){
+            repository.delete(sanPham);
+        }
     }
 
     @Override
-    public SanPham SaveOrUpdate(SanPham sanPham) {
+    public SanPham Save(SanPham sanPham) {
         return repository.save(sanPham);
+    }
+
+    @Override
+    public SanPham update(SanPham sanPham) {
+        Integer idSanPham = sanPham.getId();
+        Boolean idSpNoExis= repository.existsById(idSanPham);
+        if (idSpNoExis){
+            return repository.save(sanPham);
+        }
+        return null;
     }
 }
