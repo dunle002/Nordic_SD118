@@ -1,6 +1,5 @@
 package com.example.Nordic_SD118.entity;
 
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -13,21 +12,20 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Table(name = "loai_giay")
+@Table(name = "mau_sac")
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class LoaiGiay {
+public class MauSac {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Integer id;
     @Column(name = "ma")
     private String ma;
-    @Column(name = "ten_the_loai")
-    private String tenTheLoai;
+    @Column(name = "ten_mau")
+    private String tenMau;
     @Column(name = "trang_thai")
     private Integer trangThai;
-
 }

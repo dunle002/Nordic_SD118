@@ -13,21 +13,21 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Table(name = "loai_giay")
+@Table(name = "de_giay")
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class LoaiGiay {
+public class DeGiay {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Integer id;
     @Column(name = "ma")
     private String ma;
-    @Column(name = "ten_the_loai")
-    private String tenTheLoai;
+    @Column(name = "loai_de")
+    private String loaiDe;
     @Column(name = "trang_thai")
     private Integer trangThai;
-
 }
