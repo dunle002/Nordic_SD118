@@ -206,9 +206,7 @@
                     </p>
                 </div>
                 <h6><a style="color: black;font-family:Modern Fonts" href="#">${sp.tenSanPham}</a></h6>
-                <p class="">
-                    <button type="button" class="btn btn-outline-danger" ><a href="/shop" style="color: black">Detail</a></button>
-                </p>
+                <a class="btn btn-success" href="/detail/${sp.id}">Detail</a>
             </div>
             <c:if test="${loopStatus.count % 4 == 0 and not loopStatus.last}">
         </div>

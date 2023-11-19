@@ -122,7 +122,7 @@
                         <p style="color: red;font-weight: bold" class="price"><span>$${sp.price}</span></p>
                     </div>
                     <p class="bottom-area d-flex px-3">
-                        <button type="button" class="btn btn-outline-danger" ><a href="/shop" style="color: black">Add To Cart</a></button>
+                        <button type="button" class="btn btn-outline-success" ><a href="/shop" style="color: black">Add To Cart</a></button>
                         </a>
                     </p>
                 </div>
