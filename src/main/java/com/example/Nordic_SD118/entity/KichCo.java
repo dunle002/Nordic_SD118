@@ -25,7 +25,7 @@ public class KichCo {
     @Column(name = "ma")
     private String ma;
     @Column(name = "size")
-    private String kichCo;
+    private Integer size;
     @Column(name = "trang_thai")
     private Integer trangThai;
 }

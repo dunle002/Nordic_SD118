@@ -1,5 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ page pageEncoding="UTF-8" %>
 <!doctype html>
 <html lang="en">
 <head>
@@ -13,21 +14,59 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
+    <style>
+        .error-message {
+            display: block;
+            margin-top: 5px;
+        }
+    </style>
 </head>
 
+
 <body>
-<h1>Hello</h1>
+
 <form:form method="post" action="/product/add" modelAttribute="product">
-    Ma:<input type="text" name="ma" value="${productUpdate.ma}"><br>
-    Ten: <input type="text" name="tenSanPham" value="${productUpdate.tenSanPham}"><br>
-    Loai giay:<select name="loaiGiay">
-    <c:forEach var="item" items="${loaiDay}">
-        <option value="${item.id}" ${item.id==productUpdate.loaiGiay.id?'selected':''}>${item.tenTheLoai}</option>
-    </c:forEach>
+    <div class="input-group mb-3">
+        Ma:<input type="text" name="ma" value="${productUpdate.ma}">
+        <c:if test="${not empty errors.ma}">
+            <span class="text-danger error-message">Không duoc de trong</span>
+        </c:if>
+    </div>
+
+    <div class="input-group mb-3">
+        Ten: <input type="text" name="tenSanPham" value="${productUpdate.tenSanPham}"><br>
+        <c:if test="${not empty errors.tenSanPham}">
+            <span class="text-danger error-message">Khong duoc de trong</span>
+        </c:if>
+    </div>
+
+    <div class="input-group mb-3">
+        Loai giay:<select name="loaiGiay">
+        <c:forEach var="item" items="${loaiDay}">
+            <option value="${item.id}" ${item.id==productUpdate.loaiGiay.id?'selected':''}>${item.tenTheLoai}</option>
+        </c:forEach>
     </select><br>
-    Anh:<input type="text" name="photo" value="${productUpdate.photo}" ><br>
-    Gia:<input type="text" name="price" value="${productUpdate.price}"><br>
-    Trang thai:<input type="text" name="trangThai" value="${productUpdate.trangThai}"><br>
+    </div>
+
+    <div class="input-group mb-3">
+        Anh:<input type="text" name="photo" value="${productUpdate.photo}"><br>
+        <c:if test="${not empty errors.photo}">
+            <span class="text-danger error-message">Khong duoc de trong</span>
+        </c:if>
+    </div>
+
+    <div class="input-group mb-3">
+        Gia:<input type="text" name="price" value="${productUpdate.price}"><br>
+        <c:if test="${not empty errors.price}">
+            <span class="text-danger error-message">Khong duoc de trong</span>
+        </c:if>
+    </div>
+    <div class="input-group mb-3">
+        Trang thai:<input type="text" name="trangThai" value="${productUpdate.trangThai}"><br>
+        <c:if test="${not empty errors.trangThai}">
+            <span class="text-danger error-message">Khong duoc de trong</span>
+        </c:if>
+    </div>
     <br/>
     <input type="submit"> to upload the file!
 </form:form>
@@ -64,7 +103,7 @@
         <li class="page-item"><a class="page-link" href="/product/crud?page=0">Fist</a></li>
         <c:forEach begin="0" end="${product.totalPages - 1}" varStatus="loop">
             <li class="page-item">
-                <c:url value="/product/crud" var="pageUrl">
+                <c:url value="/product/view" var="pageUrl">
                     <c:param name="page" value="${loop.index}"/>
                 </c:url>
                 <a class="page-link" href="${pageUrl}">
