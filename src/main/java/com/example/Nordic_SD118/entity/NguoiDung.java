@@ -9,28 +9,33 @@ import lombok.Setter;
 import java.sql.Date;
 
 @Entity
-@Table(name = "gio_hang")
+@Table(name = "nguoi_dung")
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class GioHang {
+public class NguoiDung {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Integer id;
-    @Column(name = "ngay_tao")
-    private Date ngayTao;
-    @Column(name = "ngay_thanh_toan")
-    private Date ngayThanhToan;
-    @Column(name = "ten_nd")
-    private String tenNd;
+    @Column(name = "ho_ten")
+    private String hoTen;
+    @Column(name = "pass_word")
+    private String passWord;
+    @Column(name = "gioi_tinh")
+    private Boolean gioiTinh;
+    @Column(name = "ngay_sinh")
+    private Date ngaySinh;
+    @Column(name = "dia_chi")
+    private String diaChi;
     @Column(name = "so_dien_thoai")
     private String soDienThoai;
+    @Column(name = "email")
+    private String email;
+    @Column(name = "role")
+    private Boolean role;
     @Column(name = "trang_thai")
     private Integer trangThai;
-    @ManyToOne
-    @JoinColumn(name = "id_nguoi_dung")
-    private NguoiDung nguoiDung;
 
 }

@@ -224,13 +224,6 @@
             </div>
             <h5>Size:</h5>
             <p>${spt.kichCo.kichCo}</p>
-            <h5>Number</h5>
-            <div class="add flex1">
-                <span>-</span>
-                <label>1</label>
-                <span>+</span>
-            </div>
-
             <button style="margin-top: -50px">Add to Cart</button>
         </div>
     </div>

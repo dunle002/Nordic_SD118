@@ -40,13 +40,6 @@ public class WebHomeController {
         model.addAttribute("listSp",list);
         return "shop";
     }
-//    @RequestMapping("/detail/{id}")
-//    public String detail(Model model, @PathVariable("id") String id){
-//        ChiTietSanPham chiTietSanPham = chiTietSPRepository.findById(Integer.parseInt(id)).orElse(null);
-//        model.addAttribute("spt",chiTietSanPham);
-//        return "product-single";
-//    }
-
     @RequestMapping("/detail/{id}")
     public String detail(Model model, @PathVariable("id") String id) {
         try {
@@ -57,7 +50,6 @@ public class WebHomeController {
                 model.addAttribute("spt", chiTietSanPham);
                 return "detail";
             } else {
-                // Xử lý khi không tìm thấy chi tiết sản phẩm với id tương ứng
                 return "not-found-page";
             }
         } catch (NumberFormatException e) {
@@ -67,6 +59,16 @@ public class WebHomeController {
             return "error-page";
         }
     }
-
-
+    @RequestMapping("/about")
+    public String about(){
+        return "about";
+    }
+    @RequestMapping("/blog")
+    public String blog(){
+        return "blog";
+    }
+    @RequestMapping("/contact")
+    public String contact(){
+        return "contact";
+    }
 }
