@@ -40,4 +40,19 @@ public class SanPhamImlp implements SanPhamSevice {
     public SanPham SaveOrUpdate(SanPham sanPham) {
         return repository.save(sanPham);
     }
+
+    @Override
+    public SanPham findById(Integer id) {
+        return repository.findById(id).orElse(null);
+    }
+
+    @Override
+    public List<SanPham> findAll() {
+        return repository.findAll();
+    }
+
+    @Override
+    public void save(SanPham sanPham) {
+            repository.save(sanPham);
+    }
 }

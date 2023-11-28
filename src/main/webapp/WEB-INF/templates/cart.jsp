@@ -81,134 +81,93 @@
     <div class="container">
         <div class="row no-gutters slider-text align-items-center justify-content-center">
             <div class="col-md-9 ftco-animate text-center">
-                <p class="breadcrumbs"><span class="mr-2"><a href="index.jsp">Home</a></span> <span>Shop</span></p>
-                <h1 class="mb-0 bread">Shop</h1>
+                <p class="breadcrumbs"><span class="mr-2"><a href="index.jsp">Home</a></span> <span>Cart</span></p>
+                <h1 class="mb-0 bread">My Wishlist</h1>
             </div>
         </div>
     </div>
 </div>
 
-<section class="ftco-section bg-light">
+<section class="ftco-section ftco-cart">
     <div class="container">
         <div class="row">
-            <c:forEach items="${listSp.content}" var="sp">
-                <div class="col-sm-12 col-md-12 col-lg-4 ftco-animate d-flex">
-                    <div class="product d-flex flex-column">
-                        <a href="#" class="img-prod"><img class="img-fluid" style="width: 350px; height: 300px;" src="${sp.photo}" alt="Colorlib Template">
-                            <div class="overlay"></div>
-                        </a>
-                        <div class="text py-3 pb-4 px-3">
-                            <div class="d-flex">
-                                <div class="cat">
-                                    <span>Lifestyle</span>
-                                </div>
-                                <div class="rating">
-                                    <p class="text-right mb-0">
-                                        <a href="#"><span class="ion-ios-star-outline"></span></a>
-                                        <a href="#"><span class="ion-ios-star-outline"></span></a>
-                                        <a href="#"><span class="ion-ios-star-outline"></span></a>
-                                        <a href="#"><span class="ion-ios-star-outline"></span></a>
-                                        <a href="#"><span class="ion-ios-star-outline"></span></a>
-                                    </p>
-                                </div>
-                            </div>
-                            <h3><a href="#">${sp.tenSanPham}</a></h3>
-                            <div class="pricing">
-                                <p class="price"><span>$${sp.price}</span></p>
-                            </div>
-                            <p class="bottom-area d-flex px-3">
-                                <a href="/detail/${sp.id}" class="add-to-cart text-center py-2 mr-1"><span>Add to cart <i class="ion-ios-add ml-1"></i></span></a>
-                                <a href="#" class="buy-now text-center py-2">Buy now<span><i class="ion-ios-cart ml-1"></i></span></a>
-                            </p>
-                        </div>
-                    </div>
+            <div class="col-md-12 ftco-animate">
+                <div class="cart-list">
+                    <table class="table">
+                        <thead class="thead-primary">
+                        <tr class="text-center">
+                            <th>&nbsp;</th>
+                            <th>&nbsp;Images</th>
+                            <th>Product</th>
+                            <th>Price</th>
+                            <th>Quantity</th>
+                            <th>Total</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <c:forEach items="${sp}" var="c">
+                            <tr class="text-center">
+                                <td class="product-remove"><a href="#"><span class="ion-ios-close"></span></a></td>
+
+                                <td class="image-prod">
+                                    <div class="img" style="">
+                                            ${c.chiTietSanPham.hinhAnh}
+                                    </div>
+                                </td>
+
+                                <td class="product-name">
+                                    <h3>Product</h3>
+                                    <p>${c.chiTietSanPham.sanPham.tenSanPham}</p>
+                                </td>
+
+                                <td class="price">${c.donGia}</td>
+
+                                <td class="quantity">
+                                    <div class="input-group mb-3">
+                                        <input type="text" name="quantity" class="quantity form-control input-number"
+                                               value="${c.soLuong}" min="1" max="100">
+                                    </div>
+                                </td>
+
+                                <td class="total">$${c.donGia * c.soLuong}</td>
+                            </tr>
+                            <!-- END TR-->
+                        </c:forEach>
+
+                        </tbody>
+                    </table>
                 </div>
-            </c:forEach>
-
-        </div>
-
-        <div class="col text-center">
-            <div class="block-27">
-                <ul>
-                    <c:forEach begin="0" end="${listSp.totalPages - 1}" varStatus="loop" >
-                        <li class="page-item" >
-                            <c:url value="/shop" var="pageUrl">
-                                <c:param name="page" value="${loop.index}" />
-                            </c:url>
-                            <a class="page-link" href="${pageUrl}">
-                                    ${loop.index + 1}
-                            </a>
-                        </li>
-                    </c:forEach>
-                </ul>
             </div>
         </div>
-    </div>
-</section>
-
-<section class="ftco-gallery">
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-md-8 heading-section text-center mb-4 ftco-animate">
-                <h2 class="mb-4">Follow Us On Instagram</h2>
-                <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live
-                    the blind texts. Separated they live in</p>
-            </div>
-        </div>
-    </div>
-    <div class="container-fluid px-0">
-        <div class="row no-gutters">
-            <div class="col-md-4 col-lg-2 ftco-animate">
-                <a href="images/gallery-1.jpg" class="gallery image-popup img d-flex align-items-center"
-                   style="background-image: url(images/gallery-1.jpg);">
-                    <div class="icon mb-4 d-flex align-items-center justify-content-center">
-                        <span class="icon-instagram"></span>
-                    </div>
-                </a>
-            </div>
-            <div class="col-md-4 col-lg-2 ftco-animate">
-                <a href="images/gallery-2.jpg" class="gallery image-popup img d-flex align-items-center"
-                   style="background-image: url(images/gallery-2.jpg);">
-                    <div class="icon mb-4 d-flex align-items-center justify-content-center">
-                        <span class="icon-instagram"></span>
-                    </div>
-                </a>
-            </div>
-            <div class="col-md-4 col-lg-2 ftco-animate">
-                <a href="images/gallery-3.jpg" class="gallery image-popup img d-flex align-items-center"
-                   style="background-image: url(images/gallery-3.jpg);">
-                    <div class="icon mb-4 d-flex align-items-center justify-content-center">
-                        <span class="icon-instagram"></span>
-                    </div>
-                </a>
-            </div>
-            <div class="col-md-4 col-lg-2 ftco-animate">
-                <a href="images/gallery-4.jpg" class="gallery image-popup img d-flex align-items-center"
-                   style="background-image: url(images/gallery-4.jpg);">
-                    <div class="icon mb-4 d-flex align-items-center justify-content-center">
-                        <span class="icon-instagram"></span>
-                    </div>
-                </a>
-            </div>
-            <div class="col-md-4 col-lg-2 ftco-animate">
-                <a href="images/gallery-5.jpg" class="gallery image-popup img d-flex align-items-center"
-                   style="background-image: url(images/gallery-5.jpg);">
-                    <div class="icon mb-4 d-flex align-items-center justify-content-center">
-                        <span class="icon-instagram"></span>
-                    </div>
-                </a>
-            </div>
-            <div class="col-md-4 col-lg-2 ftco-animate">
-                <a href="images/gallery-6.jpg" class="gallery image-popup img d-flex align-items-center"
-                   style="background-image: url(images/gallery-6.jpg);">
-                    <div class="icon mb-4 d-flex align-items-center justify-content-center">
-                        <span class="icon-instagram"></span>
-                    </div>
-                </a>
+        <div class="row justify-content-start">
+            <div class="col col-lg-5 col-md-6 mt-5 cart-wrap ftco-animate">
+                <div class="cart-total mb-3">
+                    <h3>Cart Totals</h3>
+                    <p class="d-flex">
+                        <span>Subtotal</span>
+                        <span>$20.60</span>
+                    </p>
+                    <p class="d-flex">
+                        <span>Delivery</span>
+                        <span>$0.00</span>
+                    </p>
+                    <p class="d-flex">
+                        <span>Discount</span>
+                        <span>$3.00</span>
+                    </p>
+                    <hr>
+                    <p class="d-flex total-price">
+                        <span>Total</span>
+                        <span>$17.60</span>
+                    </p>
+                </div>
+                <p class="text-center"><a href="checkout.html" class="btn btn-primary py-3 px-4">Proceed to Checkout</a>
+                </p>
             </div>
         </div>
     </div>
 </section>
+
 
 <footer class="ftco-footer ftco-section">
     <div class="container">
@@ -317,6 +276,43 @@
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
 <script src="js/google-map.js"></script>
 <script src="js/main.js"></script>
+
+<script>
+    $(document).ready(function () {
+
+        var quantitiy = 0;
+        $('.quantity-right-plus').click(function (e) {
+
+            // Stop acting like a button
+            e.preventDefault();
+            // Get the field name
+            var quantity = parseInt($('#quantity').val());
+
+            // If is not undefined
+
+            $('#quantity').val(quantity + 1);
+
+
+            // Increment
+
+        });
+
+        $('.quantity-left-minus').click(function (e) {
+            // Stop acting like a button
+            e.preventDefault();
+            // Get the field name
+            var quantity = parseInt($('#quantity').val());
+
+            // If is not undefined
+
+            // Increment
+            if (quantity > 0) {
+                $('#quantity').val(quantity - 1);
+            }
+        });
+
+    });
+</script>
 
 </body>
 </html>

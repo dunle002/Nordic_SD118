@@ -54,7 +54,7 @@
 </div>
 <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
     <div class="container">
-        <a class="navbar-brand" href="index.jsp">Nordic Shop</a>
+        <a class="navbar-brand" href="/index">Nordic Shop</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav"
                 aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="oi oi-menu"></span> Menu
@@ -63,15 +63,8 @@
         <div class="collapse navbar-collapse" id="ftco-nav">
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item active"><a href="/index" class="nav-link">Home</a></li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="dropdown04" data-toggle="dropdown"
-                       aria-haspopup="true" aria-expanded="false">Catalog</a>
-                    <div class="dropdown-menu" aria-labelledby="dropdown04">
-                        <a class="dropdown-item" href="/shop">Shop</a>
-                        <a class="dropdown-item" href="/cart">Cart</a>
-                        <a class="dropdown-item" href="/checkout">Checkout</a>
-                    </div>
-                </li>
+                <li class="nav-item"><a href="/shop" class="nav-link">Shop</a></li>
+
                 <li class="nav-item"><a href="/about" class="nav-link">About</a></li>
                 <li class="nav-item"><a href="/blog" class="nav-link">Blog</a></li>
                 <li class="nav-item"><a href="/contact" class="nav-link">Contact</a></li>
@@ -188,33 +181,50 @@
     </div>
     <div class="container">
         <div class="row">
+
             <c:forEach var="sp" items="${sp}" varStatus="loopStatus" begin="0" end="11">
-            <div class="col-md-3">
-                <div onclick="redirectTodetail(${sp.id})">
-                    <a href="#" class="img-prod">
-                        <img style="width: 350px; height: 300px;" class="img-fluid" src="${sp.photo}" alt="Colorlib Template">
+            <div class="col-sm-12 col-md-6 col-lg-3 ftco-animate d-flex">
+                <div class="product d-flex flex-column">
+
+                    <a href="#" class="img-prod"><img style="width: 350px; height: 300px;" class="img-fluid"
+                                                      src="${sp.photo}"
+                                                      alt="Colorlib Template">
                         <div class="overlay"></div>
                     </a>
-                    <div class="cat">
-                        <span>Lifestyle</span>
-                    </div>
-                    <div class="rating">
-                        <p class="text-right mb-0">
-                            <a href="#"><span class="ion-ios-star-outline"></span></a>
-                            <a href="#"><span class="ion-ios-star-outline"></span></a>
-                            <a href="#"><span class="ion-ios-star-outline"></span></a>
-                            <a href="#"><span class="ion-ios-star-outline"></span></a>
-                            <a href="#"><span class="ion-ios-star-outline"></span></a>
+                    <div class="text py-3 pb-4 px-3">
+                        <div class="d-flex">
+                            <div class="cat">
+                                <span>Lifestyle</span>
+                            </div>
+                            <div class="rating">
+                                <p class="text-right mb-0">
+                                    <a href="#"><span class="ion-ios-star-outline"></span></a>
+                                    <a href="#"><span class="ion-ios-star-outline"></span></a>
+                                    <a href="#"><span class="ion-ios-star-outline"></span></a>
+                                    <a href="#"><span class="ion-ios-star-outline"></span></a>
+                                    <a href="#"><span class="ion-ios-star-outline"></span></a>
+                                </p>
+                            </div>
+                        </div>
+                        <h3><a href="#">${sp.tenSanPham}</a></h3>
+                        <div class="pricing">
+                            <p class="price"><span>$${sp.price}</span></p>
+                        </div>
+                        <p class="bottom-area d-flex px-3">
+                            <a href="/detail/${sp.id}" class="add-to-cart text-center py-2 mr-1"><span>Add to cart <i
+                                    class="ion-ios-add ml-1"></i></span></a>
+                            <a href="" class="buy-now text-center py-2">Buy now<span><i
+                                    class="ion-ios-cart ml-1"></i></span></a>
                         </p>
                     </div>
-                    <h6><a style="color: black;font-size: 130%; font-family: Modern Fonts" href="#">${sp.tenSanPham}</a></h6>
                 </div>
             </div>
             <c:if test="${loopStatus.count % 4 == 0 and not loopStatus.last}">
-        </div><div class="row">
-        </c:if>
-        </c:forEach>
-    </div>
+        </div>
+        <div class="row">
+            </c:if>
+            </c:forEach>
+        </div>
         <a style="font-family: Modern Fonts; font-size: 130%; margin-right: auto; border: black;"
            onmouseover="this.style.color='red'" onmouseout="this.style.color='black'" href="/shop">Shop now</a>
     </div>

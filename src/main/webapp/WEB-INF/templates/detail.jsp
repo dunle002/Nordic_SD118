@@ -19,6 +19,7 @@
         margin: 0;
         box-sizing: border-box;
     }
+
     .container {
         display: flex;
         flex-wrap: wrap;
@@ -37,6 +38,7 @@
         background: white;
         box-shadow: 5px 5px 10px 3px rgba(0, 0, 0, 0.3);
     }
+
     /*.back-button {*/
     /*    padding: 10px 15px;*/
     /*    background-color: #007bff;*/
@@ -194,37 +196,41 @@
 </style>
 <body>
 <section>
-
-
     <div class="container flex">
         <div class="left">
             <div class="main_image">
-                <img src="${spt.hinhAnh}" class="slide" style="width: 600px;height:650px">
+                <a><img src="${spt.hinhAnh}" class="slide" style="width: 600px;height:650px"></a>
             </div>
         </div>
         <div class="right" style="margin-top: -150px">
-            <button onclick="goBack()" class="back-button" style="width: 50px;margin-left: -10px"> <i style='font-size:24px' class='fas'>&#xf060;</i></button>
-
+            <button onclick="goBack()" class="back-button" style="width: 50px;margin-left: -10px"><i
+                    style='font-size:24px' class='fas'>&#xf060;</i></button>
             <script>
                 function goBack() {
                     window.history.back();
                 }
             </script>
-            <h3>${spt.sanPham.tenSanPham}</h3>
+            <h3><a>${spt.sanPham.tenSanPham}</a></h3>
             <h4 style="font-size: larger">
-                <small style="font-size: larger">Price:</small>
-                ${spt.donGia}
+                <small style="font-size: larger">Giá:</small>
+                <a>${spt.donGia}</a>
             </h4>
+            <h5 style="font-size: larger;margin-top: 30px">
+                <small style="font-size: larger">Mô Tả:</small>
+                <a>${spt.moTa}</a>
+            </h5>
+            <h5 style="margin-top: 30px;font-size: larger">
+                <small style="font-size: larger">Màu Sắc:</small>
+                <a>${spt.mauSac.tenMau}</a>
+            </h5>
 
-
-            <p>${spt.moTa}</p>
-            <h5>Color-Product:</h5>
-            <div class="color flex1">
-                <p>${spt.mauSac.tenMau}</p>
-            </div>
-            <h5>Size:</h5>
-            <p>${spt.kichCo.kichCo}</p>
-            <button style="margin-top: -50px">Add to Cart</button>
+            <h5 style="margin-top: 30px;font-size: larger">
+                <small style="font-size: larger">Kích Cỡ:</small>
+                <a>${spt.kichCo.kichCo}</a>
+            </h5>
+            <form action="/addToCart/${spt.id}" method="post">
+                <button type="submit" value="Add to Cart">Add to Cart</button>
+            </form>
         </div>
     </div>
 </section>
@@ -238,12 +244,6 @@
         line.style.background = change;
     }
 
-    <button onclick="goBack()" class="back-button">Back</button>
-
-    <script>
-        function goBack() {
-        window.history.back();
-    }
 </script>
 
 </script>

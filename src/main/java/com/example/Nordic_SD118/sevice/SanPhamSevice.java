@@ -12,4 +12,8 @@ public interface SanPhamSevice {
     public SanPham getOne(Integer id);
     public  void delete (SanPham id);
     public SanPham SaveOrUpdate(SanPham sanPham);
+    SanPham findById(Integer id);
+    List<SanPham> findAll();
+    void save(SanPham sanPham);
+
 }

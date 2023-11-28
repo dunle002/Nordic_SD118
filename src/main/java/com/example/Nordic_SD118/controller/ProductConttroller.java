@@ -42,7 +42,6 @@ public class ProductConttroller {
         sevice.SaveOrUpdate(sanPham);
         return "redirect:crud";
     }
-
     @GetMapping("/get/{id}")
     public String getOneProduct(Model model, @PathVariable("id") Integer id, @RequestParam(defaultValue = "0", name = "page") Integer num) {
         SanPham sanPham = sevice.getOne(id);
