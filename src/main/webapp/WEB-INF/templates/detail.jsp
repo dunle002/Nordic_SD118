@@ -27,7 +27,7 @@
 
     body {
         font-family: sans-serif;
-
+        overflow: hidden;
     }
 
     .container {
@@ -196,43 +196,42 @@
 </style>
 <body>
 <section>
-    <div class="container flex">
-        <div class="left">
-            <div class="main_image">
-                <a><img src="${spt.hinhAnh}" class="slide" style="width: 600px;height:650px"></a>
+        <div class="container flex">
+            <div class="left">
+
+                <div class="main_image">
+                    <a><img src="${spt.hinhAnh}" class="slide" style="width: 600px;height:650px"></a>
+                </div>
+            </div>
+            <div class="right" style="margin-top: -150px">
+                <button onclick="goBack()" class="back-button" style="width: 50px;margin-left: -10px"><i
+                        style='font-size:24px' class='fas'>&#xf060;</i></button>
+                <script>
+                    function goBack() {
+                        window.history.back();
+                    }
+                </script>
+                <h3><a>${spt.sanPham.tenSanPham}</a></h3>
+                <h4 style="font-size: larger">
+                    <small style="font-size: larger">Giá:</small>
+                    <a>${spt.donGia}</a>
+                </h4>
+                <h5 style="font-size: larger;margin-top: 30px">
+                    <small style="font-size: larger">Mô Tả:</small>
+                    <a>${spt.moTa}</a>
+                </h5>
+                <h5 style="margin-top: 30px;font-size: larger">
+                    <small style="font-size: larger">Màu Sắc:</small>
+                    <a>${spt.mauSac.tenMau}</a>
+                </h5>
+
+                <h5 style="margin-top: 30px;font-size: larger">
+                    <small style="font-size: larger">Kích Cỡ:</small>
+                    <a>${spt.kichCo.kichCo}</a>
+                </h5>
+                <button type="submit">Add to Cart</button>
             </div>
         </div>
-        <div class="right" style="margin-top: -150px">
-            <button onclick="goBack()" class="back-button" style="width: 50px;margin-left: -10px"><i
-                    style='font-size:24px' class='fas'>&#xf060;</i></button>
-            <script>
-                function goBack() {
-                    window.history.back();
-                }
-            </script>
-            <h3><a>${spt.sanPham.tenSanPham}</a></h3>
-            <h4 style="font-size: larger">
-                <small style="font-size: larger">Giá:</small>
-                <a>${spt.donGia}</a>
-            </h4>
-            <h5 style="font-size: larger;margin-top: 30px">
-                <small style="font-size: larger">Mô Tả:</small>
-                <a>${spt.moTa}</a>
-            </h5>
-            <h5 style="margin-top: 30px;font-size: larger">
-                <small style="font-size: larger">Màu Sắc:</small>
-                <a>${spt.mauSac.tenMau}</a>
-            </h5>
-
-            <h5 style="margin-top: 30px;font-size: larger">
-                <small style="font-size: larger">Kích Cỡ:</small>
-                <a>${spt.kichCo.kichCo}</a>
-            </h5>
-            <form action="/addToCart/${spt.id}" method="post">
-                <button type="submit" value="Add to Cart">Add to Cart</button>
-            </form>
-        </div>
-    </div>
 </section>
 <script>
     function img(anything) {
@@ -244,9 +243,11 @@
         line.style.background = change;
     }
 
+    document.addEventListener('wheel', function (event) {
+        event.preventDefault();
+    });
 </script>
 
-</script>
 </body>
 
 </html>

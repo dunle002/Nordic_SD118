@@ -13,6 +13,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
+@ToString
 public class GioHangChiTiet {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,7 +29,8 @@ public class GioHangChiTiet {
     @JoinColumn(name = "id_gio_hang")
     private GioHang gioHang;
     @ManyToOne
-    @JoinColumn(name = "id_chi_tiet_san_pham")
+    @JoinColumn(name = "id_san_pham")
     private ChiTietSanPham chiTietSanPham;
+
 
 }

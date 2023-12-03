@@ -15,5 +15,6 @@ public interface SanPhamSevice {
     SanPham findById(Integer id);
     List<SanPham> findAll();
     void save(SanPham sanPham);
-
+    public List<SanPham>getAll();
+    public SanPham findSanPhamById(int id);
 }

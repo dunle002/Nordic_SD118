@@ -6,11 +6,10 @@ import com.example.Nordic_SD118.entity.GioHangChiTiet;
 import com.example.Nordic_SD118.entity.SanPham;
 
 
-import com.example.Nordic_SD118.repository.ChiTietSPRepository;
-import com.example.Nordic_SD118.repository.LoaiGiayRepository;
-import com.example.Nordic_SD118.repository.SanPhamRepository;
+import com.example.Nordic_SD118.repository.*;
 //import com.example.Nordic_SD118.sevice.ChiTietSanPhamService;
 //import com.example.Nordic_SD118.sevice.GioHangService;
+import com.example.Nordic_SD118.sevice.GioHangCtService;
 import com.example.Nordic_SD118.sevice.SanPhamSevice;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
@@ -29,42 +28,36 @@ import java.util.List;
 import java.util.Optional;
 
 @Controller
+@RequestMapping("/")
 public class WebHomeController {
     @Autowired
     private SanPhamSevice sanPhamSevice;
     @Autowired
     private SanPhamRepository sanPhamRepository;
-//    @Autowired
-//    private ChiTietSanPhamService chiTietSanPhamService;
     @Autowired
     private ChiTietSPRepository repository;
-//    @Autowired
-//    private GioHangService gioHangService;
+    @Autowired
+    private GioHangRepository gioHangRepository;
+    @Autowired
+    private GioHangCtService gioHangCtService;
+    @Autowired
+    private GioHangCTRepository gioHangCTRepository;
 
-    @RequestMapping(value = {"/", "/home", "/index"})
+    @RequestMapping("home")
     public String Homepage(Model model) {
         List<SanPham> sanPham = sanPhamRepository.findAll();
         model.addAttribute("sp", sanPham);
         return "index";
     }
 
-    @RequestMapping("/shop")
-    public String ShopHome(@RequestParam(defaultValue = "0", name = "page") Integer number, Model model) {
-        Pageable pageable = PageRequest.of(number, 9);
-        Page<SanPham> list = sanPhamRepository.findAll(pageable);
-        model.addAttribute("listSp", list);
-        return "shop";
-    }
-
-    @RequestMapping("/detail/{id}")
+    @RequestMapping("detail/{id}")
     public String detail(Model model, @PathVariable("id") String id) {
         try {
             int idValue = Integer.parseInt(id);
             ChiTietSanPham chiTietSanPham = repository.findById(idValue).orElse(null);
-//            SanPham sanPham = sanPhamRepository.findById(idValue).orElse(null);
-            if (chiTietSanPham != null ) {
+            if (chiTietSanPham != null) {
                 model.addAttribute("spt", chiTietSanPham);
-                return "detail";
+                return "product-single";
             } else {
                 return "not-found-page";
             }
@@ -73,46 +66,54 @@ public class WebHomeController {
             return "error-page";
         }
     }
-//    @PostMapping("/addToCart/{id}")
-//    public String addToCart(@PathVariable Integer id){
-//        ChiTietSanPham chiTietSanPham = chiTietSanPhamService.getSanPhamById(id);
-//        //lấy giỏ hàng hiện tại
-//        GioHang gioHang = gioHangService.getCurrentTrue();
-//        //thêm sp
-//        gioHang.getChiTietSanPhams().add(chiTietSanPham);
-//        //lưu giỏ
-//        gioHangService.saveGioHang(gioHang);
-//        return "redirect:/cart";
+
+    @RequestMapping("shop")
+    public String ShopHome(@RequestParam(defaultValue = "0", name = "page") Integer number, Model model) {
+        Pageable pageable = PageRequest.of(number, 9);
+        Page<SanPham> list = sanPhamRepository.findAll(pageable);
+        model.addAttribute("listSp", list);
+        return "shop";
+    }
+
+    //    @RequestMapping("/cart")
+//    public String addToCart(){
+//        return "cart";
 //    }
-//    @PostMapping("add")
-//    public String addCart(@RequestParam("hinhAnh")String hinhAnh,
-//                          @RequestParam("donGia")String donGia,
-//                          @RequestParam("soLuong")String soLuong,
-//                          @RequestParam("sanPham")String sanPhamId,
-//                          @RequestParam("sanPham") String tenSanPham){
-//        SanPham sanPham = sanPhamRepository.findById(Integer.valueOf(sanPhamId)).orElse(null);
-//        ChiTietSanPham chiTietSanPham = ChiTietSanPham.builder()
-//                .hinhAnh(hinhAnh)
-//                .donGia(BigDecimal.valueOf(Long.parseLong(donGia)))
-//                .soLuong(Integer.valueOf(soLuong))
-//                .build();
-//        chiTietSPRepository.save(chiTietSanPham);
-//        return "redirect:/home";
-//    }
+    @RequestMapping("cart")
+    private String chuyenTrang(Model model) {
+        List<GioHangChiTiet> listGioHangChiTiet = gioHangCtService.listGioHangChiTiets();
+        BigDecimal tongTien = BigDecimal.valueOf(0);
+        List<GioHangChiTiet> list = gioHangCTRepository.findAll();
+        for (int i = 0; i < list.size(); i++) {
+            tongTien = tongTien.add(list.get(i).getDonGia());
+        }
+        model.addAttribute("listGioHangChiTiet", listGioHangChiTiet);
+        model.addAttribute("tongTien", tongTien);
+        return "cart";
+    }
 
+    @GetMapping()
+    public String viewGioHang(Model model) {
+        return chuyenTrang(model);
+    }
 
+    @GetMapping("add/{id}")
+    public String addGioHang(Model model, @PathVariable(name = "id") Integer id, String hoTen) {
+        gioHangCtService.addSanPhamVaoGio(id, hoTen);
+        return chuyenTrang(model);
+    }
 
-    @RequestMapping("/about")
+    @RequestMapping("about")
     public String about() {
         return "about";
     }
 
-    @RequestMapping("/blog")
+    @RequestMapping("blog")
     public String blog() {
         return "blog";
     }
 
-    @RequestMapping("/contact")
+    @RequestMapping("contact")
     public String contact() {
         return "contact";
     }

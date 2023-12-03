@@ -7,12 +7,10 @@
 //
 //@Configuration
 //public class SpringWebConfig implements WebMvcConfigurer {
-//    @Override
-//    public void addResourceHandlers(ResourceHandlerRegistry registry) {
-//        registry.addResourceHandler("/webapp/css/**")
-//                .addResourceLocations("classpath:/webapp/");
-//    }
-//}
+////    @Override
+////    public void addResourceHandlers(ResourceHandlerRegistry registry) {
+////        registry.addResourceHandler("/webapp/**").addResourceLocations("classpath:/webapp/");
+////    }
 ////@Configuration
 ////public class WebMvcConfig implements WebMvcConfigurer {
 ////    @Override
@@ -20,4 +18,4 @@
 ////        registry.addResourceHandler("/static/**")
 ////                .addResourceLocations("classpath:/static/");
 ////    }
-////}
+//}

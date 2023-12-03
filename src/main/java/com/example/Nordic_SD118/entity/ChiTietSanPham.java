@@ -13,7 +13,7 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class ChiTietSanPham{
+public class ChiTietSanPham {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
@@ -48,5 +48,6 @@ public class ChiTietSanPham{
     @ManyToOne
     @JoinColumn(name = "id_de_giay")
     private DeGiay deGiay;
+
 }
 

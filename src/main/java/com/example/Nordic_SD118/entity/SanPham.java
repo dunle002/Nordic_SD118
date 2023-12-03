@@ -32,7 +32,7 @@ public class SanPham {
     @JoinColumn(name = "id_loai_giay")
     private LoaiGiay loaiGiay;
 
-
-
+//    @ManyToOne
+//    private GioHang gioHang;
 
 }

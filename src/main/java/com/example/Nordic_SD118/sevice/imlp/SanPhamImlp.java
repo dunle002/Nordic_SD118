@@ -3,6 +3,8 @@ package com.example.Nordic_SD118.sevice.imlp;
 import com.example.Nordic_SD118.entity.SanPham;
 import com.example.Nordic_SD118.repository.SanPhamRepository;
 import com.example.Nordic_SD118.sevice.SanPhamSevice;
+
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +17,7 @@ public class SanPhamImlp implements SanPhamSevice {
 
     @Autowired
     SanPhamRepository repository;
-
+    public static List<SanPham> list = new ArrayList<>();
     @Override
     public Page<SanPham> getAll(Pageable pageable) {
         return repository.findAll(pageable);
@@ -54,5 +56,20 @@ public class SanPhamImlp implements SanPhamSevice {
     @Override
     public void save(SanPham sanPham) {
             repository.save(sanPham);
+    }
+
+    @Override
+    public List<SanPham> getAll() {
+        return null;
+    }
+
+    @Override
+    public SanPham findSanPhamById(int id) {
+        for (SanPham sanPham : list){
+            if (sanPham.getId() == id){
+                return sanPham;
+            }
+        }
+        return null;
     }
 }

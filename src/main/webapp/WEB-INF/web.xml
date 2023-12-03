@@ -1,0 +1,8 @@
+<servlet>
+    <servlet-name>default</servlet-name>
+    <servlet-class>org.apache.catalina.servlets.DefaultServlet</servlet-class>
+</servlet>
+<servlet-mapping>
+<servlet-name>default</servlet-name>
+<url-pattern>/WEB-INF/*</url-pattern>
+</servlet-mapping>
