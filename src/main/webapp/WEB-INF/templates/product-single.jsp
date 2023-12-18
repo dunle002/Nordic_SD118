@@ -1,4 +1,5 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html lang="en">
@@ -72,7 +73,7 @@
                 <li class="nav-item"><a href="/blog" class="nav-link">Blog</a></li>
                 <li class="nav-item"><a href="/contact" class="nav-link">Contact</a></li>
                 <li class="nav-item cta cta-colored"><a href="/cart" class="nav-link"><span
-                        class="icon-shopping_cart"></span>[0]</a></li>
+                        class="icon-shopping_cart"></span></a></li>
 
             </ul>
         </div>
@@ -110,7 +111,8 @@
                         <a href="#"><span class="ion-ios-star-outline"></span></a>
                     </p>
                 </div>
-                <p class="price"><span>$${spt.donGia}</span></p>
+                <p class="price"><span><fmt:formatNumber value="${spt.donGia}" type="currency"
+                                                         currencyCode="VND" pattern="#,##0"></fmt:formatNumber>đ</span></p>
 
                 <p>${spt.moTa}
                 </p>
@@ -119,11 +121,11 @@
                         <div class="form-group d-flex">
                             <div class="select-wrap">
                                 <div class="icon"><span class="ion-ios-arrow-down"></span></div>
-                                <select name="" id="" class="form-control">
-                                    <option value="">Small</option>
-                                    <option value="">Medium</option>
-                                    <option value="">Large</option>
-                                    <option value="">Extra Large</option>
+                                <select name="" id="" class="form-control" style="width: 150px">
+                                    <option value="">${spt.kichCo.kichCo}</option>
+<%--                                    <option value="">${spt.kichCo.kichCo}</option>--%>
+<%--                                    <option value="">${spt.kichCo.kichCo}</option>--%>
+<%--                                    <option value="">${spt.kichCo.kichCo}</option>--%>
                                 </select>
                             </div>
                         </div>
@@ -146,9 +148,8 @@
                     <div class="w-100"></div>
 
                 </div>
-                <p><a href="cart.html" class="btn btn-black py-3 px-5 mr-2">Add to Cart</a><a href="cart.html"
-                                                                                              class="btn btn-primary py-3 px-5">Buy
-                    now</a></p>
+                <p><a href="/add/${spt.id}" class="btn btn-black py-3 px-5 mr-2">Add to Cart</a>
+                    <a href="cart.html" class="btn btn-primary py-3 px-5">Buy now</a></p>
             </div>
         </div>
 

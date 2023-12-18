@@ -84,12 +84,36 @@ public class GioHangCtServiceImpl implements GioHangCtService {
 
     @Override
     public Boolean botSanPhamTrongGio(Integer id) {
-        return null;
+        List<GioHangChiTiet> listGioHangChiTiet = gioHangCTRepository.findAll();
+        ChiTietSanPham chiTietSanPham = chiTietSPRepository.findById(id).get();
+        Integer soLuong;
+        BigDecimal giaTong;
+        NguoiDung nguoiDung = nguoiDungRepository.findByHoTen("Lê Xuân Dương");
+        Date date = new Date();
+        GioHang gioHang;
+        GioHangChiTiet gioHangChiTiet = new GioHangChiTiet();
+        if (checkTrung(listGioHangChiTiet,id)){
+            for (int i = 0; i < listGioHangChiTiet.size(); i++) {
+                if (listGioHangChiTiet.get(i).getChiTietSanPham().getId().equals(id)){
+                    soLuong = listGioHangChiTiet.get(i).getSoLuong();
+                    if (soLuong == 1){
+                        removeSanPhamTrongGio(listGioHangChiTiet.get(i).getId());
+                        return false;
+                    }
+                    giaTong = listGioHangChiTiet.get(i).getDonGia().subtract(chiTietSanPham.getDonGia());
+                    gioHang = new GioHang(listGioHangChiTiet.get(i).getGioHang().getId(),date,date,nguoiDung.getHoTen(),nguoiDung.getSoDienThoai() ,1,nguoiDung);
+                    gioHangChiTiet = new GioHangChiTiet(listGioHangChiTiet.get(i).getId(),soLuong -1,chiTietSanPham.getDonGia(),giaTong,gioHang,chiTietSanPham);
+                }
+            }
+        }
+        gioHangCTRepository.save(gioHangChiTiet);
+        return true;
     }
 
     @Override
     public Boolean removeSanPhamTrongGio(Integer id) {
-        return null;
+        gioHangCTRepository.deleteById(id);
+        return true;
     }
 
     private Boolean checkTrung(List<GioHangChiTiet> listGioHangChiTiets, Integer id) {

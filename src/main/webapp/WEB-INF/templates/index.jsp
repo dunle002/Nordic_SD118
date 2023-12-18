@@ -1,4 +1,5 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html lang="en">
@@ -69,7 +70,7 @@
                 <li class="nav-item"><a href="/blog" class="nav-link">Blog</a></li>
                 <li class="nav-item"><a href="/contact" class="nav-link">Contact</a></li>
                 <li class="nav-item cta cta-colored"><a href="/cart" class="nav-link"><span
-                        class="icon-shopping_cart"></span>[0]</a></li>
+                        class="icon-shopping_cart"></span></a></li>
 
             </ul>
         </div>
@@ -180,52 +181,53 @@
         </div>
     </div>
     <div class="container">
-            <div class="row">
-                <c:forEach var="sp" items="${sp}" varStatus="loopStatus" begin="0" end="11">
-                <div class="col-sm-12 col-md-6 col-lg-3 ftco-animate d-flex">
-                    <div class="product d-flex flex-column">
+        <div class="row">
+            <c:forEach var="sp" items="${sp}" varStatus="loopStatus" begin="0" end="11">
+            <div class="col-sm-12 col-md-6 col-lg-3 ftco-animate d-flex">
+                <div class="product d-flex flex-column">
 
-                        <a href="#" class="img-prod"><img style="width: 350px; height: 300px;" class="img-fluid"
-                                                          src="${sp.photo}"
-                                                          alt="Colorlib Template" >
-                            <div class="overlay"></div>
-                        </a>
-                        <div class="text py-3 pb-4 px-3">
-                            <div class="d-flex">
-                                <div class="cat">
-                                    <span>Lifestyle</span>
-                                </div>
-                                <div class="rating">
-                                    <p class="text-right mb-0">
-                                        <a href="#"><span class="ion-ios-star-outline"></span></a>
-                                        <a href="#"><span class="ion-ios-star-outline"></span></a>
-                                        <a href="#"><span class="ion-ios-star-outline"></span></a>
-                                        <a href="#"><span class="ion-ios-star-outline"></span></a>
-                                        <a href="#"><span class="ion-ios-star-outline"></span></a>
-                                    </p>
-                                </div>
+                    <a href="#" class="img-prod"><img style="width: 350px; height: 300px;" class="img-fluid"
+                                                      src="${sp.photo}"
+                                                      alt="Colorlib Template">
+                        <div class="overlay"></div>
+                    </a>
+                    <div class="text py-3 pb-4 px-3">
+                        <div class="d-flex">
+                            <div class="cat">
+                                <span>Lifestyle</span>
                             </div>
-                            <h3><a href="#">${sp.tenSanPham}</a></h3>
-                            <div class="pricing">
-                                <a class="price" ><span>$${sp.price}</span></a>
+                            <div class="rating">
+                                <p class="text-right mb-0">
+                                    <a href="#"><span class="ion-ios-star-outline"></span></a>
+                                    <a href="#"><span class="ion-ios-star-outline"></span></a>
+                                    <a href="#"><span class="ion-ios-star-outline"></span></a>
+                                    <a href="#"><span class="ion-ios-star-outline"></span></a>
+                                    <a href="#"><span class="ion-ios-star-outline"></span></a>
+                                </p>
                             </div>
-                            <p class="bottom-area d-flex px-3">
-                                <a href="/add/${sp.id}" class="add-to-cart text-center py-2 mr-1"><span>Add to cart <i
-                                        class="ion-ios-add ml-1"></i></span></a>
-                                <a href="" class="buy-now text-center py-2">Buy now<span><i
-                                        class="ion-ios-cart ml-1"></i></span></a>
-                            </p>
                         </div>
+                        <h3><a href="#">${sp.tenSanPham}</a></h3>
+                        <div class="pricing">
+                            <span><fmt:formatNumber value="${sp.price}" type="currency" currencyCode="VND"
+                                                    pattern="#,##0"></fmt:formatNumber>₫</span>
+                        </div>
+                        <p class="bottom-area d-flex px-3">
+                            <a href="/add/${sp.id}" class="add-to-cart text-center py-2 mr-1"><span>Add to cart <i
+                                    class="ion-ios-add ml-1"></i></span></a>
+                                <%--                                <a href="" class="buy-now text-center py-2">Buy now<span><i--%>
+                                <%--                                        class="ion-ios-cart ml-1"></i></span></a>--%>
+                        </p>
                     </div>
                 </div>
-                <c:if test="${loopStatus.count % 4 == 0 and not loopStatus.last}">
             </div>
-            <div class="row">
-                </c:if>
-                </c:forEach>
-            </div>
-            <a style="font-family: Modern Fonts; font-size: 130%; margin-right: auto; border: black;"
-               onmouseover="this.style.color='red'" onmouseout="this.style.color='black'" href="/shop">Shop now</a>
+            <c:if test="${loopStatus.count % 4 == 0 and not loopStatus.last}">
+        </div>
+        <div class="row">
+            </c:if>
+            </c:forEach>
+        </div>
+        <a style="font-family: Modern Fonts; font-size: 130%; margin-right: auto; border: black;"
+           onmouseover="this.style.color='red'" onmouseout="this.style.color='black'" href="/shop">Shop now</a>
     </div>
 
 </section>
