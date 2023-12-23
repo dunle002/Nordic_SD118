@@ -9,6 +9,8 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -26,12 +28,17 @@ public class ChiTietSanPham {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private Integer idProductDetail;
-
+    private Integer id;
+    @NotNull
     @Column(name = "don_gia")
     private BigDecimal donGia;
+<<<<<<< HEAD
 
     @Column(name = "so_luong_ton")
+=======
+    @NotNull
+    @Column(name = "so_luong")
+>>>>>>> parent of 96c4105 (gui code)
     private Integer soLuong;
 
     @Column(name = "main_photo")
@@ -42,10 +49,11 @@ public class ChiTietSanPham {
 
     @Column(name = "main_photo2")
     private String photoTwo;
-
+    @NotNull
+    @NotBlank
     @Column(name = "mo_ta_ct")
     private String moTa;
-
+    @NotNull
     @Column(name = "trang_thai")
     private Integer trangThai;
 
