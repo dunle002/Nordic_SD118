@@ -21,6 +21,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -35,7 +36,6 @@ public class ProductConttroller {
     @Autowired
     private LoaiGiayRepository repository;
 
-
     @RequestMapping("/view")
     public String shopHome(Model model,
                            @RequestParam(defaultValue = "0", name = "page") Integer num,
@@ -47,19 +47,11 @@ public class ProductConttroller {
 
 <<<<<<< HEAD
     ) {
-        List<LoaiGiay> listLoai = loaiGiayRepository.findAll();
-        List<ChatLieu> chatLieuList = chatLieuRepository.findAll();
-        List<MauSac> mauSacList = mauSacRepository.findAll();
-        List<KichCo> coList = kichCoRepository.findAll();
-        List<DeGiay> deGiayList = deGiayRepository.findAll();
         List<ChiTietSanPham> list = serviceDetail.getAll();
         model.addAttribute("maZen", service.generateUniqueProductCode());
+        List<LoaiGiay> listLoai = loaiGiayRepository.findAll();
         model.addAttribute("product", list);
-        model.addAttribute("loaiDay", listLoai);
-        model.addAttribute("chatLieuList", chatLieuList);
-        model.addAttribute("mauSacList", mauSacList);
-        model.addAttribute("coList", coList);
-        model.addAttribute("deGiayList", deGiayList);
+//        model.addAttribute("loaiDay", listLoai);
         return "san-pham";
     }
 
@@ -73,7 +65,6 @@ public class ProductConttroller {
         List<MauSac> mauSacList = mauSacRepository.findAll();
         List<KichCo> coList = kichCoRepository.findAll();
         List<DeGiay> deGiayList = deGiayRepository.findAll();
-        List<ChiTietSanPham> list = serviceDetail.getAll();
 
 =======
         List<LoaiGiay> listLoai = repository.findAll();
@@ -97,9 +88,8 @@ public class ProductConttroller {
         }
         return "redirect:view";
     }
-//    @RequestParam("photoTwo2") Integer idProductDto,
-//    @RequestParam("photoTwo2") Integer idProductDetailDto
 
+<<<<<<< HEAD
 <<<<<<< HEAD
     @PostMapping(value = "/update", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public String updateSanPham(@ModelAttribute(name = "product") ProductDto product, @RequestParam("image1") MultipartFile anh1,
@@ -133,55 +123,38 @@ public class ProductConttroller {
                 String fileName3 = "../../images/" + anh3.getOriginalFilename();
                 product.setPhotoTwo(fileName3);
             }
+=======
+    @PostMapping("/update/{id}")
+    public String updateProduct(@ModelAttribute("product") SanPham sanPham,
+                                @PathVariable("id") Integer id,
+                                @RequestParam("file") MultipartFile file,
+                                @RequestParam("fileData") String fileData
+    ) {
+        if (!file.isEmpty()) {
+            sanPham.setIdProduct(id);
+            String fileName = "../../images/" + file.getOriginalFilename();
+            sanPham.setPhoto(fileName);
+            service.update(sanPham);
+        } else if (file.isEmpty()) {
+            sanPham.setIdProduct(id);
+            sanPham.setPhoto(fileData);
+            service.update(sanPham);
+>>>>>>> parent of b7388ac (gui code)
         }
 
-        SanPham sanPham = mapper.convertToProduct(product);
-        service.Save(sanPham);
-        ChiTietSanPham chiTietSanPham = mapper.convertToProductDetail(product);
-        chiTietSanPham.setSanPham(sanPham);
-        serviceDetail.Save(chiTietSanPham);
         return "redirect:/product/view";
     }
 
-
-//    @PostMapping("/update/{id}")
-//    public String updateProduct(@ModelAttribute("product") SanPham sanPham,
-//                                @PathVariable("id") Integer id,
-//                                @RequestParam("file") MultipartFile file,
-//                                @RequestParam("fileData") String fileData
-//    ) {
-//        if (!file.isEmpty()) {
-//            sanPham.setIdProduct(id);
-//            String fileName = "../../images/" + file.getOriginalFilename();
-//            sanPham.setPhoto(fileName);
-//            service.update(sanPham);
-//        } else if (file.isEmpty()) {
-//            sanPham.setIdProduct(id);
-//            sanPham.setPhoto(fileData);
-//            service.update(sanPham);
-//        }
-//
-//        return "redirect:/product/view";
-//    }
-
-    //    @GetMapping("/get/{id}")
-//    public String getOneProductDetail(Model model, @PathVariable("id") Integer id
-//    ) {
-//        ChiTietSanPham sanPham = serviceDetail.getOne(id);
-//        model.addAttribute("productUpdate", sanPham);
-//        return shopHome(model);
-//    }
-    @GetMapping("/productDetail")
-    public String getProductDetail(@RequestParam("id") Integer id, Model model) {
-        // Gọi phương thức trong ProductService để lấy thông tin chi tiết sản phẩm dựa trên id
-
-        ChiTietSanPham product = serviceDetail.getOne(id);
-        model.addAttribute("productct", product);
-        viewAdd(model);
-        return "detail-update";
+    @GetMapping("/get/{id}")
+    public String getOneProductDetail(Model model, @PathVariable("id") Integer id
+    ) {
+        SanPham sanPham = service.getOne(id);
+        model.addAttribute("productUpdate", sanPham);
+        return shopHome(model);
     }
 
 
+<<<<<<< HEAD
 //    @GetMapping("/delete/{id}")
 //    public String deleteProduct(Model model, @PathVariable("id") Integer id
 //    ) {
@@ -205,6 +178,17 @@ public class ProductConttroller {
                 errorMap.put(fieldError.getField(), fieldError.getDefaultMessage());
             }
             redirectAttributes.addFlashAttribute("errors", errorMap);
+=======
+    @GetMapping("/delete/{id}")
+    public String deleteProduct(Model model, @PathVariable("id") Integer id
+    ) {
+        SanPham sanPham = service.getOne(id);
+        service.delete(sanPham);
+        shopHome(model);
+        return "redirect:/product/view";
+    }
+}
+>>>>>>> parent of b7388ac (gui code)
 
             System.out.println("lỗi");
             return "redirect:update";

@@ -2,7 +2,18 @@
 
 
 
+window.addEventListener('load', function () {
+    var url = window.location.href;
 
+    // Kiểm tra nếu đường dẫn chứa '/product/get/' và không có ký tự '#' (để tránh xử lý khi modal đã được mở)
+    if (url.includes('/product/get/') && !url.includes('#')) {
+        // Mở modal và tải dữ liệu từ đường dẫn hiện tại
+        // Code tương ứng với thư viện JavaScript và modal bạn đang sử dụng
+        // Ví dụ:
+        $('#updateModal').modal('show');
+        $('#updateModalContent').load(url);
+    }
+});
 
 (function ($) {
     "use strict"; // Start of use strict

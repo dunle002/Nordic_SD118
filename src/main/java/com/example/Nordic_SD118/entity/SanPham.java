@@ -31,6 +31,7 @@ public class SanPham {
     private String tenSanPham;
 <<<<<<< HEAD
 
+<<<<<<< HEAD
 =======
     @NotNull
     @NotBlank
@@ -43,6 +44,16 @@ public class SanPham {
     @Column(name = "trang_thai")
     private Integer trangThai;
 >>>>>>> parent of 96c4105 (gui code)
+=======
+    @Column(name = "thumbnail_photo")
+    private String photo;
+
+    @Column(name = "price")
+    private BigDecimal price;
+
+    @Column(name = "trang_thai")
+    private Integer trangThai;
+>>>>>>> parent of b7388ac (gui code)
     @ManyToOne
     @JoinColumn(name = "id_loai_giay")
     private LoaiGiay loaiGiay;

@@ -34,11 +34,15 @@ public class ChiTietSanPham {
     private BigDecimal donGia;
 <<<<<<< HEAD
 
+<<<<<<< HEAD
     @Column(name = "so_luong_ton")
 =======
     @NotNull
     @Column(name = "so_luong")
 >>>>>>> parent of 96c4105 (gui code)
+=======
+    @Column(name = "so_luong")
+>>>>>>> parent of b7388ac (gui code)
     private Integer soLuong;
 
     @Column(name = "main_photo")
