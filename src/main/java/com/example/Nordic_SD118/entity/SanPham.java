@@ -29,14 +29,6 @@ public class SanPham {
     @Column(name = "ten_san_pham")
     private String tenSanPham;
 
-    @Column(name = "thumbnail_photo")
-    private String photo;
-
-    @Column(name = "price")
-    private BigDecimal price;
-
-    @Column(name = "trang_thai")
-    private Integer trangThai;
     @ManyToOne
     @JoinColumn(name = "id_loai_giay")
     private LoaiGiay loaiGiay;

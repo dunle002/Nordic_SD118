@@ -31,7 +31,7 @@ public class ChiTietSanPham {
     @Column(name = "don_gia")
     private BigDecimal donGia;
 
-    @Column(name = "so_luong")
+    @Column(name = "so_luong_ton")
     private Integer soLuong;
 
     @Column(name = "main_photo")

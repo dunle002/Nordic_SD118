@@ -2,6 +2,7 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ page pageEncoding="UTF-8" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -219,29 +220,28 @@
                     <div class="card-header py-3">
                         <h6 class="m-0 font-weight-bold text-primary">Danh sách sản phẩm</h6>
                     </div>
-                    <div style="position: relative;left: 1100px; margin-top: 20px">
-                        <button type="button" class="btn btn-outline-primary" data-toggle="modal"
-                                data-target="#addModal"
-                                style="width: 100px; height: 40px; margin-right: 10px ">
-                            <i class="fas fa-duotone fa-plus"></i>
-                        </button>
+<%--                    <div style="position: relative;left: 1100px; margin-top: 20px">--%>
+<%--                        <button type="button" class="btn btn-outline-primary" data-toggle="modal"--%>
+<%--                                data-target="#addModal"--%>
+<%--                                style="width: 100px; height: 40px; margin-right: 10px ">--%>
+<%--                            <i class="fas fa-duotone fa-plus"></i>--%>
+<%--                        </button>--%>
 
-                    </div>
+<%--                    </div>--%>
 
 
                     <div class="card-body">
+<%--                        <form:form modelAttribute="productForm" action="/product/update" method="post" enctype="multipart/form-data">--%>
                         <div class="table-responsive">
                             <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                 <thead>
                                 <tr>
+                                    <th></th>
                                     <th>STT</th>
                                     <th>Mã</th>
                                     <th>Tên sản phẩm</th>
-                                    <th>Loại giày</th>
                                     <th>Màu sắc</th>
                                     <th>Kích cỡ</th>
-                                    <th>Chất liệu</th>
-                                    <th>Đế giày</th>
                                     <th>Ảnh nền</th>
                                     <th>Giá</th>
                                     <th>Số lượng</th>
@@ -251,14 +251,12 @@
                                 </thead>
                                 <tfoot>
                                 <tr>
+                                    <th></th>
                                     <th>STT</th>
                                     <th>Mã</th>
                                     <th>Tên sản phẩm</th>
-                                    <th>Loại giày</th>
                                     <th>Màu sắc</th>
                                     <th>Kích cỡ</th>
-                                    <th>Chất liệu</th>
-                                    <th>Đế giày</th>
                                     <th>Ảnh nền</th>
                                     <th>Giá</th>
                                     <th>Số lượng</th>
@@ -269,182 +267,513 @@
                                 <tbody>
                                 <c:forEach items="${product}" var="pro" varStatus="i">
                                     <tr>
+                                        <th><input type="checkbox" value="${pro.idProductDetail}" id="check"></th>
                                         <th>${i.index+1}</th>
                                         <th>${pro.sanPham.ma}</th>
                                         <td>${pro.sanPham.tenSanPham}</td>
-                                        <td>${pro.sanPham.loaiGiay.tenTheLoai}</td>
                                         <td>${pro.mauSac.tenMau}</td>
-                                        <td>${pro.kichCo.size}</td>
-                                        <td>${pro.chatLieu.tenChatLieu}</td>
-                                        <td>${pro.deGiay.loaiDe}</td>
+                                        <td><input class="input-group flex-nowrap" id="productSize" type="text" name="productId" value="${pro.kichCo.size}"></td>
                                         <td><img style="height: 100px" width="100px" src="${pro.photo}"></td>
-                                        <td>${pro.donGia}</td>
-                                        <td>${pro.soLuong}</td>
+
+                                        <td><input class="input-group flex-nowrap currency-input" type="text" id="productAddPrice" name="productId" value="${pro.donGia}"></td>
+                                        <td><input class="input-group flex-nowrap" type="text" id="productAddQuantity" name="productId" value="${pro.soLuong}"></td>
                                         <td>${pro.trangThai==1?"còn hàng":"hết hàng"}</td>
                                         <td>
-                                            <div class="button-group">
-                                                <a class="btn btn-outline-primary"
-                                                   role="button" >
-                                                    <span class="fas fa-duotone fa-wrench"></span>
-                                                </a>
-                                                <a class="btn btn-outline-primary"
-                                                   role="button"><i class="fas fa-light fa-trash"></i></a>
-                                            </div>
+                                            <a class="btn btn-primary btn-detail" data-product-id="${pro.idProductDetail}">
+                                                <i class="fa fa-wrench" aria-hidden="true"></i>
+                                            </a>
                                         </td>
 
                                     </tr>
                                 </c:forEach>
                                 </tbody>
+
                             </table>
+                            <button type="submit" class="btn btn-primary" style="float: right" >Lưu</button>
+                            <button type="submit" class="btn btn-primary" style="float: right">Xóa</button>
                         </div>
+<%--                        </form:form>--%>
                     </div>
                 </div>
 
+            </div>
+<%--            modal detail--%>
+            <div class="modal fade" id="productDetailModal" tabindex="-1" role="dialog" aria-labelledby="productDetailModalLabel" aria-hidden="true"
+
+            >
+                <div class="modal-dialog" role="document" style="max-width: 50%;
+                                            margin: 0 auto;">
+                    <div class="modal-content" style="width: 100%">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="productDetailModalLabel">Chi tiết sản phẩm</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <form:form method="post" action="/product/update" modelAttribute="product"
+                                   enctype="multipart/form-data" id="myForm">
+                        <div class="modal-body"style="width: 100%">
+
+                        </div>
+                        </form:form>
+                    </div>
+                </div>
             </div>
             <!-- /.container-fluid -->
 
         </div>
         <!-- End of Main Content -->
+<%--        <form:form modelAttribute="productForm" action="/product/update" method="post">--%>
+<%--        <c:forEach items="${product}" var="pro" varStatus="i">--%>
+<%--            <tr>--%>
+<%--                <!-- Các cột dữ liệu -->--%>
+<%--                ...--%>
+<%--                <td>--%>
+<%--                    <!-- Biểu mẫu chỉnh sửa -->--%>
 
-        <div class="modal" id="addModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-             aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header text-center">
-                        <h4 class="modal-title w-100 font-weight-bold">Thêm sản phẩm</h4>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">x</span>
-                        </button>
-                    </div>
-                    <div class="modal-body mx-3">
-                        <form:form method="post" action="/product/add" modelAttribute="product"
-                                   enctype="multipart/form-data" id="form-1">
-                        <div class="md-form mb-3" style="margin-top: 10px">
-                            <input type="text" class="input-control" name="ma"
-                                   id="productAddId" value="${maZen}" readonly>
-                        </div>
-                        <div class="md-form mb-3" style="margin-top: 10px">
-                            <input type="text" class="input-control" placeholder="Nhập tên sản phẩm"
-                                   name="tenSanPham" id="productAddName" style="border: 2px solid!important;">
-                            <span class="error-message"></span>
-                        </div>
-                        <div class="md-form mb-3" style="margin-top: 10px">
-                            <input type="text" class="input-control" placeholder="Nhập giá sản phẩm"
-                                   name="price" id="productAddPrice" style="border: 2px solid!important;">
-                            <span class="error-message"></span>
-                        </div>
+<%--                        <input type="hidden" name="productId" value="${pro.idProductDetail}">--%>
+<%--                        <!-- Các trường chỉnh sửa -->--%>
+<%--                        <!-- Ví dụ: -->--%>
 
-                        <div class="input-group mb-3">
-                            Loại giày:<select name="loaiGiay" required>
-                            <c:forEach var="item" items="${loaiDay}">
-                                <option value="${item.id}">${item.tenTheLoai}</option>
-                            </c:forEach>
-                        </select><br>
-                        </div>
+<%--                        <!-- Các trường khác -->--%>
+<%--                        ...--%>
+<%--                </td>--%>
+<%--            </tr>--%>
+<%--        </c:forEach>--%>
+<%--            <button type="submit" class="btn btn-primary">Lưu</button>--%>
+<%--        </form:form>--%>
+<%--        <div class="modal" id="addModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"--%>
+<%--             aria-hidden="true">--%>
+<%--            <div class="modal-dialog" role="document">--%>
+<%--                <div class="modal-content">--%>
+<%--                    <div class="modal-header text-center">--%>
+<%--                        <h4 class="modal-title w-100 font-weight-bold">Thêm sản phẩm</h4>--%>
+<%--                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">--%>
+<%--                            <span aria-hidden="true">x</span>--%>
+<%--                        </button>--%>
+<%--                    </div>--%>
+<%--                    <div class="modal-body mx-3">--%>
+<%--                        <form:form method="post" action="/product/add" modelAttribute="product"--%>
+<%--                                   enctype="multipart/form-data">--%>
+<%--                            <div class="container"  id="form-add-1">--%>
 
-                        <div class="mb-3">
-                            <label for="formFileAdd" class="form-label">Chọn ảnh:</label>
-                            <input class="form-control" type="file" name="file" id="formFileAdd"
-                                   accept="upload/jpeg, upload/png" required>
-                        </div>
+<%--                                <div class="row">--%>
+<%--                                    <div class="col-6">--%>
+<%--                                        <div class="input-group flex-nowrap">--%>
+<%--                                            <div class="input-group-prepend">--%>
+<%--                                                <span class="input-group-text"><i--%>
+<%--                                                        class="fas fa-solid fa-id-card"></i></span>--%>
+<%--                                            </div>--%>
+<%--                                            <input type="text" class="form-control"--%>
+<%--                                                   value="${maZen}"--%>
+<%--                                                   aria-label="Username" aria-describedby="addon-wrapping" name="ma" readonly>--%>
+<%--                                        </div>--%>
+<%--                                        <br>--%>
+<%--                                        <div class="input-group flex-nowrap">--%>
+<%--                                            <div class="input-group-prepend">--%>
+<%--                                                    <span class="input-group-text"><i--%>
+<%--                                                            class="fas fa-solid fa-file-signature"></i></span>--%>
+<%--                                            </div>--%>
 
-                        <label>Trạng thái:</label>
-                        <div class="form-check-inline">
-                            <input class="form-check-input" type="radio" id="flexRadioDefault"
-                                   value=1 name="trangThai" required>
-                            <label class="form-check-label" for="flexRadioDefault">
-                                Còn hàng
-                            </label>
-                        </div>
-                        <div class="form-check-inline">
-                            <input class="form-check-input" type="radio" id="flexRadioDefault21"
-                                   value=0 name="trangThai" required>
-                            <label class="form-check-label" for="flexRadioDefault21">
-                                Hết hàng
-                            </label>
-                        </div>
-                    </div>
-                    <div class="modal-footer d-flex justify-content-center">
-                        <button class="btn btn-outline-primary" type="submit">Thêm</button>
-                    </div>
-                    </form:form>
-                </div>
-            </div>
-        </div>
+<%--                                            <input type="text" class="form-control"--%>
+<%--                                                   placeholder="Nhập tên sản phẩm"--%>
+<%--                                                   aria-label="Username" aria-describedby="addon-wrapping" name="tenSanPham" id="productAddName">--%>
+
+<%--                                            <span class="error-icon" data-toggle="tooltip" data-placement="right" title=""></span>--%>
+<%--                                        </div>--%>
+<%--                                        <br>--%>
+<%--                                        <div class="input-group flex-nowrap">--%>
+<%--                                            <div class="input-group-prepend">--%>
+<%--                                                        <span class="input-group-text"><i--%>
+<%--                                                                class="fas fa-solid fa-money-bill-wave"></i></span>--%>
+<%--                                            </div>--%>
+<%--                                            <input type="text" class="form-control"--%>
+<%--                                                   placeholder="Nhập giá sản phẩm"--%>
+<%--                                                   aria-label="Username" aria-describedby="addon-wrapping" name="donGia" id="productAddPrice">--%>
+<%--                                            <span class="error-icon" data-toggle="tooltip" data-placement="right" title=""></span>--%>
+<%--                                        </div>--%>
+<%--                                        <br>--%>
+<%--                                        <div class="input-group flex-nowrap">--%>
+<%--                                            <div class="input-group-prepend">--%>
+<%--                                                        <span class="input-group-text"><i--%>
+<%--                                                                class="fas fa-solid fa-bars"></i></span>--%>
+<%--                                            </div>--%>
+<%--                                            <input type="text" class="form-control"--%>
+<%--                                                   placeholder="Nhập số lượng sản phẩm"--%>
+<%--                                                   aria-label="Username" aria-describedby="addon-wrapping" name="soLuong" id="productAddQuantity">--%>
+<%--                                            <span class="error-icon" data-toggle="tooltip" data-placement="right" title=""></span>--%>
+
+<%--                                        </div>--%>
+<%--                                        <br>--%>
+<%--                                        <div class="input-group mb-3">--%>
+<%--                                            <div class="input-group-prepend">--%>
+<%--                                                    <span class="input-group-text"--%>
+<%--                                                    ><i class="fas fa-solid fa-upload"></i></span>--%>
+<%--                                            </div>--%>
+<%--                                            <div class="custom-file">--%>
+<%--                                                <input type="file" class="custom-file-input"--%>
+<%--                                                       aria-describedby="inputGroupFileAddon01" name="image1" required>--%>
+<%--                                                <label class="custom-file-label">Chọn ảnh đại điện</label>--%>
+<%--                                            </div>--%>
+<%--                                        </div>--%>
+<%--                                        <div class="input-group mb-3">--%>
+<%--                                            <div class="input-group-prepend">--%>
+<%--                                                    <span class="input-group-text"--%>
+<%--                                                    ><i class="fas fa-solid fa-upload"></i></span>--%>
+<%--                                            </div>--%>
+<%--                                            <div class="custom-file">--%>
+<%--                                                <input type="file" class="custom-file-input"--%>
+<%--                                                       aria-describedby="inputGroupFileAddon01" name="image2" required>--%>
+<%--                                                <label class="custom-file-label">Chọn ảnh kèm theo 1</label>--%>
+<%--                                            </div>--%>
+<%--                                        </div>--%>
+
+
+<%--                                    </div>--%>
+<%--                                    <div class="col-6">--%>
+
+<%--                                        <div class="input-group flex-nowrap">--%>
+<%--                                            <div class="input-group-prepend">--%>
+<%--                                                <span class="input-group-text"><i--%>
+<%--                                                        class="fas fa-solid fa-id-card"></i></span>--%>
+<%--                                            </div>--%>
+<%--                                            <select class="form-control"--%>
+<%--                                                    aria-label="Username" aria-describedby="addon-wrapping" name="loaiGiay">--%>
+<%--                                                <option selected disabled>Chọn loại giày</option>--%>
+<%--                                                <c:forEach var="item" items="${loaiDay}">--%>
+<%--                                                    <option value="${item.id}">${item.tenTheLoai}</option>--%>
+<%--                                                </c:forEach>--%>
+<%--                                            </select>--%>
+<%--                                            <span class="error-message"></span>--%>
+<%--                                        </div>--%>
+<%--                                        <br>--%>
+<%--                                        <div class="input-group flex-nowrap">--%>
+<%--                                            <div class="input-group-prepend">--%>
+<%--                                                <span class="input-group-text"><i--%>
+<%--                                                        class="fas fa-solid fa-id-card"></i></span>--%>
+<%--                                            </div>--%>
+<%--                                            <select class="form-control"--%>
+<%--                                                    aria-label="Username" aria-describedby="addon-wrapping" name="chatLieu">--%>
+<%--                                                <option selected disabled>Chọn chất liệu</option>--%>
+<%--                                                <c:forEach var="item" items="${chatLieuList}">--%>
+<%--                                                    <option value="${item.id}">${item.tenChatLieu}</option>--%>
+<%--                                                </c:forEach>--%>
+<%--                                            </select>--%>
+<%--                                            <span class="error-message"></span>--%>
+<%--                                        </div>--%>
+<%--                                        <br>--%>
+<%--                                        <div class="input-group flex-nowrap">--%>
+<%--                                            <div class="input-group-prepend">--%>
+<%--                                                <span class="input-group-text"><i--%>
+<%--                                                        class="fas fa-solid fa-id-card"></i></span>--%>
+<%--                                            </div>--%>
+<%--                                            <select class="form-control"--%>
+<%--                                                    aria-label="Username" aria-describedby="addon-wrapping" name="mauSac">--%>
+<%--                                                <option selected disabled>Chọn màu sắc giày</option>--%>
+<%--                                                <c:forEach var="item" items="${mauSacList}">--%>
+<%--                                                    <option value="${item.id}">${item.tenMau}</option>--%>
+<%--                                                </c:forEach>--%>
+<%--                                            </select>--%>
+<%--                                            <span class="error-message"></span>--%>
+<%--                                        </div>--%>
+<%--                                        <br>--%>
+<%--                                        <div class="input-group flex-nowrap">--%>
+<%--                                            <div class="input-group-prepend">--%>
+<%--                                                <span class="input-group-text"><i--%>
+<%--                                                        class="fas fa-solid fa-id-card"></i></span>--%>
+<%--                                            </div>--%>
+<%--                                            <select class="form-control"--%>
+<%--                                                    aria-label="Username" aria-describedby="addon-wrapping" name="kichCo">--%>
+<%--                                                <option selected disabled>Chọn kích cỡ giày</option>--%>
+<%--                                                <c:forEach var="item" items="${coList}">--%>
+<%--                                                    <option value="${item.id}">${item.size}</option>--%>
+<%--                                                </c:forEach>--%>
+<%--                                            </select>--%>
+<%--                                            <span class="error-message"></span>--%>
+<%--                                        </div>--%>
+<%--                                        <br>--%>
+<%--                                        <div class="input-group flex-nowrap">--%>
+<%--                                            <div class="input-group-prepend">--%>
+<%--                                                <span class="input-group-text"><i--%>
+<%--                                                        class="fas fa-solid fa-id-card"></i></span>--%>
+<%--                                            </div>--%>
+<%--                                            <select class="form-control"--%>
+<%--                                                    aria-label="Username" aria-describedby="addon-wrapping" name="deGiay">--%>
+<%--                                                <option selected disabled>Chọn loại đế giày</option>--%>
+<%--                                                <c:forEach var="item" items="${deGiayList}">--%>
+<%--                                                    <option value="${item.id}">${item.loaiDe}</option>--%>
+<%--                                                </c:forEach>--%>
+<%--                                            </select>--%>
+<%--                                            <span class="error-message"></span>--%>
+<%--                                        </div>--%>
+
+<%--                                        <div class="input-group mb-3" style="padding-top: 15px">--%>
+<%--                                            <div class="input-group-prepend">--%>
+<%--                                                    <span class="input-group-text"--%>
+<%--                                                    ><i class="fas fa-solid fa-upload"></i></span>--%>
+<%--                                            </div>--%>
+<%--                                            <div class="custom-file">--%>
+<%--                                                <input type="file" class="custom-file-input"--%>
+<%--                                                       aria-describedby="inputGroupFileAddon01" name="image3" id="imageNumber2">--%>
+<%--                                                <label class="custom-file-label" for="imageNumber2">Chọn ảnh kèm theo 2</label>--%>
+<%--                                            </div>--%>
+<%--                                        </div>--%>
+
+
+<%--                                    </div>--%>
+<%--                                    <div class="input-group col-12">--%>
+<%--                                        <div class="input-group-prepend">--%>
+<%--                                            <span class="input-group-text">Mô tả sản phẩm</span>--%>
+<%--                                        </div>--%>
+<%--                                        <textarea class="form-control" aria-label="With textarea" name="moTa" id="productAddDescribe"></textarea>--%>
+<%--                                        <span class="error-icon" data-toggle="tooltip" data-placement="right" title=""></span>--%>
+
+<%--                                    </div>--%>
+<%--                                    <div style="padding-left: 7px;padding-top: 10px">--%>
+<%--                                        <label>Trạng thái:</label>--%>
+<%--                                        <div class="form-check-inline">--%>
+<%--                                            <input class="form-check-input" type="radio"--%>
+<%--                                                   value=1 name="trangThai" required>--%>
+<%--                                            <label class="form-check-label" >--%>
+<%--                                                Còn hàng--%>
+<%--                                            </label>--%>
+<%--                                        </div>--%>
+<%--                                        <div class="form-check-inline">--%>
+<%--                                            <input class="form-check-input" type="radio"--%>
+<%--                                                   value=0 name="trangThai" required>--%>
+<%--                                            <label class="form-check-label" >--%>
+<%--                                                Hết hàng--%>
+<%--                                            </label>--%>
+<%--                                        </div>--%>
+
+<%--                                    </div>--%>
+
+<%--                                </div>--%>
+<%--                                <div class="modal-footer d-flex justify-content-center">--%>
+<%--                                    <button class="btn btn-outline-primary" type="submit">Update</button>--%>
+<%--                                </div>--%>
+<%--                            </div>--%>
+<%--                        </form:form>--%>
+<%--                </div>--%>
+<%--            </div>--%>
+<%--        </div>--%>
 <%--        Update sản phẩm--%>
 
-        <div class="modal" id="updateModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-             aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header text-center">
-                        <h4 class="modal-title w-100 font-weight-bold">Cập nhật sản phẩm</h4>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">x</span>
-                        </button>
-                    </div>
-                    <div class="modal-body mx-3">
-                        <form:form method="post" action="/product/update/${productUpdate.idProduct}" modelAttribute="product"
-                                   enctype="multipart/form-data" id="form-2">
-                        <div class="md-form mb-3" style="margin-top: 10px">
-                            <input type="text" class="form-control" placeholder="Nhập mã sản phẩm" name="idProduct"
-                                   value="${productUpdate.idProduct}" readonly>
-                        </div>
-                        <div class="md-form mb-3" style="margin-top: 10px">
-                            <input type="text" class="input-control" placeholder="Nhập tên sản phẩm"
-                                   name="tenSanPham" value="${productUpdate.tenSanPham}" id="productUpdateName">
-                            <span class="error-message"></span>
-                        </div>
-                        <div class="md-form mb-3" style="margin-top: 10px">
-                            <input type="text" class="input-control" placeholder="Nhập giá sản phẩm"
-                                   name="price" value="${productUpdate.price}" id="productUpdatePrice">
-                            <span class="error-message"></span>
-                        </div>
+<%--        <div class="modal" id="updateModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"--%>
+<%--             aria-hidden="true">--%>
+<%--            <div class="modal-dialog" role="document">--%>
+<%--                <div class="modal-content">--%>
+<%--                    <div class="modal-header text-center">--%>
+<%--                        <h4 class="modal-title w-100 font-weight-bold">Cập nhật sản phẩm</h4>--%>
+<%--                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">--%>
+<%--                            <span aria-hidden="true">x</span>--%>
+<%--                        </button>--%>
+<%--                    </div>--%>
+<%--                    <div class="modal-body mx-3">--%>
+<%--                        <form:form method="post" action="/product/update/{id}" modelAttribute="product"--%>
+<%--                                   enctype="multipart/form-data">--%>
+<%--                            <div class="container"  id="form-add-1">--%>
 
-                        <div class="input-group mb-3">
-                            Loại giày:<select name="loaiGiay" required>
-                            <c:forEach var="item" items="${loaiDay}">
-                                <option value="${item.id}" ${item.id==productUpdate.loaiGiay.id?'selected':''}>${item.tenTheLoai}</option>
-                            </c:forEach>
-                        </select><br>
-                        </div>
+<%--                                <div class="row">--%>
+<%--                                    <div class="col-6">--%>
+<%--                                        <div class="input-group flex-nowrap">--%>
+<%--                                            <div class="input-group-prepend">--%>
+<%--                                                <span class="input-group-text"><i--%>
+<%--                                                        class="fas fa-solid fa-id-card"></i></span>--%>
+<%--                                            </div>--%>
+<%--                                            <input type="text" class="form-control"--%>
+<%--                                                   value="${maZen}"--%>
+<%--                                                   aria-label="Username" aria-describedby="addon-wrapping" name="ma" readonly>--%>
+<%--                                        </div>--%>
+<%--                                        <br>--%>
+<%--                                        <div class="input-group flex-nowrap">--%>
+<%--                                            <div class="input-group-prepend">--%>
+<%--                                                    <span class="input-group-text"><i--%>
+<%--                                                            class="fas fa-solid fa-file-signature"></i></span>--%>
+<%--                                            </div>--%>
 
-                        <div>
-                            <label for="formFile" class="form-label">Chọn ảnh:</label>
-                            <input class="form-control" type="file" name="file" id="formFile"
-                                   accept="image/jpeg, image/png">
-                            <input type="hidden" id="fileData" name="fileData" value="${productUpdate.photo}"/>
+<%--                                            <input type="text" class="form-control"--%>
+<%--                                                   placeholder="Nhập tên sản phẩm"--%>
+<%--                                                   aria-label="Username" aria-describedby="addon-wrapping" name="tenSanPham" id="productAddName">--%>
 
-                            <div class="image-input-wrapper">
-                                <img src="${productUpdate.photo}" alt="Ảnh sản phẩm" width="200">
-                            </div>
+<%--                                            <span class="error-icon" data-toggle="tooltip" data-placement="right" title=""></span>--%>
+<%--                                        </div>--%>
+<%--                                        <br>--%>
+<%--                                        <div class="input-group flex-nowrap">--%>
+<%--                                            <div class="input-group-prepend">--%>
+<%--                                                        <span class="input-group-text"><i--%>
+<%--                                                                class="fas fa-solid fa-money-bill-wave"></i></span>--%>
+<%--                                            </div>--%>
+<%--                                            <input type="text" class="form-control"--%>
+<%--                                                   placeholder="Nhập giá sản phẩm"--%>
+<%--                                                   aria-label="Username" aria-describedby="addon-wrapping" name="donGia" id="productAddPrice">--%>
+<%--                                            <span class="error-icon" data-toggle="tooltip" data-placement="right" title=""></span>--%>
+<%--                                        </div>--%>
+<%--                                        <br>--%>
+<%--                                        <div class="input-group flex-nowrap">--%>
+<%--                                            <div class="input-group-prepend">--%>
+<%--                                                        <span class="input-group-text"><i--%>
+<%--                                                                class="fas fa-solid fa-bars"></i></span>--%>
+<%--                                            </div>--%>
+<%--                                            <input type="text" class="form-control"--%>
+<%--                                                   placeholder="Nhập số lượng sản phẩm"--%>
+<%--                                                   aria-label="Username" aria-describedby="addon-wrapping" name="soLuong" id="productAddQuantity">--%>
+<%--                                            <span class="error-icon" data-toggle="tooltip" data-placement="right" title=""></span>--%>
 
-                        </div>
+<%--                                        </div>--%>
+<%--                                        <br>--%>
+<%--                                        <div class="input-group mb-3">--%>
+<%--                                            <div class="input-group-prepend">--%>
+<%--                                                    <span class="input-group-text"--%>
+<%--                                                    ><i class="fas fa-solid fa-upload"></i></span>--%>
+<%--                                            </div>--%>
+<%--                                            <div class="custom-file">--%>
+<%--                                                <input type="file" class="custom-file-input"--%>
+<%--                                                       aria-describedby="inputGroupFileAddon01" name="image1" required>--%>
+<%--                                                <label class="custom-file-label">Chọn ảnh đại điện</label>--%>
+<%--                                            </div>--%>
+<%--                                        </div>--%>
+<%--                                        <div class="input-group mb-3">--%>
+<%--                                            <div class="input-group-prepend">--%>
+<%--                                                    <span class="input-group-text"--%>
+<%--                                                    ><i class="fas fa-solid fa-upload"></i></span>--%>
+<%--                                            </div>--%>
+<%--                                            <div class="custom-file">--%>
+<%--                                                <input type="file" class="custom-file-input"--%>
+<%--                                                       aria-describedby="inputGroupFileAddon01" name="image2" required>--%>
+<%--                                                <label class="custom-file-label">Chọn ảnh kèm theo 1</label>--%>
+<%--                                            </div>--%>
+<%--                                        </div>--%>
 
-                        <label>Trạng thái:</label>
-                        <div class="form-check-inline">
-                            <input class="form-check-input" type="radio" id="flexRadioDefault1"
-                                   value="1" name="trangThai"
-                                   required ${productUpdate.trangThai == '1' ? 'checked' : ''}>
-                            <label class="form-check-label" for="flexRadioDefault1">
-                                Còn hàng
-                            </label>
-                        </div>
-                        <div class="form-check-inline">
-                            <input class="form-check-input" type="radio" id="flexRadioDefault2"
-                                   value="0" name="trangThai" ${productUpdate.trangThai == '0' ? 'checked' : ''}>
-                            <label class="form-check-label" for="flexRadioDefault2">
-                                Hết hàng
-                            </label>
-                        </div>
-                    </div>
-                    <div class="modal-footer d-flex justify-content-center">
-                        <button class="btn btn-outline-primary" type="submit">Cập nhật</button>
-                    </div>
-                    </form:form>
-                </div>
-            </div>
-        </div>
+
+<%--                                    </div>--%>
+<%--                                    <div class="col-6">--%>
+
+<%--                                        <div class="input-group flex-nowrap">--%>
+<%--                                            <div class="input-group-prepend">--%>
+<%--                                                <span class="input-group-text"><i--%>
+<%--                                                        class="fas fa-solid fa-id-card"></i></span>--%>
+<%--                                            </div>--%>
+<%--                                            <select class="form-control"--%>
+<%--                                                    aria-label="Username" aria-describedby="addon-wrapping" name="loaiGiay">--%>
+<%--                                                <option selected disabled>Chọn loại giày</option>--%>
+<%--                                                <c:forEach var="item" items="${loaiDay}">--%>
+<%--                                                    <option value="${item.id}">${item.tenTheLoai}</option>--%>
+<%--                                                </c:forEach>--%>
+<%--                                            </select>--%>
+<%--                                            <span class="error-message"></span>--%>
+<%--                                        </div>--%>
+<%--                                        <br>--%>
+<%--                                        <div class="input-group flex-nowrap">--%>
+<%--                                            <div class="input-group-prepend">--%>
+<%--                                                <span class="input-group-text"><i--%>
+<%--                                                        class="fas fa-solid fa-id-card"></i></span>--%>
+<%--                                            </div>--%>
+<%--                                            <select class="form-control"--%>
+<%--                                                    aria-label="Username" aria-describedby="addon-wrapping" name="chatLieu">--%>
+<%--                                                <option selected disabled>Chọn chất liệu</option>--%>
+<%--                                                <c:forEach var="item" items="${chatLieuList}">--%>
+<%--                                                    <option value="${item.id}">${item.tenChatLieu}</option>--%>
+<%--                                                </c:forEach>--%>
+<%--                                            </select>--%>
+<%--                                            <span class="error-message"></span>--%>
+<%--                                        </div>--%>
+<%--                                        <br>--%>
+<%--                                        <div class="input-group flex-nowrap">--%>
+<%--                                            <div class="input-group-prepend">--%>
+<%--                                                <span class="input-group-text"><i--%>
+<%--                                                        class="fas fa-solid fa-id-card"></i></span>--%>
+<%--                                            </div>--%>
+<%--                                            <select class="form-control"--%>
+<%--                                                    aria-label="Username" aria-describedby="addon-wrapping" name="mauSac">--%>
+<%--                                                <option selected disabled>Chọn màu sắc giày</option>--%>
+<%--                                                <c:forEach var="item" items="${mauSacList}">--%>
+<%--                                                    <option value="${item.id}">${item.tenMau}</option>--%>
+<%--                                                </c:forEach>--%>
+<%--                                            </select>--%>
+<%--                                            <span class="error-message"></span>--%>
+<%--                                        </div>--%>
+<%--                                        <br>--%>
+<%--                                        <div class="input-group flex-nowrap">--%>
+<%--                                            <div class="input-group-prepend">--%>
+<%--                                                <span class="input-group-text"><i--%>
+<%--                                                        class="fas fa-solid fa-id-card"></i></span>--%>
+<%--                                            </div>--%>
+<%--                                            <select class="form-control"--%>
+<%--                                                    aria-label="Username" aria-describedby="addon-wrapping" name="kichCo">--%>
+<%--                                                <option selected disabled>Chọn kích cỡ giày</option>--%>
+<%--                                                <c:forEach var="item" items="${coList}">--%>
+<%--                                                    <option value="${item.id}">${item.size}</option>--%>
+<%--                                                </c:forEach>--%>
+<%--                                            </select>--%>
+<%--                                            <span class="error-message"></span>--%>
+<%--                                        </div>--%>
+<%--                                        <br>--%>
+<%--                                        <div class="input-group flex-nowrap">--%>
+<%--                                            <div class="input-group-prepend">--%>
+<%--                                                <span class="input-group-text"><i--%>
+<%--                                                        class="fas fa-solid fa-id-card"></i></span>--%>
+<%--                                            </div>--%>
+<%--                                            <select class="form-control"--%>
+<%--                                                    aria-label="Username" aria-describedby="addon-wrapping" name="deGiay">--%>
+<%--                                                <option selected disabled>Chọn loại đế giày</option>--%>
+<%--                                                <c:forEach var="item" items="${deGiayList}">--%>
+<%--                                                    <option value="${item.id}">${item.loaiDe}</option>--%>
+<%--                                                </c:forEach>--%>
+<%--                                            </select>--%>
+<%--                                            <span class="error-message"></span>--%>
+<%--                                        </div>--%>
+
+<%--                                        <div class="input-group mb-3" style="padding-top: 15px">--%>
+<%--                                            <div class="input-group-prepend">--%>
+<%--                                                    <span class="input-group-text"--%>
+<%--                                                    ><i class="fas fa-solid fa-upload"></i></span>--%>
+<%--                                            </div>--%>
+<%--                                            <div class="custom-file">--%>
+<%--                                                <input type="file" class="custom-file-input"--%>
+<%--                                                       aria-describedby="inputGroupFileAddon01" name="image3" id="imageNumber2">--%>
+<%--                                                <label class="custom-file-label" for="imageNumber2">Chọn ảnh kèm theo 2</label>--%>
+<%--                                            </div>--%>
+<%--                                        </div>--%>
+
+
+<%--                                    </div>--%>
+<%--                                    <div class="input-group col-12">--%>
+<%--                                        <div class="input-group-prepend">--%>
+<%--                                            <span class="input-group-text">Mô tả sản phẩm</span>--%>
+<%--                                        </div>--%>
+<%--                                        <textarea class="form-control" aria-label="With textarea" name="moTa" id="productAddDescribe"></textarea>--%>
+<%--                                        <span class="error-icon" data-toggle="tooltip" data-placement="right" title=""></span>--%>
+
+<%--                                    </div>--%>
+<%--                                    <div style="padding-left: 7px;padding-top: 10px">--%>
+<%--                                        <label>Trạng thái:</label>--%>
+<%--                                        <div class="form-check-inline">--%>
+<%--                                            <input class="form-check-input" type="radio"--%>
+<%--                                                   value=1 name="trangThai" required>--%>
+<%--                                            <label class="form-check-label" >--%>
+<%--                                                Còn hàng--%>
+<%--                                            </label>--%>
+<%--                                        </div>--%>
+<%--                                        <div class="form-check-inline">--%>
+<%--                                            <input class="form-check-input" type="radio"--%>
+<%--                                                   value=0 name="trangThai" required>--%>
+<%--                                            <label class="form-check-label" >--%>
+<%--                                                Hết hàng--%>
+<%--                                            </label>--%>
+<%--                                        </div>--%>
+
+<%--                                    </div>--%>
+
+<%--                                </div>--%>
+<%--                                <div class="modal-footer d-flex justify-content-center">--%>
+<%--                                    <button class="btn btn-outline-primary" type="submit">Update</button>--%>
+<%--                                </div>--%>
+<%--                            </div>--%>
+<%--                        </form:form>--%>
+<%--                </div>--%>
+<%--            </div>--%>
+<%--        </div>--%>
         <!-- Footer -->
         <footer class="sticky-footer bg-white">
             <div class="container my-auto">
@@ -487,14 +816,18 @@
 </div>
 
 <!-- Bootstrap core JavaScript-->
-<script src="../../vendor/jquery/jquery.min.js"></script>
-<script src="../../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="../../vendor/jquery/jquery.min.js"></script>
+    <script src="../../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
-<!-- Core plugin JavaScript-->
-<script src="../../vendor/jquery-easing/jquery.easing.min.js"></script>
+    <!-- Core plugin JavaScript-->
+    <script src="../../vendor/jquery-easing/jquery.easing.min.js"></script>
 
-<!-- Custom scripts for all pages-->
-<script src="../../js/sb-admin-2.js"></script>
+    <!-- Custom scripts for all pages-->
+    <script src="../../js/sb-admin-2.js"></script>
+
+
+
+
 
 
 <script src="../../vendor/datatables/jquery.dataTables.min.js"></script>
@@ -502,25 +835,8 @@
 
 
 <script src="../../js/demo/datatables-demo.js"></script>
-<script src="../../js/custom-js.js"></script>
-<script>
-    Validator({
-        form: '#form-1',
-        rules: [
-            Validator.isRequired('#productAddPrice'),
-            Validator.isRequired('#productAddName')
-        ]
+<script src="../../js/demo/modal-custom.js"></script>
 
-    });
-    Validator({
-        form: '#form-2',
-        rules: [
-            Validator.isRequired('#productUpdatePrice'),
-            Validator.isRequired('#productUpdateName')
-        ]
-
-    })
-</script>
 
 </body>
 

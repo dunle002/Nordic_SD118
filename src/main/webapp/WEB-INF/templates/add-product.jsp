@@ -278,8 +278,9 @@
                                                     </div>
                                                     <input type="text" class="form-control"
                                                            placeholder="Nhập số lượng sản phẩm"
-                                                           aria-label="Username" aria-describedby="addon-wrapping" name="soLuong">
-                                                    <span class="error-message"></span>
+                                                           aria-label="Username" aria-describedby="addon-wrapping" name="soLuong" id="productAddQuantity">
+                                                    <span class="error-icon" data-toggle="tooltip" data-placement="right" title=""></span>
+
                                                 </div>
                                                 <br>
                                                 <div class="input-group mb-3">
@@ -321,7 +322,7 @@
                                                             <option value="${item.id}">${item.tenTheLoai}</option>
                                                         </c:forEach>
                                                     </select>
-                                                    <span class="error-message"></span>
+
                                                 </div>
                                                 <br>
                                                 <div class="input-group flex-nowrap">
@@ -329,14 +330,12 @@
                                                 <span class="input-group-text"><i
                                                         class="fas fa-solid fa-id-card"></i></span>
                                                     </div>
-                                                    <select class="form-control"
+                                                    <select class="form-control"  id="chatlieu-select" multiple
                                                             aria-label="Username" aria-describedby="addon-wrapping" name="chatLieu">
-                                                        <option selected disabled>Chọn chất liệu</option>
                                                         <c:forEach var="item" items="${chatLieuList}">
                                                             <option value="${item.id}">${item.tenChatLieu}</option>
                                                         </c:forEach>
                                                     </select>
-                                                    <span class="error-message"></span>
                                                 </div>
                                                 <br>
                                                 <div class="input-group flex-nowrap">
@@ -344,15 +343,15 @@
                                                 <span class="input-group-text"><i
                                                         class="fas fa-solid fa-id-card"></i></span>
                                                     </div>
-                                                    <select class="form-control"
-                                                            aria-label="Username" aria-describedby="addon-wrapping" name="mauSac">
-                                                        <option selected disabled>Chọn màu sắc giày</option>
-                                                        <c:forEach var="item" items="${mauSacList}">
-                                                            <option value="${item.id}">${item.tenMau}</option>
-                                                        </c:forEach>
+                                                    <select id="my-select" multiple name="mauSac" class="form-control">
+                                                            <c:forEach var="item" items="${mauSacList}">
+                                                                <option value="${item.id}">${item.tenMau}</option>
+                                                            </c:forEach>
                                                     </select>
-                                                    <span class="error-message"></span>
+
+
                                                 </div>
+
                                                 <br>
                                                 <div class="input-group flex-nowrap">
                                                     <div class="input-group-prepend">
@@ -391,18 +390,20 @@
                                                     </div>
                                                     <div class="custom-file">
                                                         <input type="file" class="custom-file-input"
-                                                               aria-describedby="inputGroupFileAddon01" name="image3">
-                                                        <label class="custom-file-label">Chọn ảnh kèm theo 2</label>
+                                                               aria-describedby="inputGroupFileAddon01" name="image3" id="imageNumber2">
+                                                        <label class="custom-file-label" for="imageNumber2">Chọn ảnh kèm theo 2</label>
                                                     </div>
                                                 </div>
+
 
                                             </div>
                                             <div class="input-group col-12">
                                                 <div class="input-group-prepend">
                                                     <span class="input-group-text">Mô tả sản phẩm</span>
                                                 </div>
-                                                <textarea class="form-control" aria-label="With textarea" name="moTa"></textarea>
-                                                <span class="error-message"></span>
+                                                <textarea class="form-control" aria-label="With textarea" name="moTa" id="productAddDescribe"></textarea>
+                                                <span class="error-icon" data-toggle="tooltip" data-placement="right" title=""></span>
+
                                             </div>
                                             <div style="padding-left: 7px;padding-top: 10px">
                                                 <label>Trạng thái:</label>
@@ -495,6 +496,10 @@
 <script src="../../js/sb-admin-2.js"></script>
 <script src="../../js/custom-js.js"></script>
 
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.1.0-rc.0/js/select2.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.1.0-rc.0/css/select2.min.css">
 
 
 </body>
