@@ -4,12 +4,14 @@ import com.example.Nordic_SD118.config.VNPayService;
 import com.example.Nordic_SD118.entity.ChiTietSanPham;
 import com.example.Nordic_SD118.entity.GioHangChiTiet;
 import com.example.Nordic_SD118.entity.SanPham;
-import com.example.Nordic_SD118.repository.ChiTietSPRepository;
 import com.example.Nordic_SD118.repository.GioHangCTRepository;
 import com.example.Nordic_SD118.repository.GioHangRepository;
+import com.example.Nordic_SD118.repository.ProductDetailRepositori;
 import com.example.Nordic_SD118.repository.SanPhamRepository;
 import com.example.Nordic_SD118.sevice.GioHangCtService;
+import com.example.Nordic_SD118.sevice.ProductDetailSevice;
 import com.example.Nordic_SD118.sevice.SanPhamSevice;
+import com.example.Nordic_SD118.sevice.imlp.DetailProductImlp;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -28,11 +30,11 @@ import java.util.List;
 @Controller
 public class WebHomeController {
     @Autowired
-    private SanPhamSevice sanPhamSevice;
+    private ProductDetailSevice productDetailSevice;
     @Autowired
     private SanPhamRepository sanPhamRepository;
     @Autowired
-    private ChiTietSPRepository repository;
+    private ProductDetailRepositori repository;
     @Autowired
     private GioHangRepository gioHangRepository;
     @Autowired
@@ -44,7 +46,7 @@ public class WebHomeController {
 
     @RequestMapping("/home")
     public String Homepage(Model model) {
-        List<SanPham> sanPham = sanPhamRepository.findAll();
+        List<ChiTietSanPham> sanPham = repository.findAll();
         model.addAttribute("sp", sanPham);
         return "index";
     }
@@ -69,7 +71,7 @@ public class WebHomeController {
     @RequestMapping("/shop")
     public String ShopHome(@RequestParam(defaultValue = "0", name = "page") Integer number, Model model) {
         Pageable pageable = PageRequest.of(number, 9);
-        Page<SanPham> list = sanPhamRepository.findAll(pageable);
+        Page<ChiTietSanPham> list = productDetailSevice.getAll(pageable);
         model.addAttribute("listSp", list);
         return "shop";
     }

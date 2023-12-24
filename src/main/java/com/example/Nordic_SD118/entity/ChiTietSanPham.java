@@ -17,15 +17,26 @@ public class ChiTietSanPham {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private Integer id;
+    private Integer idProductDetail;
+
     @Column(name = "don_gia")
     private BigDecimal donGia;
-    @Column(name = "so_luong")
+
+    @Column(name = "so_luong_ton")
     private Integer soLuong;
-    @Column(name = "hinh_anh")
-    private String hinhAnh;
+
+    @Column(name = "main_photo")
+    private String photo;
+
+    @Column(name = "main_photo1")
+    private String photoOne;
+
+    @Column(name = "main_photo2")
+    private String photoTwo;
+
     @Column(name = "mo_ta_ct")
     private String moTa;
+
     @Column(name = "trang_thai")
     private Integer trangThai;
 

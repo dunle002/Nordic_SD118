@@ -4,10 +4,10 @@ import com.example.Nordic_SD118.entity.ChiTietSanPham;
 import com.example.Nordic_SD118.entity.GioHang;
 import com.example.Nordic_SD118.entity.GioHangChiTiet;
 import com.example.Nordic_SD118.entity.NguoiDung;
-import com.example.Nordic_SD118.repository.ChiTietSPRepository;
 import com.example.Nordic_SD118.repository.GioHangCTRepository;
 import com.example.Nordic_SD118.repository.GioHangRepository;
 import com.example.Nordic_SD118.repository.NguoiDungRepository;
+import com.example.Nordic_SD118.repository.ProductDetailRepositori;
 import com.example.Nordic_SD118.sevice.GioHangCtService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,7 +22,7 @@ public class GioHangCtServiceImpl implements GioHangCtService {
     @Autowired
     private GioHangCTRepository gioHangCTRepository;
     @Autowired
-    private ChiTietSPRepository chiTietSPRepository;
+    private ProductDetailRepositori chiTietSPRepository;
     @Autowired
     private GioHangRepository gioHangRepository;
     @Autowired
@@ -51,7 +51,7 @@ public class GioHangCtServiceImpl implements GioHangCtService {
         if (chiTietSanPham != null) {
             if (checkTrung(listGioHangChiTiets, id)) {
                 for (GioHangChiTiet gioHangChiTietExisting : listGioHangChiTiets) {
-                    if (gioHangChiTietExisting.getChiTietSanPham().getId().equals(id)) {
+                    if (gioHangChiTietExisting.getChiTietSanPham().getIdProductDetail().equals(id)) {
                         Integer soLuong = gioHangChiTietExisting.getSoLuong() + 1;
                         BigDecimal giaTong = gioHangChiTietExisting.getDonGia().add(chiTietSanPham.getDonGia());
                         gioHangChiTiet = new GioHangChiTiet(
@@ -94,7 +94,7 @@ public class GioHangCtServiceImpl implements GioHangCtService {
         GioHangChiTiet gioHangChiTiet = new GioHangChiTiet();
         if (checkTrung(listGioHangChiTiet,id)){
             for (int i = 0; i < listGioHangChiTiet.size(); i++) {
-                if (listGioHangChiTiet.get(i).getChiTietSanPham().getId().equals(id)){
+                if (listGioHangChiTiet.get(i).getChiTietSanPham().getIdProductDetail().equals(id)){
                     soLuong = listGioHangChiTiet.get(i).getSoLuong();
                     if (soLuong == 1){
                         removeSanPhamTrongGio(listGioHangChiTiet.get(i).getId());
@@ -118,7 +118,7 @@ public class GioHangCtServiceImpl implements GioHangCtService {
 
     private Boolean checkTrung(List<GioHangChiTiet> listGioHangChiTiets, Integer id) {
         for (int i = 0; i < listGioHangChiTiets.size(); i++) {
-            if (listGioHangChiTiets.get(i).getChiTietSanPham().getId().equals(id)) {
+            if (listGioHangChiTiets.get(i).getChiTietSanPham().getIdProductDetail().equals(id)) {
                 return true;
             }
         }
