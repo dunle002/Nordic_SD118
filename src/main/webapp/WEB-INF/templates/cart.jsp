@@ -164,9 +164,10 @@
                                 <c:set var="subtotal" value="${c.soLuong * c.donGia}"/>
                                 <c:set var="totalAmount" value="${totalAmount + subtotal}"/>
                             </c:forEach>
-                            <fmt:formatNumber var="formattedTotalAmount" value="${totalAmount}" type="currency"
+                            <fmt:formatNumber var="totalAmount" value="${totalAmount}" type="currency"
                                               currencyCode="VND" pattern="#,##0"/>
-                            <span style="color: red">${formattedTotalAmount} đ</span>
+                            <span  style="color: red">${totalAmount} đ</span>
+
                         </p>
                         <hr>
                     </div>

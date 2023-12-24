@@ -25,11 +25,13 @@ public class PaymentController {
     private VNPayService vnPayService;
 
     @PostMapping("/pay/vnpayajax")
-    public String hashUrl(HttpServletRequest req) throws IOException {
+    public String hashUrl(HttpServletRequest req, Model model, @RequestParam(name = "vnp_Amount") Integer amount) throws IOException {
         String vnp_Version = "2.1.0";
         String vnp_Command = "pay";
         String orderType = "other";
-        long amount = 100000*100;
+        //model.addAttribute("formattedTotalAmount");
+        // Trong Controller hoặc một phương thức xử lý HTTP request
+        //long amount = 10000000 * 100;
         String bankCode = req.getParameter("bankCode");
 
         String vnp_TxnRef = VNPayConfig.getRandomNumber(8);
@@ -97,5 +99,5 @@ public class PaymentController {
         System.out.println(paymentUrl);
         return "redirect:" + paymentUrl;
     }
-
 }
+
