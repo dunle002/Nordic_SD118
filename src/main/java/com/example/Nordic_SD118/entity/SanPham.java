@@ -17,22 +17,19 @@ public class SanPham {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private Integer id;
+    private Integer idProduct;
     @Column(name = "ma")
+
     private String ma;
+
     @Column(name = "ten_san_pham")
     private String tenSanPham;
-    @Column(name = "thumbnail_photo")
-    private String photo;
-    @Column(name = "price")
-    private BigDecimal price;
-    @Column(name = "trang_thai")
-    private Integer trangThai;
+
     @ManyToOne
     @JoinColumn(name = "id_loai_giay")
     private LoaiGiay loaiGiay;
 
-//    @ManyToOne
-//    private GioHang gioHang;
+    @OneToMany(mappedBy = "sanPham", cascade = CascadeType.ALL)
+    private List<ChiTietSanPham> children;
 
 }
