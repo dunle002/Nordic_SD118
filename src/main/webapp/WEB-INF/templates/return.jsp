@@ -9,7 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="icon" href="../../assets1/images/create_logo_with_content_Nordic_Shoes_and_back.jpg" type="image/jpeg">
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
     <link rel="stylesheet" href="css/open-iconic-bootstrap.min.css">
     <link rel="stylesheet" href="css/animate.css">
 
@@ -69,10 +69,9 @@
                 <li class="nav-item"><a href="/about" class="nav-link">About</a></li>
                 <li class="nav-item"><a href="/blog" class="nav-link">Blog</a></li>
                 <li class="nav-item"><a href="/contact" class="nav-link">Contact</a></li>
-                <li class="nav-item cta cta-colored"><a href="/cart" style="font-size: 15px;margin-top: -5px" class="nav-link"><span
+                <li class="nav-item cta cta-colored"><a href="/cart" class="nav-link"><span
                         class="icon-shopping_cart"></span></a></li>
-                <li class="nav-item cta cta-colored"><a href="" style="font-size: 15px;margin-top: -7px;margin-left: -15px" class="nav-link"><span
-                        class="fa fa-user"></span></a></li>
+
             </ul>
         </div>
     </div>
@@ -83,102 +82,75 @@
     <div class="container">
         <div class="row no-gutters slider-text align-items-center justify-content-center">
             <div class="col-md-9 ftco-animate text-center">
-                <p class="breadcrumbs"><span class="mr-2"><a href="index.jsp">Home</a></span> <span>Checkout</span></p>
-                <h1 class="mb-0 bread">Checkout</h1>
+                <p class="breadcrumbs"><h1 class="mb-0 bread" href="/home">Home</h1></p>
             </div>
         </div>
     </div>
 </div>
 
-<section class="ftco-section">
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-xl-10 ftco-animate">
-                <form action="<c:url value='/submitOrder' />" method="post" class="billing-form">
-                    <img src="<c:url value='../../images/vnpay-logo.png' />" style="width: 200px">
-                    <h3 class="mb-4 billing-heading" style="margin-top: 20px">Billing Details</h3>
-                    <div class="row align-items-end">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="firstname">Số tiền:</label>
-                                <input type="text" class="form-control" placeholder="">
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="lastname">Last Name</label>
-                                <input type="text" class="form-control" placeholder="">
-                            </div>
-                        </div>
-                    </div>
-                </form><!-- END -->
+<section style="margin-top: 30px">
+    <div style="text-align: center" class="container">
+        <img src="../../images/screenshot_1703597162.png" style="height: 200px">
+        <h1 style="font-family: Open Sans;color: red;">Thanh toán thành công</h1>
+        <a href="/shop" style="margin-right:300px;color: black; font-family: Open Sans;"> <img src="../../images/kisspng-portable-network-graphics-transparency-computer-ic-free-png-reply-arrow-png-image-with-transparent-ba-5d11d38de1d981.0448739115614493579251.jpg" style="height: 10px">Tiếp tục mua sắm</a>
+    </div>
 
+</section>
 
-                <div class="row mt-5 pt-3 d-flex">
-                    <div class="col-md-6 d-flex">
-                        <div class="cart-detail cart-total bg-light p-3 p-md-4">
-                            <h3 class="billing-heading mb-4">Cart Total</h3>
-                            <p class="d-flex">
-                                <span>Subtotal</span>
-                                <span>$20.60</span>
-                            </p>
-                            <p class="d-flex">
-                                <span>Delivery</span>
-                                <span>$0.00</span>
-                            </p>
-                            <p class="d-flex">
-                                <span>Discount</span>
-                                <span>$3.00</span>
-                            </p>
-                            <hr>
-                            <p class="d-flex total-price">
-                                <span>Total</span>
-                                <span>$17.60</span>
-                            </p>
-                        </div>
+<section class="ftco-gallery" style="margin-top: 150px">
+    <div class="container-fluid px-0">
+        <div class="row no-gutters">
+            <div class="col-md-4 col-lg-2 ftco-animate">
+                <a href="../../images/gallery-1.jpg" class="gallery image-popup img d-flex align-items-center"
+                   style="background-image: url(images/gallery-1.jpg);">
+                    <div class="icon mb-4 d-flex align-items-center justify-content-center">
+                        <span class="icon-instagram"></span>
                     </div>
-                    <div class="col-md-6">
-                        <div class="cart-detail bg-light p-3 p-md-4">
-                            <h3 class="billing-heading mb-4">Payment Method</h3>
-                            <div class="form-group">
-                                <div class="col-md-12">
-                                    <div class="radio">
-                                        <label><input type="radio" name="optradio" class="mr-2"> Direct Bank
-                                            Tranfer</label>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="col-md-12">
-                                    <div class="radio">
-                                        <label><input type="radio" name="optradio" class="mr-2"> Check Payment</label>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="col-md-12">
-                                    <div class="radio">
-                                        <label><input type="radio" name="optradio" class="mr-2"> Paypal</label>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="col-md-12">
-                                    <div class="checkbox">
-                                        <label><input type="checkbox" value="" class="mr-2"> I have read and accept the
-                                            terms and conditions</label>
-                                    </div>
-                                </div>
-                            </div>
-                            <p><a href="#" class="btn btn-primary py-3 px-4">Place an order</a></p>
-                        </div>
+                </a>
+            </div>
+            <div class="col-md-4 col-lg-2 ftco-animate">
+                <a href="../../images/gallery-2.jpg" class="gallery image-popup img d-flex align-items-center"
+                   style="background-image: url(images/gallery-2.jpg);">
+                    <div class="icon mb-4 d-flex align-items-center justify-content-center">
+                        <span class="icon-instagram"></span>
                     </div>
-                </div>
-            </div> <!-- .col-md-8 -->
+                </a>
+            </div>
+            <div class="col-md-4 col-lg-2 ftco-animate">
+                <a href="../../images/gallery-3.jpg" class="gallery image-popup img d-flex align-items-center"
+                   style="background-image: url(images/gallery-3.jpg);">
+                    <div class="icon mb-4 d-flex align-items-center justify-content-center">
+                        <span class="icon-instagram"></span>
+                    </div>
+                </a>
+            </div>
+            <div class="col-md-4 col-lg-2 ftco-animate">
+                <a href="../../images/gallery-4.jpg" class="gallery image-popup img d-flex align-items-center"
+                   style="background-image: url(images/gallery-4.jpg);">
+                    <div class="icon mb-4 d-flex align-items-center justify-content-center">
+                        <span class="icon-instagram"></span>
+                    </div>
+                </a>
+            </div>
+            <div class="col-md-4 col-lg-2 ftco-animate">
+                <a href="../../images/gallery-5.jpg" class="gallery image-popup img d-flex align-items-center"
+                   style="background-image: url(images/gallery-5.jpg);">
+                    <div class="icon mb-4 d-flex align-items-center justify-content-center">
+                        <span class="icon-instagram"></span>
+                    </div>
+                </a>
+            </div>
+            <div class="col-md-4 col-lg-2 ftco-animate">
+                <a href="../../images/gallery-6.jpg" class="gallery image-popup img d-flex align-items-center"
+                   style="background-image: url(images/gallery-6.jpg);">
+                    <div class="icon mb-4 d-flex align-items-center justify-content-center">
+                        <span class="icon-instagram"></span>
+                    </div>
+                </a>
+            </div>
         </div>
     </div>
-</section> <!-- .section -->
-
+</section>
 
 <footer class="ftco-footer ftco-section">
     <div class="container">
@@ -271,59 +243,22 @@
 </div>
 
 
-<script src="js/jquery.min.js"></script>
-<script src="js/jquery-migrate-3.0.1.min.js"></script>
-<script src="js/popper.min.js"></script>
-<script src="js/bootstrap.min.js"></script>
-<script src="js/jquery.easing.1.3.js"></script>
-<script src="js/jquery.waypoints.min.js"></script>
-<script src="js/jquery.stellar.min.js"></script>
-<script src="js/owl.carousel.min.js"></script>
-<script src="js/jquery.magnific-popup.min.js"></script>
-<script src="js/aos.js"></script>
-<script src="js/jquery.animateNumber.min.js"></script>
-<script src="js/bootstrap-datepicker.js"></script>
-<script src="js/scrollax.min.js"></script>
+<script src="../../js/jquery.min.js"></script>
+<script src="../../js/jquery-migrate-3.0.1.min.js"></script>
+<script src="../../js/popper.min.js"></script>
+<script src="../../js/bootstrap.min.js"></script>
+<script src="../../js/jquery.easing.1.3.js"></script>
+<script src="../../js/jquery.waypoints.min.js"></script>
+<script src="../../js/jquery.stellar.min.js"></script>
+<script src="../../js/owl.carousel.min.js"></script>
+<script src="../../js/jquery.magnific-popup.min.js"></script>
+<script src="../../js/aos.js"></script>
+<script src="../../js/jquery.animateNumber.min.js"></script>
+<script src="../../js/bootstrap-datepicker.js"></script>
+<script src="../../js/scrollax.min.js"></script>
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
-<script src="js/google-map.js"></script>
-<script src="js/main.js"></script>
-
-<script>
-    $(document).ready(function () {
-
-        var quantitiy = 0;
-        $('.quantity-right-plus').click(function (e) {
-
-            // Stop acting like a button
-            e.preventDefault();
-            // Get the field name
-            var quantity = parseInt($('#quantity').val());
-
-            // If is not undefined
-
-            $('#quantity').val(quantity + 1);
-
-
-            // Increment
-
-        });
-
-        $('.quantity-left-minus').click(function (e) {
-            // Stop acting like a button
-            e.preventDefault();
-            // Get the field name
-            var quantity = parseInt($('#quantity').val());
-
-            // If is not undefined
-
-            // Increment
-            if (quantity > 0) {
-                $('#quantity').val(quantity - 1);
-            }
-        });
-
-    });
-</script>
+<script src="../../js/google-map.js"></script>
+<script src="../../js/main.js"></script>
 
 </body>
 </html>

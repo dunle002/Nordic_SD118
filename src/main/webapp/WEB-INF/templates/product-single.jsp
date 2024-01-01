@@ -7,7 +7,7 @@
     <title>NORDIC | SD118</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="icon" href="../../images/create_logo_with_content_Nordic_Shoes_and_back.jpg" type="image/jpeg">
+    <link rel="icon" href="../../assets1/images/create_logo_with_content_Nordic_Shoes_and_back.jpg" type="image/jpeg">
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800" rel="stylesheet">
 
     <link rel="stylesheet" type="text/css" href="../../css/open-iconic-bootstrap.min.css">
@@ -18,7 +18,7 @@
     <link rel="stylesheet" type="text/css" href="../../css/magnific-popup.css">
 
     <link rel="stylesheet" type="text/css" href="../../css/aos.css">
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" type="text/css" href="../../css/ionicons.min.css">
 
     <link rel="stylesheet" type="text/css" href="../../css/bootstrap-datepicker.css">
@@ -28,7 +28,7 @@
     <link rel="stylesheet" type="text/css" href="../../css/flaticon.css">
     <link rel="stylesheet" type="text/css" href="../../css/icomoon.css">
 
-    <link rel="stylesheet" type="text/css" href="../../css/style.css" />
+    <link rel="stylesheet" type="text/css" href="../../css/style.css"/>
 
 
 </head>
@@ -72,9 +72,10 @@
                 <li class="nav-item"><a href="/about" class="nav-link">About</a></li>
                 <li class="nav-item"><a href="/blog" class="nav-link">Blog</a></li>
                 <li class="nav-item"><a href="/contact" class="nav-link">Contact</a></li>
-                <li class="nav-item cta cta-colored"><a href="/cart" class="nav-link"><span
+                <li class="nav-item cta cta-colored"><a href="/cart" style="font-size: 15px;margin-top: -5px" class="nav-link"><span
                         class="icon-shopping_cart"></span></a></li>
-
+                <li class="nav-item cta cta-colored"><a href="" style="font-size: 15px;margin-top: -7px;margin-left: -15px" class="nav-link"><span
+                        class="fa fa-user"></span></a></li>
             </ul>
         </div>
     </div>
@@ -96,59 +97,38 @@
     <div class="container">
         <div class="row">
             <div class="col-lg-6 mb-5 ftco-animate">
-                <a  class="image-popup prod-img-bg"><img src="${spt.hinhAnh}"
-                                                                                    class="img-fluid"
-                                                                                    alt="Colorlib Template"></a>
+                <a class="image-popup prod-img-bg"><img src="${spt.photo}"
+                                                        class="img-fluid"
+                                                        alt="Colorlib Template"></a>
             </div>
             <div class="col-lg-6 product-details pl-md-5 ftco-animate">
-                <h3>${spt.sanPham.tenSanPham}</h3>
-                <div class="rating d-flex">
-                    <p class="text-left mr-4">
-                        <a href="#"><span class="ion-ios-star-outline"></span></a>
-                        <a href="#"><span class="ion-ios-star-outline"></span></a>
-                        <a href="#"><span class="ion-ios-star-outline"></span></a>
-                        <a href="#"><span class="ion-ios-star-outline"></span></a>
-                        <a href="#"><span class="ion-ios-star-outline"></span></a>
-                    </p>
-                </div>
-                <p class="price"><span><fmt:formatNumber value="${spt.donGia}" type="currency"
-                                                         currencyCode="VND" pattern="#,##0"></fmt:formatNumber>đ</span></p>
-
-                <p>${spt.moTa}
+                <p>Tên sản phẩm:</p> <h4 style="margin-top: -15px">${spt.sanPham.tenSanPham}</h4>
+                <p>Giá:</p>
+                <p class="price" style="margin-top: -15px"><span><fmt:formatNumber value="${spt.donGia}" type="currency"
+                                                         currencyCode="VND" pattern="#,##0"></fmt:formatNumber>đ</span>
                 </p>
+
+                <p>Size:</p>
                 <div class="row mt-4">
                     <div class="col-md-6">
                         <div class="form-group d-flex">
                             <div class="select-wrap">
                                 <div class="icon"><span class="ion-ios-arrow-down"></span></div>
-                                <select name="" id="" class="form-control" style="width: 150px">
-                                    <option value="">${spt.kichCo.kichCo}</option>
-<%--                                    <option value="">${spt.kichCo.kichCo}</option>--%>
-<%--                                    <option value="">${spt.kichCo.kichCo}</option>--%>
-<%--                                    <option value="">${spt.kichCo.kichCo}</option>--%>
+                                <select style="margin-top: -15px" name="" id="" class="form-control" style="width: 150px">
+                                    <option value="">${spt.kichCo.size}</option>
+
                                 </select>
                             </div>
                         </div>
                     </div>
                     <div class="w-100"></div>
-                    <div class="input-group col-md-6 d-flex mb-3">
-	             	<span class="input-group-btn mr-2">
-	                	<button type="button" class="quantity-left-minus btn" data-type="minus" data-field="">
-	                   <i class="ion-ios-remove"></i>
-	                	</button>
-	            		</span>
-                        <input type="text" id="quantity" name="quantity" class="quantity form-control input-number"
-                               value="1" min="1" max="100">
-                        <span class="input-group-btn ml-2">
-	                	<button type="button" class="quantity-right-plus btn" data-type="plus" data-field="">
-	                     <i class="ion-ios-add"></i>
-	                 </button>
-	             	</span>
-                    </div>
                     <div class="w-100"></div>
 
                 </div>
-                <p><a href="/add/${spt.id}" class="btn btn-black py-3 px-5 mr-2">Add to Cart</a>
+                <p>Mô tả:</p>
+                <p style="margin-top: -15px">${spt.moTa}</p>
+                <p><a href="/add/${spt.idProductDetail}" class="btn btn-black py-3 px-5 mr-2">Add to
+                    Cart</a>
                     <a href="cart.html" class="btn btn-primary py-3 px-5">Buy now</a></p>
             </div>
         </div>
@@ -161,10 +141,12 @@
                     <a class="nav-link ftco-animate active mr-lg-1" id="v-pills-1-tab" data-toggle="pill"
                        href="#v-pills-1" role="tab" aria-controls="v-pills-1" aria-selected="true">Description</a>
 
-                    <a class="nav-link ftco-animate mr-lg-1" id="v-pills-2-tab" data-toggle="pill" href="#v-pills-2"
+                    <a class="nav-link ftco-animate mr-lg-1" id="v-pills-2-tab" data-toggle="pill"
+                       href="#v-pills-2"
                        role="tab" aria-controls="v-pills-2" aria-selected="false">Manufacturer</a>
 
-                    <a class="nav-link ftco-animate" id="v-pills-3-tab" data-toggle="pill" href="#v-pills-3" role="tab"
+                    <a class="nav-link ftco-animate" id="v-pills-3-tab" data-toggle="pill" href="#v-pills-3"
+                       role="tab"
                        aria-controls="v-pills-3" aria-selected="false">Reviews</a>
 
                 </div>
@@ -173,35 +155,51 @@
 
                 <div class="tab-content bg-light" id="v-pills-tabContent">
 
-                    <div class="tab-pane fade show active" id="v-pills-1" role="tabpanel" aria-labelledby="day-1-tab">
+                    <div class="tab-pane fade show active" id="v-pills-1" role="tabpanel"
+                         aria-labelledby="day-1-tab">
                         <div class="p-4">
                             <h3 class="mb-4">Nike Free RN 2019 iD</h3>
-                            <p>On her way she met a copy. The copy warned the Little Blind Text, that where it came from
-                                it would have been rewritten a thousand times and everything that was left from its
-                                origin would be the word "and" and the Little Blind Text should turn around and return
-                                to its own, safe country. But nothing the copy said could convince her and so it didn’t
-                                take long until a few insidious Copy Writers ambushed her, made her drunk with Longe and
-                                Parole and dragged her into their agency, where they abused her for their.</p>
+                            <p>On her way she met a copy. The copy warned the Little Blind Text, that where
+                                it came from
+                                it would have been rewritten a thousand times and everything that was left
+                                from its
+                                origin would be the word "and" and the Little Blind Text should turn around
+                                and return
+                                to its own, safe country. But nothing the copy said could convince her and
+                                so it didn’t
+                                take long until a few insidious Copy Writers ambushed her, made her drunk
+                                with Longe and
+                                Parole and dragged her into their agency, where they abused her for
+                                their.</p>
                         </div>
                     </div>
 
-                    <div class="tab-pane fade" id="v-pills-2" role="tabpanel" aria-labelledby="v-pills-day-2-tab">
+                    <div class="tab-pane fade" id="v-pills-2" role="tabpanel"
+                         aria-labelledby="v-pills-day-2-tab">
                         <div class="p-4">
                             <h3 class="mb-4">Manufactured By Nike</h3>
-                            <p>On her way she met a copy. The copy warned the Little Blind Text, that where it came from
-                                it would have been rewritten a thousand times and everything that was left from its
-                                origin would be the word "and" and the Little Blind Text should turn around and return
-                                to its own, safe country. But nothing the copy said could convince her and so it didn’t
-                                take long until a few insidious Copy Writers ambushed her, made her drunk with Longe and
-                                Parole and dragged her into their agency, where they abused her for their.</p>
+                            <p>On her way she met a copy. The copy warned the Little Blind Text, that where
+                                it came from
+                                it would have been rewritten a thousand times and everything that was left
+                                from its
+                                origin would be the word "and" and the Little Blind Text should turn around
+                                and return
+                                to its own, safe country. But nothing the copy said could convince her and
+                                so it didn’t
+                                take long until a few insidious Copy Writers ambushed her, made her drunk
+                                with Longe and
+                                Parole and dragged her into their agency, where they abused her for
+                                their.</p>
                         </div>
                     </div>
-                    <div class="tab-pane fade" id="v-pills-3" role="tabpanel" aria-labelledby="v-pills-day-3-tab">
+                    <div class="tab-pane fade" id="v-pills-3" role="tabpanel"
+                         aria-labelledby="v-pills-day-3-tab">
                         <div class="row p-4">
                             <div class="col-md-7">
                                 <h3 class="mb-4">23 Reviews</h3>
                                 <div class="review">
-                                    <div class="user-img" style="background-image: url(images/person_1.jpg)"></div>
+                                    <div class="user-img"
+                                         style="background-image: url(images/person_1.jpg)"></div>
                                     <div class="desc">
                                         <h4>
                                             <span class="text-left">Jacob Webb</span>
@@ -218,12 +216,14 @@
                                             <span class="text-right"><a href="#" class="reply"><i
                                                     class="icon-reply"></i></a></span>
                                         </p>
-                                        <p>When she reached the first hills of the Italic Mountains, she had a last view
+                                        <p>When she reached the first hills of the Italic Mountains, she had
+                                            a last view
                                             back on the skyline of her hometown Bookmarksgrov</p>
                                     </div>
                                 </div>
                                 <div class="review">
-                                    <div class="user-img" style="background-image: url(images/person_2.jpg)"></div>
+                                    <div class="user-img"
+                                         style="background-image: url(images/person_2.jpg)"></div>
                                     <div class="desc">
                                         <h4>
                                             <span class="text-left">Jacob Webb</span>
@@ -240,12 +240,14 @@
                                             <span class="text-right"><a href="#" class="reply"><i
                                                     class="icon-reply"></i></a></span>
                                         </p>
-                                        <p>When she reached the first hills of the Italic Mountains, she had a last view
+                                        <p>When she reached the first hills of the Italic Mountains, she had
+                                            a last view
                                             back on the skyline of her hometown Bookmarksgrov</p>
                                     </div>
                                 </div>
                                 <div class="review">
-                                    <div class="user-img" style="background-image: url(images/person_3.jpg)"></div>
+                                    <div class="user-img"
+                                         style="background-image: url(images/person_3.jpg)"></div>
                                     <div class="desc">
                                         <h4>
                                             <span class="text-left">Jacob Webb</span>
@@ -262,7 +264,8 @@
                                             <span class="text-right"><a href="#" class="reply"><i
                                                     class="icon-reply"></i></a></span>
                                         </p>
-                                        <p>When she reached the first hills of the Italic Mountains, she had a last view
+                                        <p>When she reached the first hills of the Italic Mountains, she had
+                                            a last view
                                             back on the skyline of her hometown Bookmarksgrov</p>
                                     </div>
                                 </div>

@@ -1,5 +1,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html lang="en">
@@ -7,7 +8,7 @@
     <title>NORDIC | SD118</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="icon" href="../../images/create_logo_with_content_Nordic_Shoes_and_back.jpg" type="image/jpeg">
+    <link rel="icon" href="../../assets1/images/create_logo_with_content_Nordic_Shoes_and_back.jpg" type="image/jpeg">
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800" rel="stylesheet">
 
     <link rel="stylesheet" type="text/css" href="../../css/open-iconic-bootstrap.min.css">
@@ -24,7 +25,7 @@
     <link rel="stylesheet" type="text/css" href="../../css/bootstrap-datepicker.css">
     <link rel="stylesheet" type="text/css" href="../../css/jquery.timepicker.css">
 
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" type="text/css" href="../../css/flaticon.css">
     <link rel="stylesheet" type="text/css" href="../../css/icomoon.css">
 
@@ -71,9 +72,10 @@
                 <li class="nav-item"><a href="/about" class="nav-link">About</a></li>
                 <li class="nav-item"><a href="/blog" class="nav-link">Blog</a></li>
                 <li class="nav-item"><a href="/contact" class="nav-link">Contact</a></li>
-                <li class="nav-item cta cta-colored"><a href="/cart" class="nav-link"><span
+                <li class="nav-item cta cta-colored"><a href="/cart" style="font-size: 15px;margin-top: -5px" class="nav-link"><span
                         class="icon-shopping_cart"></span></a></li>
-
+                <li class="nav-item cta cta-colored"><a href="" style="font-size: 15px;margin-top: -7px;margin-left: -15px" class="nav-link"><span
+                        class="fa fa-user"></span></a></li>
             </ul>
         </div>
     </div>
@@ -100,11 +102,12 @@
                         <thead class="thead-primary">
                         <tr class="text-center">
                             <th></th>
-                            <th>Image</th>
-                            <th>Product</th>
-                            <th>Price</th>
-                            <th>Quantity</th>
-                            <th>Total</th>
+                            <th>Hình Ảnh</th>
+                            <th></th>
+                            <th>Phân Loại</th>
+                            <th>Đơn Giá</th>
+                            <th>Số Lượng</th>
+                            <th>Tổng Tiền</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -117,12 +120,15 @@
                                 </td>
                                 <td>
                                     <div class="img-box">
-                                        <img style="width: 250px; height: 200px;"
-                                             src="${cartItem.chiTietSanPham.sanPham.photo}">
+                                        <img style="width: 70px; height: 70px;"
+                                             src="${cartItem.chiTietSanPham.photo}">
                                     </div>
                                 </td>
                                 <td>
                                     <p>${cartItem.chiTietSanPham.sanPham.tenSanPham}</p>
+                                </td>
+                                <td>
+                                    <p>${cartItem.chiTietSanPham.mauSac.tenMau}[${cartItem.chiTietSanPham.kichCo.size}]</p>
                                 </td>
                                 <td class="price">
                                 <span>
@@ -139,7 +145,7 @@
                                 </td>
                                 <td class="total">
                                 <span>
-    <fmt:formatNumber value="${cartItem.soLuong * cartItem.donGia}" type="currency" currencyCode="VND"
+    <fmt:formatNumber value="${cartItem.total}" type="currency" currencyCode="VND"
                       pattern="#,##0"></fmt:formatNumber>₫
 </span>
                                 </td>
@@ -161,12 +167,13 @@
                             <span>Tổng Tiền:</span>
                             <c:set var="totalAmount" value="0"/>
                             <c:forEach items="${listGioHangChiTiet}" var="c">
-                                <c:set var="subtotal" value="${c.soLuong * c.donGia}"/>
+                                <c:set var="subtotal" value="${c.total}"/>
                                 <c:set var="totalAmount" value="${totalAmount + subtotal}"/>
                             </c:forEach>
                             <fmt:formatNumber var="totalAmount" value="${totalAmount}" type="currency"
                                               currencyCode="VND" pattern="#,##0"/>
-                            <span  style="color: red">${totalAmount} đ</span>
+                            <input style="border: none;outline: none;color: red;margin-left: -100px" type="text" readonly name="totalAmount" value="${totalAmount}đ" />
+
 
                         </p>
                         <hr>
@@ -291,7 +298,7 @@
 <script>
     $(document).ready(function () {
 
-        var quantitiy = 0;
+        var quantity = 0;
         $('.quantity-right-plus').click(function (e) {
             e.preventDefault();
             // Get the field name

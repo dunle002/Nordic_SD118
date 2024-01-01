@@ -9,7 +9,7 @@
 
     <link rel="stylesheet" href="css/open-iconic-bootstrap.min.css">
     <link rel="stylesheet" href="css/animate.css">
-    <link rel="icon" href="../../images/create_logo_with_content_Nordic_Shoes_and_back.jpg" type="image/jpeg">
+    <link rel="icon" href="../../assets1/images/create_logo_with_content_Nordic_Shoes_and_back.jpg" type="image/jpeg">
     <link rel="stylesheet" href="css/owl.carousel.min.css">
     <link rel="stylesheet" href="css/owl.theme.default.min.css">
     <link rel="stylesheet" href="css/magnific-popup.css">
@@ -17,7 +17,7 @@
     <link rel="stylesheet" href="css/aos.css">
 
     <link rel="stylesheet" href="css/ionicons.min.css">
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="css/bootstrap-datepicker.css">
     <link rel="stylesheet" href="css/jquery.timepicker.css">
 
@@ -66,9 +66,10 @@
                 <li class="nav-item"><a href="/about" class="nav-link">About</a></li>
                 <li class="nav-item"><a href="/blog" class="nav-link">Blog</a></li>
                 <li class="nav-item"><a href="/contact" class="nav-link">Contact</a></li>
-                <li class="nav-item cta cta-colored"><a href="/cart" class="nav-link"><span
+                <li class="nav-item cta cta-colored"><a href="/cart" style="font-size: 15px;margin-top: -5px" class="nav-link"><span
                         class="icon-shopping_cart"></span></a></li>
-
+                <li class="nav-item cta cta-colored"><a href="" style="font-size: 15px;margin-top: -7px;margin-left: -15px" class="nav-link"><span
+                        class="fa fa-user"></span></a></li>
             </ul>
         </div>
     </div>

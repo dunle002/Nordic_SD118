@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.context.annotation.SessionScope;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -27,6 +28,8 @@ public class GioHangCtServiceImpl implements GioHangCtService {
     private GioHangRepository gioHangRepository;
     @Autowired
     private NguoiDungRepository nguoiDungRepository;
+
+    private List<GioHangChiTiet> cartItems = new ArrayList<>();
 
     @Override
     public List<GioHangChiTiet> listGioHangChiTiets() {
@@ -53,12 +56,12 @@ public class GioHangCtServiceImpl implements GioHangCtService {
                 for (GioHangChiTiet gioHangChiTietExisting : listGioHangChiTiets) {
                     if (gioHangChiTietExisting.getChiTietSanPham().getIdProductDetail().equals(id)) {
                         Integer soLuong = gioHangChiTietExisting.getSoLuong() + 1;
-                        BigDecimal giaTong = gioHangChiTietExisting.getDonGia().add(chiTietSanPham.getDonGia());
+                        Integer giaTong = gioHangChiTietExisting.getDonGia();
                         gioHangChiTiet = new GioHangChiTiet(
                                 gioHangChiTietExisting.getId(),
                                 soLuong,
                                 giaTong,
-                                gioHangChiTietExisting.getDonGiaKhiGiam(),
+                                gioHangChiTietExisting.getTotal(),
                                 gioHangChiTietExisting.getGioHang(),
                                 chiTietSanPham
                         );
@@ -69,7 +72,7 @@ public class GioHangCtServiceImpl implements GioHangCtService {
                         null,
                         1,
                         chiTietSanPham.getDonGia(),
-                        BigDecimal.valueOf(0),
+                        Integer.valueOf(0),
                         gioHang,
                         chiTietSanPham
                 );
@@ -83,37 +86,14 @@ public class GioHangCtServiceImpl implements GioHangCtService {
     }
 
     @Override
-    public Boolean botSanPhamTrongGio(Integer id) {
-        List<GioHangChiTiet> listGioHangChiTiet = gioHangCTRepository.findAll();
-        ChiTietSanPham chiTietSanPham = chiTietSPRepository.findById(id).get();
-        Integer soLuong;
-        BigDecimal giaTong;
-        NguoiDung nguoiDung = nguoiDungRepository.findByHoTen("Lê Xuân Dương");
-        Date date = new Date();
-        GioHang gioHang;
-        GioHangChiTiet gioHangChiTiet = new GioHangChiTiet();
-        if (checkTrung(listGioHangChiTiet,id)){
-            for (int i = 0; i < listGioHangChiTiet.size(); i++) {
-                if (listGioHangChiTiet.get(i).getChiTietSanPham().getIdProductDetail().equals(id)){
-                    soLuong = listGioHangChiTiet.get(i).getSoLuong();
-                    if (soLuong == 1){
-                        removeSanPhamTrongGio(listGioHangChiTiet.get(i).getId());
-                        return false;
-                    }
-                    giaTong = listGioHangChiTiet.get(i).getDonGia().subtract(chiTietSanPham.getDonGia());
-                    gioHang = new GioHang(listGioHangChiTiet.get(i).getGioHang().getId(),date,date,nguoiDung.getHoTen(),nguoiDung.getSoDienThoai() ,1,nguoiDung);
-                    gioHangChiTiet = new GioHangChiTiet(listGioHangChiTiet.get(i).getId(),soLuong -1,chiTietSanPham.getDonGia(),giaTong,gioHang,chiTietSanPham);
-                }
-            }
-        }
-        gioHangCTRepository.save(gioHangChiTiet);
+    public Boolean removeSanPhamTrongGio(Integer id) {
+        gioHangCTRepository.deleteById(id);
         return true;
     }
 
     @Override
-    public Boolean removeSanPhamTrongGio(Integer id) {
-        gioHangCTRepository.deleteById(id);
-        return true;
+    public void clearShoppingCart() {
+        cartItems.clear();
     }
 
     private Boolean checkTrung(List<GioHangChiTiet> listGioHangChiTiets, Integer id) {

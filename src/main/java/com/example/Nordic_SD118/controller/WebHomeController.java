@@ -1,18 +1,13 @@
 package com.example.Nordic_SD118.controller;
 
-import com.example.Nordic_SD118.config.VNPayService;
 import com.example.Nordic_SD118.entity.ChiTietSanPham;
 import com.example.Nordic_SD118.entity.GioHangChiTiet;
-import com.example.Nordic_SD118.entity.SanPham;
 import com.example.Nordic_SD118.repository.GioHangCTRepository;
 import com.example.Nordic_SD118.repository.GioHangRepository;
 import com.example.Nordic_SD118.repository.ProductDetailRepositori;
 import com.example.Nordic_SD118.repository.SanPhamRepository;
 import com.example.Nordic_SD118.sevice.GioHangCtService;
 import com.example.Nordic_SD118.sevice.ProductDetailSevice;
-import com.example.Nordic_SD118.sevice.SanPhamSevice;
-import com.example.Nordic_SD118.sevice.imlp.DetailProductImlp;
-import jakarta.persistence.criteria.CriteriaBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -41,8 +36,7 @@ public class WebHomeController {
     private GioHangCtService gioHangCtService;
     @Autowired
     private GioHangCTRepository gioHangCTRepository;
-    @Autowired
-    private VNPayService vnPayService;
+
 
     @RequestMapping("/home")
     public String Homepage(Model model) {
@@ -81,20 +75,18 @@ public class WebHomeController {
         List<GioHangChiTiet> listGioHangChiTiet = gioHangCtService.listGioHangChiTiets();
         BigDecimal tongTien = BigDecimal.valueOf(0);
         List<GioHangChiTiet> list = gioHangCTRepository.findAll();
-        for (int i = 0; i < list.size(); i++) {
-            tongTien = tongTien.add(list.get(i).getDonGia());
-        }
-        if (list.isEmpty()) {
-            model.addAttribute("cartEmptyMessage", "Giỏ hàng của bạn trống");
-        } else {
-            model.addAttribute("listGioHangChiTiet", listGioHangChiTiet);
-            model.addAttribute("tongTien", tongTien);
-        }
+//        for (int i = 0; i < list.size(); i++) {
+//            tongTien = tongTien.add(list.get(i).getDonGia());
+//        }
+        model.addAttribute("listGioHangChiTiet", listGioHangChiTiet);
+        model.addAttribute("total", listGioHangChiTiet);
+
+        model.addAttribute("tongTien", tongTien);
 
         return "cart";
     }
 
-    @GetMapping()
+    @GetMapping("/viewgio")
     public String viewGioHang(Model model) {
         return chuyenTrang(model);
     }
@@ -106,7 +98,7 @@ public class WebHomeController {
     }
 
     @GetMapping("/delete/{id}")
-    public String delete(@PathVariable("id") Integer id){
+    public String delete(@PathVariable("id") Integer id) {
         gioHangCTRepository.deleteById(id);
         return "redirect:/cart";
     }
@@ -125,9 +117,6 @@ public class WebHomeController {
     public String contact() {
         return "contact";
     }
-    @RequestMapping("/checkout")
-    public String checkout() {
-        return "checkout";
-    }
+
 
 }

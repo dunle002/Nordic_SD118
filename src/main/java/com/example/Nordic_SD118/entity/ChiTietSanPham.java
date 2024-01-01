@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.math.BigDecimal;
+import java.sql.Date;
 
 @Entity
 @Table(name = "chi_tiet_san_pham")
@@ -20,7 +21,7 @@ public class ChiTietSanPham {
     private Integer idProductDetail;
 
     @Column(name = "don_gia")
-    private BigDecimal donGia;
+    private Integer donGia;
 
     @Column(name = "so_luong_ton")
     private Integer soLuong;
@@ -33,6 +34,12 @@ public class ChiTietSanPham {
 
     @Column(name = "main_photo2")
     private String photoTwo;
+
+    @Column(name = "ngay_tao")
+    private Date ngayTao;
+
+    @Column(name = "ngay_sua")
+    private Date ngaySua;
 
     @Column(name = "mo_ta_ct")
     private String moTa;

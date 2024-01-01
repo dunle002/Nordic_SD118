@@ -1,10 +1,7 @@
 package com.example.Nordic_SD118.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.sql.Date;
 
@@ -14,6 +11,7 @@ import java.sql.Date;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@ToString
 public class NguoiDung {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -34,7 +32,7 @@ public class NguoiDung {
     @Column(name = "email")
     private String email;
     @Column(name = "role")
-    private Boolean role;
+    private String role;
     @Column(name = "trang_thai")
     private Integer trangThai;
 

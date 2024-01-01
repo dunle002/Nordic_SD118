@@ -10,6 +10,7 @@ public interface GioHangCtService  {
     List<GioHangChiTiet> listGioHangChiTiets();
     GioHangChiTiet findOneGioHangChiTiet(Integer id);
     Boolean addSanPhamVaoGio(Integer id,String hoTen);
-    Boolean botSanPhamTrongGio(Integer id);
+//    Boolean botSanPhamTrongGio(Integer id);
     Boolean removeSanPhamTrongGio(Integer id);
+    void clearShoppingCart();
 }

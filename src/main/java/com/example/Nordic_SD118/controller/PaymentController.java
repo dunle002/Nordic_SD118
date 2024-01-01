@@ -1,50 +1,41 @@
 package com.example.Nordic_SD118.controller;
 
 import com.example.Nordic_SD118.config.VNPayConfig;
-import com.example.Nordic_SD118.config.VNPayService;
-import com.example.Nordic_SD118.sevice.GioHangCtService;
+import com.example.Nordic_SD118.entity.GioHangChiTiet;
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.jsp.jstl.core.Config;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
-import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.math.BigDecimal;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.text.SimpleDateFormat;
 import java.util.*;
-@Controller
 
+@Controller
 public class PaymentController {
 
-    @Autowired
-    private VNPayService vnPayService;
 
     @PostMapping("/pay/vnpayajax")
-    public String hashUrl(HttpServletRequest req, Model model, @RequestParam(name = "vnp_Amount") Integer amount) throws IOException {
+    public String hashUrl(HttpServletRequest req, @RequestParam("totalAmount") String totalAmountStr) throws UnsupportedEncodingException {
         String vnp_Version = "2.1.0";
         String vnp_Command = "pay";
         String orderType = "other";
-        //model.addAttribute("formattedTotalAmount");
-        // Trong Controller hoặc một phương thức xử lý HTTP request
-        //long amount = 10000000 * 100;
         String bankCode = req.getParameter("bankCode");
-
         String vnp_TxnRef = VNPayConfig.getRandomNumber(8);
         String vnp_IpAddr = "127.0.0.1";
         String vnp_TmnCode = VNPayConfig.vnp_TmnCode;
-
+        String totalAmountStrNumeric = totalAmountStr.replaceAll("[^\\d]", "");
+        int totalAmount = Integer.parseInt(totalAmountStrNumeric);
         Map<String, String> vnp_Params = new HashMap<>();
         vnp_Params.put("vnp_Version", vnp_Version);
         vnp_Params.put("vnp_Command", vnp_Command);
         vnp_Params.put("vnp_TmnCode", vnp_TmnCode);
-        vnp_Params.put("vnp_Amount", String.valueOf(amount));
+        vnp_Params.put("vnp_Amount", String.valueOf(totalAmount * 100));
         vnp_Params.put("vnp_CurrCode", "VND");
-
         if (bankCode != null && !bankCode.isEmpty()) {
             vnp_Params.put("vnp_BankCode", bankCode);
         }
@@ -98,6 +89,10 @@ public class PaymentController {
         String paymentUrl = VNPayConfig.vnp_PayUrl + "?" + queryUrl;
         System.out.println(paymentUrl);
         return "redirect:" + paymentUrl;
+    }
+    @GetMapping("/return")
+    public String vnpayReturn(){
+        return "return";
     }
 }
 
