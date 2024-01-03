@@ -102,23 +102,7 @@
 //     });
 // });
 //lấy 1 sản phẩm
-$(document).ready(function () {
-    $('.btn-detail').click(function () {
-        var productId = $(this).data('product-id');
-        $.ajax({
-            url: "/product/productDetail",
-            type: "GET",
-            data: {id: productId},
-            success: function (data) {
-                $('#productDetailModal .modal-body').html(data);
-                $('#productDetailModal').modal('show');
-            },
-            error: function () {
-                alert("Lỗi khi tải chi tiết sản phẩm.");
-            }
-        });
-    });
-});
+
 
 var currencyInputs = document.getElementsByClassName('currency-input');
 for (var i = 0; i < currencyInputs.length; i++) {

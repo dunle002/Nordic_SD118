@@ -1,4 +1,3 @@
-
 function Validator(options) {
     function validate(inputElement, validationRules) {
         const errorIcon = inputElement.parentElement.querySelector(".error-icon");
@@ -102,6 +101,25 @@ $(document).ready(function () {
         allowClear: true,
     });
 });
+$(document).ready(function () {
+    $('#kichco-select').select2({
+        placeholder: 'Chọn kích cỡ',
+        allowClear: true,
+    });
+});
+$(document).ready(function () {
+    $('#loaiday-select').select2({
+        placeholder: 'Chọn kích cỡ',
+        allowClear: true,
+    });
+});
+$(document).ready(function () {
+    $('#degiay-select').select2({
+        placeholder: 'Chọn đế giày',
+        allowClear: true,
+    });
+});
+
 //lấy 1 sản phẩm
 $(document).ready(function () {
     $('.btn-detail').click(function () {
@@ -120,4 +138,173 @@ $(document).ready(function () {
         });
     });
 });
-//Sử lí dữ liệu đi
+//load nhiều ảnh
+
+
+$(document).ready(function () {
+    $(document).on('change', '.input-images', function () {
+        var files = $(this)[0].files;
+        var imageContainer = $(this).siblings('.imageContainer');
+
+        if (files.length > 3) {
+            alert('Vui lòng chọn không quá 3 ảnh.');
+            $(this).val(''); // Xóa tất cả các tệp đã chọn
+            return;
+        }
+
+        if (files.length > 0) {
+            for (var i = 0; i < files.length; i++) {
+                var file = files[i];
+                var reader = new FileReader();
+
+                reader.onload = function (e) {
+                    var image = $('<img>').attr('src', e.target.result);
+                    var deleteIcon = $('<i>').addClass('fas fa-trash delete-icon');
+
+                    var imageWrapper = $('<div>').addClass('image-wrapper');
+                    imageWrapper.append(image);
+                    imageWrapper.append(deleteIcon);
+
+                    imageContainer.append(imageWrapper);
+                };
+
+                reader.readAsDataURL(file);
+            }
+        }
+    });
+
+    // Các sự kiện xóa ảnh không thay đổi
+
+    $(document).on('mouseenter', '.image-wrapper', function () {
+        $(this).find('.delete-icon').show();
+    });
+
+    $(document).on('mouseleave', '.image-wrapper', function () {
+        $(this).find('.delete-icon').hide();
+    });
+
+    $(document).on('click', '.delete-icon', function () {
+        $(this).closest('.image-wrapper').remove();
+    });
+});
+
+
+//tạo size dựa vào màu sắc
+$(document).ready(function () {
+    // Biến lưu trữ danh sách các màu đã được tạo
+    var createdColors = [];
+    var isInputsSelected = false;
+
+    function checkInputsSelected() {
+        var productAddName = $('#productAddName').val();
+        var selectedColors = $('#my-select').val();
+        var selectedSizes = $('#kichco-select').val();
+        var trangThaiSelected = $('input[name="trangThai"]:checked').length > 0;
+
+        if (productAddName && selectedColors && selectedColors.length > 0 && selectedSizes && selectedSizes.length > 0 && trangThaiSelected) {
+            isInputsSelected = true;
+        } else {
+            isInputsSelected = false;
+        }
+    }
+
+    $('#my-select, #kichco-select, #productAddName,input[name="trangThai"]').change(function () {
+        var selectedColors = $('#my-select').val();
+        var selectedSizes = $('#kichco-select').val();
+        var productAddName = $('#productAddName').val();
+        var trangThaiSelected = $('input[name="trangThai"]:checked').length > 0;
+        checkInputsSelected();
+        $('tbody').empty();
+        createdColors = [];
+
+        if (productAddName && selectedColors && selectedColors.length > 0 && selectedSizes && selectedSizes.length > 0 && trangThaiSelected
+        ) {
+            var sizeCount = 0;
+
+
+            for (var i = 0; i < selectedColors.length; i++) {
+                var color = selectedColors[i];
+
+                // Kiểm tra xem màu đã được tạo hay chưa
+
+                for (var j = 0; j < selectedSizes.length; j++) {
+                    var size = selectedSizes[j];
+                    var trSize = createSizeTableRow(color, size);
+                    $('tbody').append(trSize);
+                    sizeCount++;
+
+                }
+            }
+        }
+
+
+    });
+    // Sự kiện delegation cho click vào spanRow
+
+    $('tbody').on('click', '.label-images', function () {
+        $(this).siblings('.input-images').click();
+    });
+
+
+
+    function createSizeTableRow(color, size) {
+        if (!isInputsSelected) {
+            return $(); // Trả về đối tượng jQuery rỗng nếu chưa chọn xong các input
+        }
+        var selectedColorOption = $('#my-select option:selected').filter(function () {
+            return $(this).val() === color;
+        })[0];
+        var selectedColorText = selectedColorOption.text;
+        var inputMau = $('<input>').attr('type', 'hidden').attr('value', $('#my-select option[value="' + color + '"]:selected').val()).attr('name', 'mauSac');
+        var inputDeGiay=$('<input>').attr('type', 'hidden').attr('value', $('#degiay-select option:selected').val()).attr('name', 'deGiay');
+        var inputChatGiay=$('<input>').attr('type', 'hidden').attr('value', $('#chatlieu-select option:selected').val()).attr('name', 'chatLieu');
+        var inputKichCo=$('<input>').attr('type', 'hidden').attr('value', $('#kichco-select option[value="' + size + '"]:selected').val()).attr('name', 'kichCo');
+        var tr = $('<tr>');
+        var checkbox = $('<input>').attr('type', 'checkbox');
+        var productName = $('<td>').text($('#productAddName').val()+' ['+ selectedColorText+'] ['+ $('#kichco-select option[value="' + size + '"]:selected').text()+']');
+        var loaiGiayCell = $('<td>').text($('#loaiday-select option:selected').text());
+        var chatLieuCell = $('<td>').text($('#chatlieu-select option:selected').text());
+        var deGiayCell = $('<td>').text($('#degiay-select option:selected').text());
+        var sizeCell = $('<td>').text($('#kichco-select option[value="' + size + '"]:selected').text());
+        var priceInput = $('<input>').attr('type', 'text').addClass('form-control').attr('value', '150000').attr('aria-label', 'Giá').attr('aria-describedby', 'addon-wrapping').attr('name', 'donGia');
+        priceInput.css('width', '100px')
+        var quantityInput = $('<input>').attr('type', 'text').addClass('form-control').attr('value', '10').attr('aria-label', 'Số lượng').attr('aria-describedby', 'addon-wrapping').attr('name', 'soLuong');
+        quantityInput.css('width', '80px')
+        var status = $('input[name="trangThai"]:checked').next('label').text();
+        var deleteIcon = $('<i>').addClass('fa fa-trash').attr('aria-hidden', 'true');
+        var deleteCell = $('<td>').append(deleteIcon);
+        chatLieuCell.append(inputChatGiay);
+        deGiayCell.append(inputDeGiay);
+        productName.append(inputKichCo);
+        productName.append(inputMau);
+        var thImage = createImageCell();
+        tr.append(
+            $('<th>').append(checkbox),
+            productName,
+            loaiGiayCell,
+            deGiayCell,
+            chatLieuCell,
+            $('<td>').append(priceInput),
+            $('<td>').append(quantityInput),
+            $('<td>').append(status),
+            deleteCell,
+            $('<td>').append(thImage)
+        );
+
+        return tr;
+    }
+
+    function createImageCell() {
+        var inputImages = $('<input>').attr('type', 'file').attr('name', 'fileImages').addClass('input-images').attr('multiple', true).css('display', 'none');
+        var labelImages = $('<label>').addClass('label-images').append($('<i>').addClass('fas fa-upload'));
+        var imagesContainer = $('<div>').addClass('imageContainer');
+        var imageCell = $('<a>').append(inputImages, labelImages, imagesContainer);
+        return imageCell;
+    }
+
+    $('tbody').on('click', '.fa-trash', function () {
+        var row = $(this).closest('tr');
+        row.remove();
+    });
+});
+

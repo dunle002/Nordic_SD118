@@ -25,7 +25,8 @@
 
     <link href="../../vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet">
     <link href="../../vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
-    <link href="../../css/css/mixins/_text-hide.css" rel="stylesheet">
+    <link href="../../css/css/mixins/select2.css" rel="stylesheet" type="text/css">
+    <link href="../../css/css/mixins/_text-hide.css" rel="stylesheet" type="text/css">
 
     <style>
         .input-group-append {
@@ -159,290 +160,315 @@
 
     <!-- Content Wrapper -->
     <div id="content-wrapper" class="d-flex flex-column">
+        <form:form method="post" action="/product/add"
+                   enctype="multipart/form-data">
+            <!-- Main Content -->
+            <div id="content">
 
-        <!-- Main Content -->
-        <div id="content">
+                <!-- Topbar -->
+                <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
 
-            <!-- Topbar -->
-            <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
-
-                <!-- Sidebar Toggle (Topbar) -->
-                <form class="form-inline">
-                    <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
-                        <i class="fa fa-bars"></i>
-                    </button>
-                </form>
-
-
-                <!-- Topbar Navbar -->
-                <ul class="navbar-nav ml-auto">
-
-                    <!-- Nav Item - Search Dropdown (Visible Only XS) -->
+                    <!-- Sidebar Toggle (Topbar) -->
+                    <form class="form-inline">
+                        <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                    </form>
 
 
-                    <!-- Nav Item - User Information -->
-                    <li class="nav-item dropdown no-arrow">
-                        <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
-                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <span class="mr-2 d-none d-lg-inline text-gray-600 small">Douglas McGee</span>
-                            <img class="img-profile rounded-circle"
-                                 src="../../images/about.jpg">
-                        </a>
-                        <!-- Dropdown - User Information -->
-                        <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
-                             aria-labelledby="userDropdown">
-                            <a class="dropdown-item" href="#">
-                                <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
-                                Profile
+                    <!-- Topbar Navbar -->
+                    <ul class="navbar-nav ml-auto">
+
+                        <!-- Nav Item - Search Dropdown (Visible Only XS) -->
+
+
+                        <!-- Nav Item - User Information -->
+                        <li class="nav-item dropdown no-arrow">
+                            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
+                               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Douglas McGee</span>
+                                <img class="img-profile rounded-circle"
+                                     src="../../images/about.jpg">
                             </a>
-                            <a class="dropdown-item" href="#">
-                                <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
-                                Settings
-                            </a>
-                            <a class="dropdown-item" href="#">
-                                <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
-                                Activity Log
-                            </a>
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
-                                <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-                                Logout
-                            </a>
+                            <!-- Dropdown - User Information -->
+                            <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                                 aria-labelledby="userDropdown">
+                                <a class="dropdown-item" href="#">
+                                    <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
+                                    Profile
+                                </a>
+                                <a class="dropdown-item" href="#">
+                                    <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
+                                    Settings
+                                </a>
+                                <a class="dropdown-item" href="#">
+                                    <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
+                                    Activity Log
+                                </a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
+                                    <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                                    Logout
+                                </a>
+                            </div>
+                        </li>
+
+                    </ul>
+
+                </nav>
+                <!-- End of Topbar -->
+
+                <!-- Begin Page Content -->
+                <div class="container-fluid">
+
+                    <!-- Page Heading -->
+                    <!-- DataTales Example -->
+                    <div class="card shadow mb-4">
+                        <div class="card-header py-3">
+                            <h6 class="m-0 font-weight-bold text-primary">TẠO MỚI SẢN PHẨM</h6>
                         </div>
-                    </li>
-
-                </ul>
-
-            </nav>
-            <!-- End of Topbar -->
-
-            <!-- Begin Page Content -->
-            <div class="container-fluid">
-
-                <!-- Page Heading -->
-                <h1 class="h3 mb-2 text-gray-800">Tables</h1>
-                <!-- DataTales Example -->
-                <div class="card shadow mb-4">
-                    <div class="card-header py-3">
-                        <h6 class="m-0 font-weight-bold text-primary">TẠO MỚI SẢN PHẨM</h6>
-                    </div>
 
 
-                    <div class="card-body">
-                        <div class="table-responsive">
-                            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                                <form:form method="post" action="/product/add" modelAttribute="product"
-                                           enctype="multipart/form-data">
-                                <div class="container"  id="form-add-1">
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table" width="100%" cellspacing="0">
 
+
+                                    <div class="container" id="form-add-1">
+                                        <input type="hidden" class="form-control"
+                                               value="${maZen}"
+                                               aria-label="Username" aria-describedby="addon-wrapping" name="ma"
+                                               readonly>
                                         <div class="row">
-                                            <div class="col-6">
+                                            <div class="py-3">
+                                                <h7 class="m-0 font-weight-bold text-primary">SẢN PHẨM</h7>
+                                            </div>
+                                            <div style="width: 100%">
                                                 <div class="input-group flex-nowrap">
                                                     <div class="input-group-prepend">
-                                                <span class="input-group-text"><i
-                                                        class="fas fa-solid fa-id-card"></i></span>
-                                                    </div>
-                                                    <input type="text" class="form-control"
-                                                           value="${maZen}"
-                                                           aria-label="Username" aria-describedby="addon-wrapping" name="ma" readonly>
-                                                </div>
-                                                <br>
-                                                <div class="input-group flex-nowrap">
-                                                    <div class="input-group-prepend">
-                                                    <span class="input-group-text"><i
-                                                            class="fas fa-solid fa-file-signature"></i></span>
+                                                        <span class="input-group-text">Tên sản phẩm</span>
                                                     </div>
 
                                                     <input type="text" class="form-control"
-                                                           placeholder="Nhập tên sản phẩm"
-                                                           aria-label="Username" aria-describedby="addon-wrapping" name="tenSanPham" id="productAddName">
-
-                                                    <span class="error-icon" data-toggle="tooltip" data-placement="right" title=""></span>
-                                                </div>
-                                                <br>
-                                                <div class="input-group flex-nowrap">
-                                                    <div class="input-group-prepend">
-                                                        <span class="input-group-text"><i
-                                                                class="fas fa-solid fa-money-bill-wave"></i></span>
+                                                           placeholder="Nhập tên sản phẩm" aria-label="Username"
+                                                           aria-describedby="addon-wrapping" name="tenSanPham"
+                                                           id="productAddName"
+                                                           list="productList" autocomplete="off"
+                                                           onchange="filterOptions(event)">
+                                                    <datalist id="productList">
+                                                        <c:forEach items="${tenSanPham}" var="sp">
+                                                            <option class="select2-dropdown"
+                                                                    value="${sp.tenSanPham}">${sp.tenSanPham}</option>
+                                                        </c:forEach>
+                                                    </datalist>
+                                                    <div class="input-group-append">
+                                                        <a class="btn btn-primary" type="button"><i class="fa fa-plus"
+                                                                                                    aria-hidden="true"></i></a>
                                                     </div>
-                                                    <input type="text" class="form-control"
-                                                           placeholder="Nhập giá sản phẩm"
-                                                           aria-label="Username" aria-describedby="addon-wrapping" name="donGia" id="productAddPrice">
-                                                    <span class="error-icon" data-toggle="tooltip" data-placement="right" title=""></span>
-                                                </div>
-                                                <br>
-                                                <div class="input-group flex-nowrap">
-                                                    <div class="input-group-prepend">
-                                                        <span class="input-group-text"><i
-                                                                class="fas fa-solid fa-bars"></i></span>
-                                                    </div>
-                                                    <input type="text" class="form-control"
-                                                           placeholder="Nhập số lượng sản phẩm"
-                                                           aria-label="Username" aria-describedby="addon-wrapping" name="soLuong" id="productAddQuantity">
-                                                    <span class="error-icon" data-toggle="tooltip" data-placement="right" title=""></span>
-
-                                                </div>
-                                                <br>
-                                                <div class="input-group mb-3">
-                                                    <div class="input-group-prepend">
-                                                    <span class="input-group-text"
-                                                    ><i class="fas fa-solid fa-upload"></i></span>
-                                                    </div>
-                                                    <div class="custom-file">
-                                                        <input type="file" class="custom-file-input"
-                                                               aria-describedby="inputGroupFileAddon01" name="image1" required>
-                                                        <label class="custom-file-label">Chọn ảnh đại điện</label>
-                                                    </div>
-                                                </div>
-                                                <div class="input-group mb-3">
-                                                    <div class="input-group-prepend">
-                                                    <span class="input-group-text"
-                                                    ><i class="fas fa-solid fa-upload"></i></span>
-                                                    </div>
-                                                    <div class="custom-file">
-                                                        <input type="file" class="custom-file-input"
-                                                               aria-describedby="inputGroupFileAddon01" name="image2" required>
-                                                        <label class="custom-file-label">Chọn ảnh kèm theo 1</label>
-                                                    </div>
+                                                    <span class="error-icon" data-toggle="tooltip"
+                                                          data-placement="right" title=""></span>
                                                 </div>
 
 
                                             </div>
-                                            <div class="col-6">
-
-                                                <div class="input-group flex-nowrap">
-                                                    <div class="input-group-prepend">
-                                                <span class="input-group-text"><i
-                                                        class="fas fa-solid fa-id-card"></i></span>
+                                            <br>
+                                            <div class="py-3">
+                                                <h7 class="m-0 font-weight-bold text-primary">THUỘC TÍNH</h7>
+                                            </div>
+                                            <br>
+                                            <div class="container">
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <div class="input-group flex-nowrap">
+                                                            <div class="input-group-prepend">
+                                                                <span class="input-group-text">Loại giày</span>
+                                                            </div>
+                                                            <select class="form-control"
+                                                                    aria-label="Username"
+                                                                    aria-describedby="addon-wrapping"
+                                                                     id="loaiday-select" name="loaiGiay">
+                                                                <c:forEach var="item" items="${loaiDay}">
+                                                                    <option value="${item.id}">${item.tenTheLoai}</option>
+                                                                </c:forEach>
+                                                            </select>
+                                                            <div class="input-group-append">
+                                                                <a class="btn btn-primary" type="button"
+                                                                   style="border-radius:0;height: 41px"><i
+                                                                        class="fa fa-plus" aria-hidden="true"></i></a>
+                                                            </div>
+                                                        </div>
                                                     </div>
-                                                    <select class="form-control"
-                                                            aria-label="Username" aria-describedby="addon-wrapping" name="loaiGiay">
-                                                        <option selected disabled>Chọn loại giày</option>
-                                                        <c:forEach var="item" items="${loaiDay}">
-                                                            <option value="${item.id}">${item.tenTheLoai}</option>
-                                                        </c:forEach>
-                                                    </select>
-
-                                                </div>
-                                                <br>
-                                                <div class="input-group flex-nowrap">
-                                                    <div class="input-group-prepend">
-                                                <span class="input-group-text"><i
-                                                        class="fas fa-solid fa-id-card"></i></span>
+                                                    <div class="col-md-6">
+                                                        <div class="input-group flex-nowrap">
+                                                            <div class="input-group-prepend">
+                                                                <span class="input-group-text">Chất liệu</span>
+                                                            </div>
+                                                            <select class="form-control"
+                                                                    aria-label="Username" id="chatlieu-select"
+                                                                    aria-describedby="addon-wrapping">
+                                                                <c:forEach var="item" items="${chatLieuList}">
+                                                                    <option value="${item.id}">${item.tenChatLieu}</option>
+                                                                </c:forEach>
+                                                            </select>
+                                                        </div>
                                                     </div>
-                                                    <select class="form-control"  id="chatlieu-select" multiple
-                                                            aria-label="Username" aria-describedby="addon-wrapping" name="chatLieu">
-                                                        <c:forEach var="item" items="${chatLieuList}">
-                                                            <option value="${item.id}">${item.tenChatLieu}</option>
-                                                        </c:forEach>
-                                                    </select>
                                                 </div>
-                                                <br>
-                                                <div class="input-group flex-nowrap">
-                                                    <div class="input-group-prepend">
-                                                <span class="input-group-text"><i
-                                                        class="fas fa-solid fa-id-card"></i></span>
+                                                <div class="row" style="padding-top: 20px">
+                                                    <div class="col-md-6">
+                                                        <div class="input-group flex-nowrap">
+                                                            <div class="input-group-prepend">
+                                                                <span class="input-group-text">Đế giày</span>
+                                                            </div>
+                                                            <select class="form-control" id="degiay-select"
+                                                                    aria-label="Username"
+                                                                    aria-describedby="addon-wrapping"
+                                                                    >
+                                                                <c:forEach var="item" items="${deGiayList}">
+                                                                    <option value="${item.id}">${item.loaiDe}</option>
+                                                                </c:forEach>
+                                                            </select>
+                                                            <span class="error-message"></span>
+                                                        </div>
                                                     </div>
-                                                    <select id="my-select" multiple name="mauSac" class="form-control">
-                                                            <c:forEach var="item" items="${mauSacList}">
-                                                                <option value="${item.id}">${item.tenMau}</option>
-                                                            </c:forEach>
-                                                    </select>
-
-
-                                                </div>
-
-                                                <br>
-                                                <div class="input-group flex-nowrap">
-                                                    <div class="input-group-prepend">
-                                                <span class="input-group-text"><i
-                                                        class="fas fa-solid fa-id-card"></i></span>
-                                                    </div>
-                                                    <select class="form-control"
-                                                            aria-label="Username" aria-describedby="addon-wrapping" name="kichCo">
-                                                        <option selected disabled>Chọn kích cỡ giày</option>
-                                                        <c:forEach var="item" items="${coList}">
-                                                            <option value="${item.id}">${item.size}</option>
-                                                        </c:forEach>
-                                                    </select>
-                                                    <span class="error-message"></span>
-                                                </div>
-                                                <br>
-                                                <div class="input-group flex-nowrap">
-                                                    <div class="input-group-prepend">
-                                                <span class="input-group-text"><i
-                                                        class="fas fa-solid fa-id-card"></i></span>
-                                                    </div>
-                                                    <select class="form-control"
-                                                            aria-label="Username" aria-describedby="addon-wrapping" name="deGiay">
-                                                        <option selected disabled>Chọn loại đế giày</option>
-                                                        <c:forEach var="item" items="${deGiayList}">
-                                                            <option value="${item.id}">${item.loaiDe}</option>
-                                                        </c:forEach>
-                                                    </select>
-                                                    <span class="error-message"></span>
-                                                </div>
-
-                                                <div class="input-group mb-3" style="padding-top: 15px">
-                                                    <div class="input-group-prepend">
+                                                    <div class="col-md-6">
+                                                        <div class="input-group mb-3">
+                                                            <div class="input-group-prepend">
                                                     <span class="input-group-text"
-                                                    ><i class="fas fa-solid fa-upload"></i></span>
-                                                    </div>
-                                                    <div class="custom-file">
-                                                        <input type="file" class="custom-file-input"
-                                                               aria-describedby="inputGroupFileAddon01" name="image3" id="imageNumber2">
-                                                        <label class="custom-file-label" for="imageNumber2">Chọn ảnh kèm theo 2</label>
+                                                    >Ảnh</span>
+                                                            </div>
+                                                            <div class="custom-file">
+                                                                <input type="file" class="custom-file-input"
+                                                                       aria-describedby="inputGroupFileAddon01" name="image31" id="imageNumber2">
+                                                                <label class="custom-file-label" for="imageNumber2">Chọn ảnh</label>
+                                                            </div>
+                                                        </div>
+
                                                     </div>
                                                 </div>
+                                                <div class="row" style="padding-top: 20px">
+                                                    <div class="col-md-6">
+                                                        <div class="input-group flex-nowrap">
+                                                            <div class="input-group-prepend">
+                                                                <span class="input-group-text">Màu sắc</span>
+                                                            </div>
+                                                            <select id="my-select" multiple
+                                                                    class="form-control">
+                                                                <c:forEach var="item" items="${mauSacList}">
+                                                                    <option value="${item.id}">${item.tenMau}</option>
+                                                                </c:forEach>
+                                                            </select>
 
+
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="input-group flex-nowrap">
+                                                            <div class="input-group-prepend">
+                                                                <span class="input-group-text">Kích cỡ</span>
+                                                            </div>
+                                                            <select class="form-control" id="kichco-select" multiple
+                                                                    aria-label="Username"
+                                                                    aria-describedby="addon-wrapping"
+                                                                   >
+                                                                <c:forEach var="item" items="${coList}">
+                                                                    <option value="${item.id}">${item.size}</option>
+                                                                </c:forEach>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div id="selected-options"></div>
 
                                             </div>
-                                            <div class="input-group col-12">
+
+
+                                        </div>
+                                        <div class="modal-footer d-flex justify-content-center">
+                                            <div class="input-group col-12" style="padding-top: 20px">
                                                 <div class="input-group-prepend">
                                                     <span class="input-group-text">Mô tả sản phẩm</span>
                                                 </div>
-                                                <textarea class="form-control" aria-label="With textarea" name="moTa" id="productAddDescribe"></textarea>
-                                                <span class="error-icon" data-toggle="tooltip" data-placement="right" title=""></span>
+                                                <textarea class="form-control" aria-label="With textarea" name="moTa"
+                                                          id="productAddDescribe"></textarea>
+                                                <span class="error-icon" data-toggle="tooltip" data-placement="right"
+                                                      title=""></span>
 
                                             </div>
-                                            <div style="padding-left: 7px;padding-top: 10px">
+                                            <div style="padding-left: 7px;padding-top: 10px" id="trangThaiDiv">
                                                 <label>Trạng thái:</label>
                                                 <div class="form-check-inline">
                                                     <input class="form-check-input" type="radio"
                                                            value=1 name="trangThai" required>
-                                                    <label class="form-check-label" >
-                                                        Còn hàng
+                                                    <label class="form-check-label">
+                                                        Hiển thị
                                                     </label>
                                                 </div>
                                                 <div class="form-check-inline">
                                                     <input class="form-check-input" type="radio"
                                                            value=0 name="trangThai" required>
-                                                    <label class="form-check-label" >
-                                                        Hết hàng
+                                                    <label class="form-check-label">
+                                                        Không hiển thị
                                                     </label>
                                                 </div>
 
                                             </div>
-
-                                        </div>
-                                        <div class="modal-footer d-flex justify-content-center">
-                                            <button class="btn btn-outline-primary" type="submit">Thêm</button>
                                         </div>
 
 
-                                </div>
-                                </form:form>
-                            </table>
+                                    </div>
+
+                                </table>
+                            </div>
                         </div>
                     </div>
+
+                    <div class="card shadow mb-4">
+                        <div class="card-header py-3">
+                            <div class="card-header py-3">
+                                <h6 class="m-0 font-weight-bold text-primary">CHI TIẾT SẢN PHẨM</h6>
+                            </div>
+                            <button type="submit" class="btn-primary"
+                                    style="width: 120px;float: right; border-radius: 2px;margin-right: 20px">Thêm
+                            </button>
+                        </div>
+
+
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-bordered"  width="100%" cellspacing="0">
+
+                                    <thead>
+                                    <tr>
+                                        <th></th>
+                                        <th>Tên sản phẩm</th>
+                                        <th>Loại giày</th>
+                                        <th>Để giày</th>
+                                        <th>Chất liệu</th>
+                                        <th>Giá</th>
+                                        <th>Số lượng</th>
+                                        <th>Trạng thái</th>
+                                        <th></th>
+                                        <th>Ảnh</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+
+                                    </tbody>
+
+                                </table>
+
+                            </div>
+
+                        </div>
+                    </div>
+
+
                 </div>
+                <!-- /.container-fluid -->
 
             </div>
-            <!-- /.container-fluid -->
-
-        </div>
-        <!-- End of Main Content -->
-
+            <!-- End of Main Content -->
+        </form:form>
 
         <!-- Footer -->
         <footer class="sticky-footer bg-white">
@@ -494,13 +520,18 @@
 
 <!-- Custom scripts for all pages-->
 <script src="../../js/sb-admin-2.js"></script>
+
+
+<script src="../../vendor/datatables/jquery.dataTables.min.js"></script>
+<script src="../../vendor/datatables/dataTables.bootstrap4.min.js"></script>
 <script src="../../js/custom-js.js"></script>
 
+<script src="../../js/demo/datatables-demo.js"></script>
 
+</script>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.1.0-rc.0/js/select2.min.js"></script>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.1.0-rc.0/css/select2.min.css">
-
+<%--<script src="https://cdnjs.cloudflare.com/ajax/libs/blueimp-file-upload/10.12.0/js/jquery.fileupload.js"></script>--%>
 
 </body>
 

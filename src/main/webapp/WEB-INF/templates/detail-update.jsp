@@ -26,11 +26,8 @@
 
             <div class="container" id="form-add-1">
                 <input type="hidden"
-                       value="${productct.idProductDetail}"
-                       name="idProductDetail" readonly>
-                <input type="hidden"
-                       value="${productct.sanPham.idProduct}"
-                       name="idProduct" readonly>
+                       value="${productct.idProduct}"
+                       name="idProduct">
                 <div class="row">
                     <div class="col-6">
                         <div class="input-group flex-nowrap">
@@ -39,7 +36,7 @@
                                                         class="fas fa-solid fa-id-card"></i></span>
                             </div>
                             <input type="text" class="form-control"
-                                   value="${productct.sanPham.ma}"
+                                   value="${productct.ma}"
                                    aria-label="Username" aria-describedby="addon-wrapping" name="ma" readonly>
                         </div>
                         <br>
@@ -52,64 +49,11 @@
                             <input type="text" class="form-control"
                                    placeholder="Nhập tên sản phẩm"
                                    aria-label="Username" aria-describedby="addon-wrapping" name="tenSanPham"
-                                   id="productAddName" value="${productct.sanPham.tenSanPham}">
+                                   id="productAddName" value="${productct.tenSanPham}">
 
                             <span class="error-icon" data-toggle="tooltip" data-placement="right" title=""></span>
                         </div>
                         <br>
-                        <div class="input-group flex-nowrap">
-                            <div class="input-group-prepend">
-                                                        <span class="input-group-text"><i
-                                                                class="fas fa-solid fa-money-bill-wave"></i></span>
-                            </div>
-                            <input type="text" class="form-control"
-                                   placeholder="Nhập giá sản phẩm"
-                                   aria-label="Username" aria-describedby="addon-wrapping" name="donGia"
-                                   id="productAddPrice" value="${productct.donGia}">
-                            <span class="error-icon" data-toggle="tooltip" data-placement="right" title=""></span>
-                        </div>
-                        <br>
-                        <div class="input-group flex-nowrap">
-                            <div class="input-group-prepend">
-                                                        <span class="input-group-text"><i
-                                                                class="fas fa-solid fa-bars"></i></span>
-                            </div>
-                            <input type="text" class="form-control"
-                                   placeholder="Nhập số lượng sản phẩm"
-                                   aria-label="Username" aria-describedby="addon-wrapping" name="soLuong"
-                                   id="productAddQuantity" value="${productct.soLuong}">
-                            <span class="error-icon" data-toggle="tooltip" data-placement="right" title=""></span>
-
-                        </div>
-                        <br>
-                        <div class="input-group mb-3">
-                            <div class="input-group-prepend">
-                                                    <span class="input-group-text"
-                                                    ><i class="fas fa-solid fa-upload"></i></span>
-                            </div>
-                            <div class="custom-file">
-                                <input type="file" class="custom-file-input"
-                                       aria-describedby="inputGroupFileAddon01" name="image1">
-                                <label class="custom-file-label">Chọn ảnh đại điện</label>
-                                <input type="hidden"
-                                       value="${productct.photo}"
-                                       name="photo0" readonly>
-                            </div>
-                        </div>
-                        <div class="input-group mb-3">
-                            <div class="input-group-prepend">
-                                                    <span class="input-group-text"
-                                                    ><i class="fas fa-solid fa-upload"></i></span>
-                            </div>
-                            <div class="custom-file">
-                                <input type="file" class="custom-file-input"
-                                       aria-describedby="inputGroupFileAddon01" name="image2">
-                                <label class="custom-file-label">Chọn ảnh kèm theo 1</label>
-                            </div>
-                            <input type="hidden"
-                                   value="${productct.photoOne}"
-                                   name="photoOne1" readonly>
-                        </div>
 
 
                     </div>
@@ -123,71 +67,14 @@
                             <select class="form-control"
                                     name="loaiGiay">
                                 <option selected disabled>Chọn loại giày</option>
-                                <c:forEach var="item" items="${loaiDay}">
-                                    <option value="${item.id}" ${item.id==productct.sanPham.loaiGiay.id?'selected':''}>${item.tenTheLoai}</option>
-                                </c:forEach>
-                            </select>
-                            <span class="error-message"></span>
-                        </div>
-                        <br>
-                        <div class="input-group flex-nowrap">
-                            <div class="input-group-prepend">
-                                                <span class="input-group-text"><i
-                                                        class="fas fa-solid fa-id-card"></i></span>
-                            </div>
-                            <select class="form-control"
-                                    name="chatLieu">
-                                <c:forEach var="item" items="${chatLieuList}">
-                                    <option value="${item.id}" ${item.id==productct.chatLieu.id?'selected':''}>${item.tenChatLieu}</option>
-                                </c:forEach>
-                            </select>
-
-                        </div>
-                        <br>
-                        <div class="input-group flex-nowrap">
-                            <div class="input-group-prepend">
-                                                <span class="input-group-text"><i
-                                                        class="fas fa-solid fa-id-card"></i></span>
-                            </div>
-                            <select name="mauSac" class="form-control">
-                                <c:forEach var="item" items="${mauSacList}">
-                                    <option value="${item.id}" ${item.id==productct.mauSac.id?'selected':''}>${item.tenMau}</option>
+                                <c:forEach var="item" items="${listLoai}">
+                                    <option value="${item.id}" ${item.id==productct.loaiGiay.id?'selected':''}>${item.tenTheLoai}</option>
                                 </c:forEach>
                             </select>
                         </div>
 
-                        <br>
-                        <div class="input-group flex-nowrap">
-                            <div class="input-group-prepend">
-                                                <span class="input-group-text"><i
-                                                        class="fas fa-solid fa-id-card"></i></span>
-                            </div>
-                            <select class="form-control"
-                                    aria-label="Username" aria-describedby="addon-wrapping" name="kichCo">
-                                <option selected disabled>Chọn kích cỡ giày</option>
-                                <c:forEach var="item" items="${coList}">
-                                    <option value="${item.id}" ${item.id==productct.kichCo.id?'selected':''}>${item.size}</option>
-                                </c:forEach>
-                            </select>
-                            <span class="error-message"></span>
-                        </div>
-                        <br>
-                        <div class="input-group flex-nowrap">
-                            <div class="input-group-prepend">
-                                                <span class="input-group-text"><i
-                                                        class="fas fa-solid fa-id-card"></i></span>
-                            </div>
-                            <select class="form-control"
-                                    aria-label="Username" aria-describedby="addon-wrapping" name="deGiay">
-                                <option selected disabled>Chọn loại đế giày</option>
-                                <c:forEach var="item" items="${deGiayList}">
-                                    <option value="${item.id}" ${item.id==productct.deGiay.id?'selected':''}>${item.loaiDe}</option>
-                                </c:forEach>
-                            </select>
-                            <span class="error-message"></span>
-                        </div>
 
-                        <div class="input-group mb-3" style="padding-top: 15px">
+                        <div class="input-group mb-3" style="padding-top: 25px">
                             <div class="input-group-prepend">
                                                     <span class="input-group-text"
                                                     ><i class="fas fa-solid fa-upload"></i></span>
@@ -195,10 +82,10 @@
                             <div class="custom-file">
                                 <input type="file" class="custom-file-input"
                                        aria-describedby="inputGroupFileAddon01" name="image3" id="imageNumber2">
-                                <label class="custom-file-label" for="imageNumber2">Chọn ảnh kèm theo 2</label>
+                                <label class="custom-file-label" for="imageNumber2">Chọn ảnh</label>
                                 <input type="hidden"
-                                       value="${productct.photoTwo}"
-                                       name="photoTwo2" readonly>
+                                       value="${productct.imgMain}"
+                                       name="fileData" readonly>
                             </div>
                         </div>
 
@@ -210,7 +97,8 @@
                         </div>
                         <textarea class="form-control" aria-label="With textarea" name="moTa"
                                   id="productAddDescribe">${productct.moTa}</textarea>
-                        <span class="error-icon" data-toggle="tooltip" data-placement="right" title=""></span>
+                        <span class="error-icon" data-toggle="tooltip" data-placement="right"
+                              title=""></span>
 
                     </div>
                     <div style="padding-left: 7px;padding-top: 10px">
@@ -219,22 +107,22 @@
                             <input class="form-check-input" type="radio"
                                    value=1 name="trangThai" required ${1==productct.trangThai?'checked':''}>
                             <label class="form-check-label">
-                                Còn hàng
+                                Hiển thị
                             </label>
                         </div>
                         <div class="form-check-inline">
                             <input class="form-check-input" type="radio"
                                    value=0 name="trangThai" required ${0==productct.trangThai?'checked':''}>
                             <label class="form-check-label">
-                                Hết hàng
+                                Không hiển thị
                             </label>
                         </div>
 
                     </div>
 
                 </div>
-                <div class="modal-footer d-flex justify-content-center">
-                    <button class="btn btn-outline-primary" type="submit">Thêm</button>
+                <div class="d-flex justify-content-center">
+                    <button class="btn btn-outline-primary" type="submit">Sửa</button>
                 </div>
             </div>
 

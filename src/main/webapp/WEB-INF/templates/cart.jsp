@@ -118,7 +118,7 @@
                                 <td>
                                     <div class="img-box">
                                         <img style="width: 250px; height: 200px;"
-                                             src="${cartItem.chiTietSanPham.sanPham.photo}">
+                                             src="${cartItem.chiTietSanPham.photo}">
                                     </div>
                                 </td>
                                 <td>

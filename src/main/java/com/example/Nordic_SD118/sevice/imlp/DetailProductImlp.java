@@ -51,6 +51,13 @@ public class DetailProductImlp implements ProductDetailSevice {
         return repository.save(sanPham);
     }
 
+
+
+    @Override
+    public List<ChiTietSanPham> SaveAll(List<ChiTietSanPham> detail) {
+        return repository.saveAll(detail);
+    }
+
     @Override
     public ChiTietSanPham update(ChiTietSanPham chiTietSanPham) {
         Integer idSanPham = chiTietSanPham.getIdProductDetail();

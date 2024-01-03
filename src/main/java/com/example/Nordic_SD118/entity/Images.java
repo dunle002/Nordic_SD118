@@ -3,6 +3,7 @@ package com.example.Nordic_SD118.entity;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -18,39 +19,28 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Table(name = "san_pham")
+@Table(name = "photo")
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class SanPham {
+public class Images {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private Integer idProduct;
-    @Column(name = "ma")
+    private Integer idImages;
 
-    private String ma;
+    @Column(name = "duong_dan")
+    private String url;
 
-    @Column(name = "ten_san_pham")
-    private String tenSanPham;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_detail_san_pham")
+    private ChiTietSanPham detail;
 
-    @Column(name = "mo_ta")
-    private String moTa;
-
-    @Column(name = "photo")
-    private String imgMain;
-
-    @Column(name = "trang_thai")
-    private Integer trangThai;
-
-    @ManyToOne
-    @JoinColumn(name = "id_loai_giay")
-    private LoaiGiay loaiGiay;
-
-    @OneToMany(mappedBy = "sanPham", cascade = CascadeType.ALL)
-    private List<ChiTietSanPham> children;
+    public void setParentEntity(ChiTietSanPham parentEntity) {
+        this.detail = parentEntity;
+    }
 
 
 }

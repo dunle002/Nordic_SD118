@@ -13,5 +13,6 @@ public interface ProductDetailSevice {
     public ChiTietSanPham getOne(Integer id);
     public  void delete (ChiTietSanPham id);
     public ChiTietSanPham Save(ChiTietSanPham detail);
+    public List<ChiTietSanPham> SaveAll(List<ChiTietSanPham> detail);
     public ChiTietSanPham update(ChiTietSanPham detail);
 }
