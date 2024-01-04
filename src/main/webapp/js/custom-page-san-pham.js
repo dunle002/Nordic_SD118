@@ -18,7 +18,8 @@ $(document).ready(function() {
     });
 });
 $(document).ready(function () {
-    $('.btn-detail').click(function () {
+    $(document).on("click", ".btn-detail", function(event) {
+        event.preventDefault();
         var productId = $(this).data('product-id');
         $.ajax({
             url: "/product/productDetail",

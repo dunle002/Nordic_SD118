@@ -210,6 +210,15 @@ public class SanPhamImlp implements SanPhamSevice {
         return "Thành công";
     }
 
+    @Override
+    public String checkNameProduct(String s) {
+        if(repository.existsByTenSanPhamIsLike(s.trim())){
+            return "Sản phẩm đã có sẵn";
+        }else{
+            return "Thêm thành công";
+        }
+    }
+
     private String generateRandomCode() {
         String numbers = "0123456789";
         String letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";

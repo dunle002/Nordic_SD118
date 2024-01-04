@@ -32,5 +32,6 @@ public interface SanPhamSevice {
                         List<Integer> soLuongGet,
                         SanPham sanPham
                         );
+    String checkNameProduct(String s);
 
 }

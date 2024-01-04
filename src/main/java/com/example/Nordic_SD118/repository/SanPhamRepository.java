@@ -8,4 +8,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface SanPhamRepository extends JpaRepository<SanPham,Integer> {
     boolean existsByMa(String ma);
+    boolean existsByTenSanPhamIsLike(String ten);
 }

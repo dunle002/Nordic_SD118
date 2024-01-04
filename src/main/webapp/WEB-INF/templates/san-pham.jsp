@@ -214,74 +214,77 @@
                 <!-- Page Heading -->
                 <h1 class="h3 mb-2 text-gray-800">Tables</h1>
                 <!-- DataTales Example -->
-                <div class="row">
-
-                    <div class="card shadow mb-4 col-6">
-                        <div class="card-header py-3">
-                            <h6 class="m-0 font-weight-bold text-primary">Danh sách sản phẩm</h6>
-                        </div>
 
 
-                        <div class="card-body">
-                            <div class="table-responsive">
-                                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                                    <thead>
-                                    <tr>
-                                        <th>STT</th>
-                                        <th>Mã</th>
-                                        <th>Tên sản phẩm</th>
-                                        <th>Loại giày</th>
-                                        <th>Trạng thái</th>
-                                        <th>Action</th>
-                                    </tr>
-                                    </thead>
-                                    <tfoot>
-                                    <tr>
-                                        <th>STT</th>
-                                        <th>Mã</th>
-                                        <th>Tên sản phẩm</th>
-                                        <th>Ảnh đai điện</th>
-                                        <th>Trạng thái</th>
-                                        <th>Action</th>
-                                    </tr>
-                                    </tfoot>
-                                    <tbody>
-                                    <c:forEach items="${product}" var="pro" varStatus="i">
-                                        <tr>
-                                            <th>${i.index+1}</th>
-                                            <th> <a class="column-click" data-product-id="${pro.idProduct}">
-                                                    ${pro.ma}
-                                            </a></th>
-                                            <td>${pro.tenSanPham}</td>
-                                            <td><img src="${pro.imgMain}" width="50px" height="50px"></td>
-                                            <td>${pro.trangThai==1?"Hiển thị":"Không hiển thị"}</td>
-                                            <td>
-                                                <a class="btn btn-primary btn-detail"
-                                                   data-product-id="${pro.idProduct}">
-                                                    <i class="fa fa-wrench" aria-hidden="true"></i>
-                                                </a>
-                                            </td>
-
-                                        </tr>
-                                    </c:forEach>
-                                    </tbody>
-
-                                </table>
-                            </div>
-                        </div>
+                <div class="card shadow mb-4">
+                    <div class="card-header py-3">
+                        <h6 class="m-0 font-weight-bold text-primary">Danh sách sản phẩm</h6>
                     </div>
 
-                    <div class="card shadow mb-4 col-6" id="productDetailAll">
-                        <div class="card-header py-3">
-                            <h6 class="m-0 font-weight-bold text-primary">Chi tiết sản phẩm</h6>
-                        </div>
 
-                        <div class="card-body" id="table-body-add">
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                <thead>
+                                <tr>
+                                    <th>STT</th>
+                                    <th>Mã</th>
+                                    <th>Tên sản phẩm</th>
+                                    <th>Loại giày</th>
+                                    <th>Trạng thái</th>
+                                    <th>Số lượng tồn</th>
+                                    <th>Action</th>
+                                </tr>
+                                </thead>
+                                <tfoot>
+                                <tr>
+                                    <th>STT</th>
+                                    <th>Mã</th>
+                                    <th>Tên sản phẩm</th>
+                                    <th>Ảnh đai điện</th>
+                                    <th>Trạng thái</th>
+                                    <th>Số lượng tồn</th>
+                                    <th>Action</th>
+                                </tr>
+                                </tfoot>
+                                <tbody>
+                                <c:forEach items="${product}" var="pro" varStatus="i">
+                                    <tr>
+                                        <th>${i.index+1}</th>
+                                        <th><a class="column-click" data-product-id="${pro.idProduct}">
+                                                ${pro.ma}
+                                        </a></th>
+                                        <td>${pro.tenSanPham}</td>
+                                        <td><img src="${pro.imgMain}" width="50px" height="50px"></td>
+                                        <td>${pro.trangThai==1?"Hiển thị":"Không hiển thị"}</td>
+                                        <c:set var="totalSoLuong" value="0" />
+                                        <c:forEach var="detail" items="${pro.children}">
+                                            <c:set var="soLuong" value="${detail.soLuong}" />
+                                            <c:set var="totalSoLuong" value="${totalSoLuong + soLuong}" />
+                                        </c:forEach>
+                                        <td>${totalSoLuong==0?'hết hàng':totalSoLuong}</td>
+                                        <td>
+                                            <a class="btn btn-primary btn-detail"
+                                               data-product-id="${pro.idProduct}">
+                                                <i class="fa fa-wrench" aria-hidden="true"></i>
+                                            </a>
+                                        </td>
 
+                                    </tr>
+                                </c:forEach>
+                                </tbody>
+
+                            </table>
                         </div>
                     </div>
-
                 </div>
+
+                <div id="productDetailAll">
+                    <div id="table-body-add"></div>
+                </div>
+
+
+
             </div>
             <%--            modal detail--%>
             <div class="modal fade" id="productDetailModal" tabindex="-1" role="dialog"

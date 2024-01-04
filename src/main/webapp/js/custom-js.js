@@ -123,7 +123,7 @@ $(document).ready(function () {
 //lấy 1 sản phẩm
 $(document).ready(function () {
     $('.btn-detail').click(function () {
-        var productId = $(this).data('product-id');
+        var productId = $(this).data('product-detail-id');
         $.ajax({
             url: "/product/productDetail",
             type: "GET",
@@ -159,7 +159,7 @@ $(document).ready(function () {
 
                 reader.onload = function (e) {
                     var image = $('<img>').attr('src', e.target.result);
-                    var deleteIcon = $('<i>').addClass('fas fa-trash delete-icon');
+                    var deleteIcon = $('<i>').addClass('fa fa-minus-circle delete-icon');
 
                     var imageWrapper = $('<div>').addClass('image-wrapper');
                     imageWrapper.append(image);
@@ -208,6 +208,7 @@ $(document).ready(function () {
         }
     }
 
+
     $('#my-select, #kichco-select, #productAddName,input[name="trangThai"]').change(function () {
         var selectedColors = $('#my-select').val();
         var selectedSizes = $('#kichco-select').val();
@@ -229,7 +230,9 @@ $(document).ready(function () {
 
                 for (var j = 0; j < selectedSizes.length; j++) {
                     var size = selectedSizes[j];
+
                     var trSize = createSizeTableRow(color, size);
+
                     $('tbody').append(trSize);
                     sizeCount++;
 
@@ -246,7 +249,6 @@ $(document).ready(function () {
     });
 
 
-
     function createSizeTableRow(color, size) {
         if (!isInputsSelected) {
             return $(); // Trả về đối tượng jQuery rỗng nếu chưa chọn xong các input
@@ -256,12 +258,12 @@ $(document).ready(function () {
         })[0];
         var selectedColorText = selectedColorOption.text;
         var inputMau = $('<input>').attr('type', 'hidden').attr('value', $('#my-select option[value="' + color + '"]:selected').val()).attr('name', 'mauSac');
-        var inputDeGiay=$('<input>').attr('type', 'hidden').attr('value', $('#degiay-select option:selected').val()).attr('name', 'deGiay');
-        var inputChatGiay=$('<input>').attr('type', 'hidden').attr('value', $('#chatlieu-select option:selected').val()).attr('name', 'chatLieu');
-        var inputKichCo=$('<input>').attr('type', 'hidden').attr('value', $('#kichco-select option[value="' + size + '"]:selected').val()).attr('name', 'kichCo');
+        var inputDeGiay = $('<input>').attr('type', 'hidden').attr('value', $('#degiay-select option:selected').val()).attr('name', 'deGiay');
+        var inputChatGiay = $('<input>').attr('type', 'hidden').attr('value', $('#chatlieu-select option:selected').val()).attr('name', 'chatLieu');
+        var inputKichCo = $('<input>').attr('type', 'hidden').attr('value', $('#kichco-select option[value="' + size + '"]:selected').val()).attr('name', 'kichCo');
         var tr = $('<tr>');
         var checkbox = $('<input>').attr('type', 'checkbox');
-        var productName = $('<td>').text($('#productAddName').val()+' ['+ selectedColorText+'] ['+ $('#kichco-select option[value="' + size + '"]:selected').text()+']');
+        var productName = $('<td>').text($('#productAddName').val() + ' [' + selectedColorText + '] [' + $('#kichco-select option[value="' + size + '"]:selected').text() + ']');
         var loaiGiayCell = $('<td>').text($('#loaiday-select option:selected').text());
         var chatLieuCell = $('<td>').text($('#chatlieu-select option:selected').text());
         var deGiayCell = $('<td>').text($('#degiay-select option:selected').text());

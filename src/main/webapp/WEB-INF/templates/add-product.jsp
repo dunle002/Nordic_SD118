@@ -161,7 +161,7 @@
     <!-- Content Wrapper -->
     <div id="content-wrapper" class="d-flex flex-column">
         <form:form method="post" action="/product/add"
-                   enctype="multipart/form-data">
+                   enctype="multipart/form-data" id="myForm">
             <!-- Main Content -->
             <div id="content">
 
@@ -286,7 +286,7 @@
                                                             <select class="form-control"
                                                                     aria-label="Username"
                                                                     aria-describedby="addon-wrapping"
-                                                                     id="loaiday-select" name="loaiGiay">
+                                                                    id="loaiday-select" name="loaiGiay">
                                                                 <c:forEach var="item" items="${loaiDay}">
                                                                     <option value="${item.id}">${item.tenTheLoai}</option>
                                                                 </c:forEach>
@@ -322,7 +322,7 @@
                                                             <select class="form-control" id="degiay-select"
                                                                     aria-label="Username"
                                                                     aria-describedby="addon-wrapping"
-                                                                    >
+                                                            >
                                                                 <c:forEach var="item" items="${deGiayList}">
                                                                     <option value="${item.id}">${item.loaiDe}</option>
                                                                 </c:forEach>
@@ -338,8 +338,10 @@
                                                             </div>
                                                             <div class="custom-file">
                                                                 <input type="file" class="custom-file-input"
-                                                                       aria-describedby="inputGroupFileAddon01" name="image31" id="imageNumber2">
-                                                                <label class="custom-file-label" for="imageNumber2">Chọn ảnh</label>
+                                                                       aria-describedby="inputGroupFileAddon01"
+                                                                       name="image31" id="imageNumber2">
+                                                                <label class="custom-file-label" for="imageNumber2">Chọn
+                                                                    ảnh</label>
                                                             </div>
                                                         </div>
 
@@ -369,7 +371,7 @@
                                                             <select class="form-control" id="kichco-select" multiple
                                                                     aria-label="Username"
                                                                     aria-describedby="addon-wrapping"
-                                                                   >
+                                                            >
                                                                 <c:forEach var="item" items="${coList}">
                                                                     <option value="${item.id}">${item.size}</option>
                                                                 </c:forEach>
@@ -431,12 +433,9 @@
                                     style="width: 120px;float: right; border-radius: 2px;margin-right: 20px">Thêm
                             </button>
                         </div>
-
-
                         <div class="card-body">
                             <div class="table-responsive">
-                                <table class="table table-bordered"  width="100%" cellspacing="0">
-
+                                <table class="table table-bordered" width="100%" cellspacing="0">
                                     <thead>
                                     <tr>
                                         <th></th>
@@ -454,12 +453,10 @@
                                     <tbody>
 
                                     </tbody>
-
                                 </table>
-
                             </div>
-
                         </div>
+
                     </div>
 
 
@@ -529,9 +526,25 @@
 <script src="../../js/demo/datatables-demo.js"></script>
 
 </script>
-
+<script>
+    <c:if test="${not empty alertType}">
+    window.onload = function() {
+        alert("${alertMessage}");
+    };
+    </c:if>
+</script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.1.0-rc.0/js/select2.min.js"></script>
 <%--<script src="https://cdnjs.cloudflare.com/ajax/libs/blueimp-file-upload/10.12.0/js/jquery.fileupload.js"></script>--%>
+
+<script>
+    document.getElementById("myForm").addEventListener("submit", function(event) {
+        var mauSacInput = document.getElementsByName("mauSac")[0];
+        if (!mauSacInput) {
+            event.preventDefault(); // Ngăn chặn gửi biểu mẫu
+            alert("Vui lòng tạo sản phẩm!");
+        }
+    });
+</script>
 
 </body>
 

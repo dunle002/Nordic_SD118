@@ -138,7 +138,7 @@
 <script src="../../vendor/jquery-easing/jquery.easing.min.js"></script>
 
 <!-- Custom scripts for all pages-->
-<script src="../../js/custom-js.js"></script>
+<%--<script src="../../js/custom-js.js"></script>--%>
 <script>
     // const fileInputs = document.querySelectorAll('.custom-file-input');
     // const labelElements = document.querySelectorAll('.custom-file-label');

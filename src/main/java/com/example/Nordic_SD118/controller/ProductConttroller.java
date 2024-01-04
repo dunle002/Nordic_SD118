@@ -1,6 +1,5 @@
 package com.example.Nordic_SD118.controller;
 
-
 import com.example.Nordic_SD118.DTO.ProductDto;
 import com.example.Nordic_SD118.entity.ChatLieu;
 import com.example.Nordic_SD118.entity.ChiTietSanPham;
@@ -21,17 +20,20 @@ import com.example.Nordic_SD118.sevice.SanPhamSevice;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 
 @Controller
@@ -56,7 +58,7 @@ public class ProductConttroller {
     private ProductMapper mapper;
     @Autowired
     private ImageRepositoriy imageRepositoriy;
-
+    private final ScheduledExecutorService executorService = Executors.newSingleThreadScheduledExecutor();
 
     @RequestMapping("/view")
     public String shopHome(Model model
@@ -90,6 +92,13 @@ public class ProductConttroller {
         return "add-product";
     }
 
+    private void scheduleRedirect(String url, RedirectAttributes redirectAttributes, int delaySeconds) {
+        executorService.schedule(() -> {
+            redirectAttributes.addFlashAttribute("redirectDelay", true);
+            redirectAttributes.addFlashAttribute("redirectUrl", url);
+        }, delaySeconds, TimeUnit.SECONDS);
+    }
+
     //
     @PostMapping(value = "/add", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public String saveSanPham(@ModelAttribute(name = "product") ProductDto product,
@@ -100,15 +109,28 @@ public class ProductConttroller {
                               @RequestParam("mauSac") List<Integer> mauSacGet,
                               @RequestParam("kichCo") List<Integer> kichCoGet,
                               @RequestParam("donGia") List<BigDecimal> giaGet,
-                              @RequestParam("soLuong") List<Integer> soLuongGet
+                              @RequestParam("soLuong") List<Integer> soLuongGet,
+                              Model model,
+                              RedirectAttributes redirectAttributes
     ) throws IOException {
-        String fileName = "../../images/" + fileImagesOne.getOriginalFilename();
-        product.setImgMain(fileName);
-        SanPham sanPham = mapper.convertToProduct(product);
-        service.Save(sanPham);
-        service.addAllDetail(fileImages, chatLieuGet, deGiayGet, mauSacGet, kichCoGet, giaGet, soLuongGet, sanPham);
 
-        return "redirect:/product/view";
+        String check = service.checkNameProduct(product.getTenSanPham());
+        if (check == "Sản phẩm đã có sẵn") {
+            redirectAttributes.addFlashAttribute("alertType", "error");
+            redirectAttributes.addFlashAttribute("alertMessage", "Sản phẩm đã tồn tại.");
+            return "redirect:/product/view-add";
+        } else {
+            String fileName = "../../images/" + fileImagesOne.getOriginalFilename();
+            product.setImgMain(fileName);
+            SanPham sanPham = mapper.convertToProduct(product);
+            service.Save(sanPham);
+            service.addAllDetail(fileImages, chatLieuGet, deGiayGet, mauSacGet, kichCoGet, giaGet, soLuongGet, sanPham);
+            redirectAttributes.addFlashAttribute("alertType", "success");
+            redirectAttributes.addFlashAttribute("alertMessage", "Xử lý thành công.");
+            return "redirect:/product/view";
+        }
+
+
     }
 
 //    @PostMapping(value = "/update", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
@@ -189,8 +211,9 @@ public class ProductConttroller {
         model.addAttribute("productct", product);
         return "detail-update";
     }
+
     @GetMapping("/getDetail")
-    public String getProductDetail(@RequestParam("id") Integer id,Model model) {
+    public String getProductDetail(@RequestParam("id") Integer id, Model model) {
         // Gọi phương thức trong ProductService để lấy thông tin chi tiết sản phẩm dựa trên id
         SanPham product = service.getOne(id);
         model.addAttribute("productct", product);
