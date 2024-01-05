@@ -82,7 +82,7 @@ public class WebHomeController {
         BigDecimal tongTien = BigDecimal.valueOf(0);
         List<GioHangChiTiet> list = gioHangCTRepository.findAll();
         for (int i = 0; i < list.size(); i++) {
-            tongTien = tongTien.add(list.get(i).getDonGia());
+//            tongTien = tongTien.add(list.get(i).getDonGia());
         }
         if (list.isEmpty()) {
             model.addAttribute("cartEmptyMessage", "Giỏ hàng của bạn trống");

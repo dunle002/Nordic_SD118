@@ -1,6 +1,7 @@
 package com.example.Nordic_SD118.sevice;
 
 
+import com.example.Nordic_SD118.entity.ChiTietSanPham;
 import com.example.Nordic_SD118.entity.SanPham;
 import java.math.BigDecimal;
 import java.util.List;
@@ -20,17 +21,18 @@ public interface SanPhamSevice {
     public SanPham Save(SanPham sanPham);
 
     public SanPham update(SanPham sanPham);
+    public SanPham findSanPhamByTen(String sanPham);
 
     String generateUniqueProductCode();
 
-    String addAllDetail(List<MultipartFile> fileImages,
-                        Integer chatLieuGet,
-                        Integer deGiayGet,
-                        List<Integer> mauSacGet,
-                        List<Integer> kichCoGet,
-                        List<BigDecimal> giaGet,
-                        List<Integer> soLuongGet,
-                        SanPham sanPham
+    List<ChiTietSanPham> addAllDetail(List<MultipartFile> fileImages,
+                                      Integer chatLieuGet,
+                                      Integer deGiayGet,
+                                      List<Integer> mauSacGet,
+                                      List<Integer> kichCoGet,
+                                      List<Integer> giaGet,
+                                      List<Integer> soLuongGet,
+                                      SanPham sanPham
                         );
     String checkNameProduct(String s);
 

@@ -21,7 +21,7 @@ public class ChiTietSanPham {
     private Integer idProductDetail;
 
     @Column(name = "don_gia")
-    private BigDecimal donGia;
+    private Integer donGia;
 
     @Column(name = "so_luong_ton")
     private Integer soLuong;

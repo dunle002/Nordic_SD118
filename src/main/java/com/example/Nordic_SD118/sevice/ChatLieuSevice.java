@@ -8,4 +8,6 @@ import java.util.Optional;
 public interface ChatLieuSevice {
     public List<ChatLieu> getAll();
     public Optional<ChatLieu> getOne(Integer id);
+    public boolean add(ChatLieu id);
+    public void remove(ChatLieu id);
 }

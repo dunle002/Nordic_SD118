@@ -49,6 +49,10 @@ public class SanPham {
     @JoinColumn(name = "id_loai_giay")
     private LoaiGiay loaiGiay;
 
+    @ManyToOne
+    @JoinColumn(name = "id_thuong_hieu")
+    private ThuongHieu thuongHieu;
+
     @OneToMany(mappedBy = "sanPham", cascade = CascadeType.ALL)
     private List<ChiTietSanPham> children;
 

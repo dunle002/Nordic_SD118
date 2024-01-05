@@ -129,6 +129,13 @@
                     <a class="collapse-item" href="/product/view">Danh sách sản phẩm</a>
                     <div class="collapse-divider"></div>
                     <a class="collapse-item" href="/product/view-add">Tạo sản phẩm</a>
+                    <h6 class="collapse-header">Thuộc tính</h6>
+                    <a class="collapse-item" href="/chat-lieu/view">Chất liệu</a>
+                    <a class="collapse-item" href="/kich-co/view">Kích cỡ</a>
+                    <a class="collapse-item" href="/loai-giay/view">Loại giày</a>
+                    <a class="collapse-item" href="/de-giay/view">Đế giày</a>
+                    <a class="collapse-item" href="/mau-sac/view">Màu sắc</a>
+                    <a class="collapse-item" href="/thuong-hieu/view">Thương hiệu</a>
                 </div>
             </div>
         </li>
@@ -243,8 +250,8 @@
                                             <div class="py-3">
                                                 <h7 class="m-0 font-weight-bold text-primary">SẢN PHẨM</h7>
                                             </div>
-                                            <div style="width: 100%">
-                                                <div class="input-group flex-nowrap">
+                                            <div style="width: 100%" class="row">
+                                                <div class="input-group flex-nowrap col-md-6">
                                                     <div class="input-group-prepend">
                                                         <span class="input-group-text">Tên sản phẩm</span>
                                                     </div>
@@ -254,21 +261,36 @@
                                                            aria-describedby="addon-wrapping" name="tenSanPham"
                                                            id="productAddName"
                                                            list="productList" autocomplete="off"
-                                                           onchange="filterOptions(event)">
+                                                    >
                                                     <datalist id="productList">
                                                         <c:forEach items="${tenSanPham}" var="sp">
                                                             <option class="select2-dropdown"
                                                                     value="${sp.tenSanPham}">${sp.tenSanPham}</option>
                                                         </c:forEach>
                                                     </datalist>
-                                                    <div class="input-group-append">
-                                                        <a class="btn btn-primary" type="button"><i class="fa fa-plus"
-                                                                                                    aria-hidden="true"></i></a>
-                                                    </div>
                                                     <span class="error-icon" data-toggle="tooltip"
                                                           data-placement="right" title=""></span>
                                                 </div>
-
+                                                <div class="col-md-6">
+                                                    <div class="input-group flex-nowrap">
+                                                        <div class="input-group-prepend">
+                                                            <span class="input-group-text">Thương hiệu</span>
+                                                        </div>
+                                                        <select class="form-control" id="thuong-hieu-select"
+                                                                aria-label="Username"
+                                                                aria-describedby="addon-wrapping" name="thuongHieu"
+                                                        >
+                                                            <c:forEach var="item" items="${thuongHieuList}">
+                                                                <option value="${item.id}">${item.tenThuongHieu}</option>
+                                                            </c:forEach>
+                                                        </select>
+                                                        <div class="input-group-append">
+                                                            <a class="btn btn-primary" type="button" id="id-thuong-hieu"
+                                                               style="border-radius:0;height: 41px"><i
+                                                                    class="fa fa-plus" aria-hidden="true"></i></a>
+                                                        </div>
+                                                    </div>
+                                                </div>
 
                                             </div>
                                             <br>
@@ -277,6 +299,7 @@
                                             </div>
                                             <br>
                                             <div class="container">
+
                                                 <div class="row">
                                                     <div class="col-md-6">
                                                         <div class="input-group flex-nowrap">
@@ -293,6 +316,7 @@
                                                             </select>
                                                             <div class="input-group-append">
                                                                 <a class="btn btn-primary" type="button"
+                                                                   id="id-loai-giay"
                                                                    style="border-radius:0;height: 41px"><i
                                                                         class="fa fa-plus" aria-hidden="true"></i></a>
                                                             </div>
@@ -310,6 +334,12 @@
                                                                     <option value="${item.id}">${item.tenChatLieu}</option>
                                                                 </c:forEach>
                                                             </select>
+                                                            <div class="input-group-append">
+                                                                <a class="btn btn-primary" type="button"
+                                                                   id="id-chat-lieu"
+                                                                   style="border-radius:0;height: 41px"><i
+                                                                        class="fa fa-plus" aria-hidden="true"></i></a>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -327,6 +357,11 @@
                                                                     <option value="${item.id}">${item.loaiDe}</option>
                                                                 </c:forEach>
                                                             </select>
+                                                            <div class="input-group-append">
+                                                                <a class="btn btn-primary" type="button" id="id-de-giay"
+                                                                   style="border-radius:0;height: 41px"><i
+                                                                        class="fa fa-plus" aria-hidden="true"></i></a>
+                                                            </div>
                                                             <span class="error-message"></span>
                                                         </div>
                                                     </div>
@@ -359,7 +394,11 @@
                                                                     <option value="${item.id}">${item.tenMau}</option>
                                                                 </c:forEach>
                                                             </select>
-
+                                                            <div class="input-group-append">
+                                                                <a class="btn btn-primary" type="button" id="id-mau-sac"
+                                                                   style="border-radius:0;height: 41px"><i
+                                                                        class="fa fa-plus" aria-hidden="true"></i></a>
+                                                            </div>
 
                                                         </div>
                                                     </div>
@@ -376,6 +415,11 @@
                                                                     <option value="${item.id}">${item.size}</option>
                                                                 </c:forEach>
                                                             </select>
+                                                            <div class="input-group-append">
+                                                                <a class="btn btn-primary" type="button" id="id-kich-co"
+                                                                   style="border-radius:0;height: 41px"><i
+                                                                        class="fa fa-plus" aria-hidden="true"></i></a>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -480,9 +524,145 @@
     </div>
     <!-- End of Content Wrapper -->
 
-</div>
-<!-- End of Page Wrapper -->
+    <%--            modal thuong hieu--%>
+    <div class="modal fade" id="thuongHieuModal" tabindex="-1" role="dialog"
+         aria-labelledby="productDetailModalLabel" aria-hidden="true"
 
+    >
+        <div class="modal-dialog" role="document" style="max-width: 50%;
+                                            margin: 0 auto;">
+            <div class="modal-content" style="width: 100%">
+                <div class="modal-header">
+                    <h5 class="modal-title" >Thương hiệu</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form:form method="post" action="/thuong-hieu/add" modelAttribute="thuongHieuAdd"
+                           enctype="multipart/form-data">
+                    <div class="modal-body" style="width: 100%">
+
+                    </div>
+                </form:form>
+            </div>
+        </div>
+    </div>
+<%--    modal chất liệu--%>
+    <div class="modal fade" id="chatLieuModal" tabindex="-1" role="dialog"
+         aria-labelledby="productDetailModalLabel" aria-hidden="true"
+
+    >
+        <div class="modal-dialog" role="document" style="max-width: 50%;
+                                            margin: 0 auto;">
+            <div class="modal-content" style="width: 100%">
+                <div class="modal-header">
+                    <h5 class="modal-title">Chất liệu</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form:form method="post" action="/chat-lieu/add" modelAttribute="chatLieuAdd"
+                           enctype="multipart/form-data">
+                    <div class="modal-body" style="width: 100%">
+
+                    </div>
+                </form:form>
+            </div>
+        </div>
+    </div>
+<%--    Màu sắc--%>
+    <div class="modal fade" id="mauSacModal" tabindex="-1" role="dialog"
+         aria-labelledby="productDetailModalLabel" aria-hidden="true"
+
+    >
+        <div class="modal-dialog" role="document" style="max-width: 50%;
+                                            margin: 0 auto;">
+            <div class="modal-content" style="width: 100%">
+                <div class="modal-header">
+                    <h5 class="modal-title">Màu sắc</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form:form method="post" action="/mau-sac/add" modelAttribute="mauSacAdd"
+                           enctype="multipart/form-data">
+                    <div class="modal-body" style="width: 100%">
+
+                    </div>
+                </form:form>
+            </div>
+        </div>
+    </div>
+</div>
+<%--Kích cỡ--%>
+<div class="modal fade" id="kichCoModal" tabindex="-1" role="dialog"
+     aria-labelledby="productDetailModalLabel" aria-hidden="true"
+
+>
+    <div class="modal-dialog" role="document" style="max-width: 50%;
+                                            margin: 0 auto;">
+        <div class="modal-content" style="width: 100%">
+            <div class="modal-header">
+                <h5 class="modal-title">Kích cỡ</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form:form method="post" action="/kich-co/add" modelAttribute="kichCoAdd"
+                       enctype="multipart/form-data">
+                <div class="modal-body" style="width: 100%">
+
+                </div>
+            </form:form>
+        </div>
+    </div>
+</div>
+<%--Loại giày--%>
+<div class="modal fade" id="loaiDayModal" tabindex="-1" role="dialog"
+     aria-labelledby="productDetailModalLabel" aria-hidden="true"
+
+>
+    <div class="modal-dialog" role="document" style="max-width: 50%;
+                                            margin: 0 auto;">
+        <div class="modal-content" style="width: 100%">
+            <div class="modal-header">
+                <h5 class="modal-title">Loại giày</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form:form method="post" action="/loai-giay/add" modelAttribute="loaiGiayAdd"
+                       enctype="multipart/form-data">
+                <div class="modal-body" style="width: 100%">
+
+                </div>
+            </form:form>
+        </div>
+    </div>
+</div>
+<%--Đế giày--%>
+<div class="modal fade" id="deGiayModal" tabindex="-1" role="dialog"
+     aria-labelledby="productDetailModalLabel" aria-hidden="true"
+
+>
+    <div class="modal-dialog" role="document" style="max-width: 50%;
+                                            margin: 0 auto;">
+        <div class="modal-content" style="width: 100%">
+            <div class="modal-header">
+                <h5 class="modal-title">Đế giày</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form:form method="post" action="/de-giay/add" modelAttribute="deGiayAdd"
+                       enctype="multipart/form-data">
+                <div class="modal-body" style="width: 100%">
+
+                </div>
+            </form:form>
+        </div>
+    </div>
+</div>
 <!-- Scroll to Top Button-->
 <a class="scroll-to-top rounded" href="#page-top">
     <i class="fas fa-angle-up"></i>
@@ -524,11 +704,12 @@
 <script src="../../js/custom-js.js"></script>
 
 <script src="../../js/demo/datatables-demo.js"></script>
+<script src="../../js/demo/modal-add.js"></script>
 
 </script>
 <script>
     <c:if test="${not empty alertType}">
-    window.onload = function() {
+    window.onload = function () {
         alert("${alertMessage}");
     };
     </c:if>
@@ -537,12 +718,41 @@
 <%--<script src="https://cdnjs.cloudflare.com/ajax/libs/blueimp-file-upload/10.12.0/js/jquery.fileupload.js"></script>--%>
 
 <script>
-    document.getElementById("myForm").addEventListener("submit", function(event) {
+    document.getElementById("myForm").addEventListener("submit", function (event) {
         var mauSacInput = document.getElementsByName("mauSac")[0];
         if (!mauSacInput) {
             event.preventDefault(); // Ngăn chặn gửi biểu mẫu
             alert("Vui lòng tạo sản phẩm!");
         }
+    });
+
+    var searchInput = document.getElementById('productAddName');
+    var datalist = document.getElementById('productList');
+    var options = Array.from(datalist.options);
+
+    var showLimit = 5; // Số lượng tùy chỉnh muốn hiển thị
+
+    searchInput.addEventListener('input', function () {
+        var searchValue = searchInput.value.toLowerCase().trim();
+        var matchingOptions = options.filter(function (option) {
+            return option.value.toLowerCase().includes(searchValue);
+        });
+
+        var limitedOptions = matchingOptions.slice(0, showLimit);
+
+        datalist.innerHTML = '';
+
+        limitedOptions.forEach(function (option) {
+            datalist.appendChild(option.cloneNode(true));
+        });
+    });
+
+    searchInput.addEventListener('focus', function () {
+        datalist.innerHTML = '';
+
+        options.slice(0, showLimit).forEach(function (option) {
+            datalist.appendChild(option.cloneNode(true));
+        });
     });
 </script>
 

@@ -72,9 +72,24 @@
                                 </c:forEach>
                             </select>
                         </div>
+                        <div class="input-group flex-nowrap" style="padding-top: 25px">
+                            <div class="input-group-prepend">
+                                                <span class="input-group-text"><i
+                                                        class="fas fa-solid fa-id-card"></i></span>
+                            </div>
+                            <select class="form-control"
+                                    name="thuongHieu">
+                                <option selected disabled>Chọn thương hiệu</option>
+                                <c:forEach var="item" items="${listThuongHieu}">
+                                    <option value="${item.id}" ${item.id==productct.thuongHieu.id?'selected':''}>${item.tenThuongHieu}</option>
+                                </c:forEach>
+                            </select>
+                        </div>
 
 
-                        <div class="input-group mb-3" style="padding-top: 25px">
+                        </div>
+
+                        <div class="input-group col-12" style="padding-bottom: 10px; width: 100%">
                             <div class="input-group-prepend">
                                                     <span class="input-group-text"
                                                     ><i class="fas fa-solid fa-upload"></i></span>
@@ -87,10 +102,9 @@
                                        value="${productct.imgMain}"
                                        name="fileData" readonly>
                             </div>
+
                         </div>
 
-
-                    </div>
                     <div class="input-group col-12">
                         <div class="input-group-prepend">
                             <span class="input-group-text">Mô tả sản phẩm</span>

@@ -6,4 +6,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface LoaiGiayRepository extends JpaRepository<LoaiGiay,Integer> {
+    boolean existsByTenTheLoaiLike(String s);
+    boolean existsByMa(String ma);
 }

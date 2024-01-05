@@ -1,12 +1,11 @@
 package com.example.Nordic_SD118.sevice.imlp;
 
-import com.example.Nordic_SD118.entity.ChatLieu;
 import com.example.Nordic_SD118.entity.KichCo;
-import com.example.Nordic_SD118.entity.MauSac;
-import com.example.Nordic_SD118.repository.ChatLieuRepository;
-import com.example.Nordic_SD118.repository.MauSacRepository;
-import com.example.Nordic_SD118.sevice.ChatLieuSevice;
-import com.example.Nordic_SD118.sevice.MauSacSevice;
+import com.example.Nordic_SD118.entity.LoaiGiay;
+import com.example.Nordic_SD118.repository.KichCoRepository;
+import com.example.Nordic_SD118.repository.LoaiGiayRepository;
+import com.example.Nordic_SD118.sevice.KichCoSevice;
+import com.example.Nordic_SD118.sevice.LoaiGiaySevice;
 import com.example.Nordic_SD118.sevice.SanPhamSevice;
 import java.util.List;
 import java.util.Optional;
@@ -14,28 +13,27 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class ChatLieuImlp implements ChatLieuSevice {
+public class LoaiGiayImlp implements LoaiGiaySevice {
 
     @Autowired
-    ChatLieuRepository repository;
-
+    LoaiGiayRepository repository;
     @Override
-    public List<ChatLieu> getAll() {
+    public List<LoaiGiay> getAll() {
         return repository.findAll();
     }
 
     @Override
-    public Optional<ChatLieu> getOne(Integer id) {
+    public Optional<LoaiGiay> getOne(Integer id) {
         return repository.findById(id);
     }
 
     @Override
-    public boolean add(ChatLieu id) {
-        ChatLieu kichCo = new ChatLieu();
-        kichCo.setTenChatLieu(id.getTenChatLieu().trim());
+    public boolean add(LoaiGiay id) {
+        LoaiGiay kichCo = new LoaiGiay();
+        kichCo.setTenTheLoai(id.getTenTheLoai().trim());
         kichCo.setMa(generateUniqueProductCode());
         kichCo.setTrangThai(id.getTrangThai());
-        if(repository.existsByTenChatLieuIsLike(kichCo.getTenChatLieu().trim())){
+        if(repository.existsByTenTheLoaiLike(kichCo.getTenTheLoai().trim())){
             return false;
         }else {
             repository.save(kichCo);
@@ -44,7 +42,7 @@ public class ChatLieuImlp implements ChatLieuSevice {
     }
 
     @Override
-    public void remove(ChatLieu id) {
+    public void remove(LoaiGiay id) {
 
     }
     public String generateUniqueProductCode() {

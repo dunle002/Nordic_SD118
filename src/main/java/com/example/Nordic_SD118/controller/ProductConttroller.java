@@ -8,6 +8,7 @@ import com.example.Nordic_SD118.entity.KichCo;
 import com.example.Nordic_SD118.entity.LoaiGiay;
 import com.example.Nordic_SD118.entity.MauSac;
 import com.example.Nordic_SD118.entity.SanPham;
+import com.example.Nordic_SD118.entity.ThuongHieu;
 import com.example.Nordic_SD118.mapper.ProductMapper;
 import com.example.Nordic_SD118.repository.ChatLieuRepository;
 import com.example.Nordic_SD118.repository.DeGiayRepository;
@@ -15,10 +16,11 @@ import com.example.Nordic_SD118.repository.ImageRepositoriy;
 import com.example.Nordic_SD118.repository.KichCoRepository;
 import com.example.Nordic_SD118.repository.LoaiGiayRepository;
 import com.example.Nordic_SD118.repository.MauSacRepository;
+import com.example.Nordic_SD118.repository.ThuongHieuRepo;
 import com.example.Nordic_SD118.sevice.ProductDetailSevice;
 import com.example.Nordic_SD118.sevice.SanPhamSevice;
 import java.io.IOException;
-import java.math.BigDecimal;
+import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -58,6 +60,10 @@ public class ProductConttroller {
     private ProductMapper mapper;
     @Autowired
     private ImageRepositoriy imageRepositoriy;
+
+
+    @Autowired
+    private ThuongHieuRepo thuongHieuRepo;
     private final ScheduledExecutorService executorService = Executors.newSingleThreadScheduledExecutor();
 
     @RequestMapping("/view")
@@ -66,6 +72,7 @@ public class ProductConttroller {
     ) {
 
         List<SanPham> list = service.getAll();
+        Collections.sort(list, (obj1, obj2) -> Integer.compare(obj2.getIdProduct(), obj1.getIdProduct()));
         model.addAttribute("product", list);
         return "san-pham";
     }
@@ -82,22 +89,18 @@ public class ProductConttroller {
         List<DeGiay> deGiayList = deGiayRepository.findAll();
         List<ChiTietSanPham> list = serviceDetail.getAll();
         List<SanPham> listSP = service.getAll();
-
+        List<ThuongHieu> thuongHieuList = thuongHieuRepo.findAll();
         model.addAttribute("tenSanPham", listSP);
         model.addAttribute("loaiDay", listLoai);
         model.addAttribute("chatLieuList", chatLieuList);
         model.addAttribute("mauSacList", mauSacList);
         model.addAttribute("coList", coList);
         model.addAttribute("deGiayList", deGiayList);
+        model.addAttribute("thuongHieuList", thuongHieuList);
         return "add-product";
     }
 
-    private void scheduleRedirect(String url, RedirectAttributes redirectAttributes, int delaySeconds) {
-        executorService.schedule(() -> {
-            redirectAttributes.addFlashAttribute("redirectDelay", true);
-            redirectAttributes.addFlashAttribute("redirectUrl", url);
-        }, delaySeconds, TimeUnit.SECONDS);
-    }
+
 
     //
     @PostMapping(value = "/add", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
@@ -108,7 +111,7 @@ public class ProductConttroller {
                               @RequestParam("deGiay") Integer deGiayGet,
                               @RequestParam("mauSac") List<Integer> mauSacGet,
                               @RequestParam("kichCo") List<Integer> kichCoGet,
-                              @RequestParam("donGia") List<BigDecimal> giaGet,
+                              @RequestParam("donGia") List<Integer> giaGet,
                               @RequestParam("soLuong") List<Integer> soLuongGet,
                               Model model,
                               RedirectAttributes redirectAttributes
@@ -116,12 +119,17 @@ public class ProductConttroller {
 
         String check = service.checkNameProduct(product.getTenSanPham());
         if (check == "Sản phẩm đã có sẵn") {
+            SanPham sanPham = service.findSanPhamByTen(product.getTenSanPham().trim());
+
+            sanPham.setChildren(service.addAllDetail(fileImages, chatLieuGet, deGiayGet, mauSacGet, kichCoGet, giaGet, soLuongGet, sanPham));
+            service.Save(sanPham);
             redirectAttributes.addFlashAttribute("alertType", "error");
-            redirectAttributes.addFlashAttribute("alertMessage", "Sản phẩm đã tồn tại.");
+            redirectAttributes.addFlashAttribute("alertMessage", "Thêm chi tiết sản phẩm thành công.");
             return "redirect:/product/view-add";
         } else {
             String fileName = "../../images/" + fileImagesOne.getOriginalFilename();
             product.setImgMain(fileName);
+
             SanPham sanPham = mapper.convertToProduct(product);
             service.Save(sanPham);
             service.addAllDetail(fileImages, chatLieuGet, deGiayGet, mauSacGet, kichCoGet, giaGet, soLuongGet, sanPham);
@@ -133,47 +141,7 @@ public class ProductConttroller {
 
     }
 
-//    @PostMapping(value = "/update", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-//    public String updateSanPham(@ModelAttribute(name = "product") ProductDto product, @RequestParam("image1") MultipartFile anh1,
-//                                @RequestParam("image2") MultipartFile anh2,
-//                                @RequestParam("image3") MultipartFile anh3,
-//                                @RequestParam("photo0") String anh4,
-//                                @RequestParam("photoOne1") String anh5,
-//                                @RequestParam("photoTwo2") String anh6
-//
-//    ) throws IOException {
-//        if (anh1.isEmpty() && anh2.isEmpty() && anh3.isEmpty()) {
-//            product.setPhoto(anh4);
-//            product.setPhotoOne(anh5);
-//            product.setPhotoTwo(anh6);
-//        } else {
-//            if (!anh1.isEmpty()) {
-//                product.setPhotoOne(anh5);
-//                product.setPhotoTwo(anh6);
-//                String fileName1 = "../../images/" + anh1.getOriginalFilename();
-//                product.setPhoto(fileName1);
-//            }
-//            if (!anh2.isEmpty()) {
-//                product.setPhotoTwo(anh6);
-//                product.setPhoto(anh4);
-//                String fileName2 = "../../images/" + anh2.getOriginalFilename();
-//                product.setPhotoOne(fileName2);
-//            }
-//            if (!anh3.isEmpty()) {
-//                product.setPhoto(anh4);
-//                product.setPhotoOne(anh5);
-//                String fileName3 = "../../images/" + anh3.getOriginalFilename();
-//                product.setPhotoTwo(fileName3);
-//            }
-//        }
-//
-//        SanPham sanPham = mapper.convertToProduct(product);
-//        service.Save(sanPham);
-//        ChiTietSanPham chiTietSanPham = mapper.convertToProductDetail(product);
-//        chiTietSanPham.setSanPham(sanPham);
-//        serviceDetail.Save(chiTietSanPham);
-//        return "redirect:/product/view";
-//    }
+
 
 
     @PostMapping("/update")
@@ -184,10 +152,12 @@ public class ProductConttroller {
         if (!file.isEmpty()) {
             String fileName = "../../images/" + file.getOriginalFilename();
             sanPham.setImgMain(fileName);
+            sanPham.setTenSanPham(sanPham.getTenSanPham().trim());
             SanPham sanPham1 = mapper.convertToProduct(sanPham);
             service.update(sanPham1);
         } else if (file.isEmpty()) {
             sanPham.setImgMain(fileData);
+            sanPham.setTenSanPham(sanPham.getTenSanPham().trim());
             SanPham sanPham2 = mapper.convertToProduct(sanPham);
             service.update(sanPham2);
         }
@@ -195,20 +165,17 @@ public class ProductConttroller {
         return "redirect:/product/view";
     }
 
-    //    @GetMapping("/get/{id}")
-//    public String getOneProductDetail(Model model, @PathVariable("id") Integer id
-//    ) {
-//        ChiTietSanPham sanPham = serviceDetail.getOne(id);
-//        model.addAttribute("productUpdate", sanPham);
-//        return shopHome(model);
-//    }
+
     @GetMapping("/productDetail")
     public String getProduct(@RequestParam("id") Integer id, Model model) {
         // Gọi phương thức trong ProductService để lấy thông tin chi tiết sản phẩm dựa trên id
         List<LoaiGiay> listLoai = loaiGiayRepository.findAll();
+        List<ThuongHieu> thuongHieuList = thuongHieuRepo.findAll();
         SanPham product = service.getOne(id);
+        model.addAttribute("listThuongHieu", thuongHieuList);
         model.addAttribute("listLoai", listLoai);
         model.addAttribute("productct", product);
+
         return "detail-update";
     }
 
@@ -221,13 +188,6 @@ public class ProductConttroller {
     }
 
 
-//    @GetMapping("/delete/{id}")
-//    public String deleteProduct(Model model, @PathVariable("id") Integer id
-//    ) {
-//        SanPham sanPham = service.getOne(id);
-//        service.delete(sanPham);
-//        shopHome(model);
-//        return "redirect:/product/view";
-//    }
+
 }
 

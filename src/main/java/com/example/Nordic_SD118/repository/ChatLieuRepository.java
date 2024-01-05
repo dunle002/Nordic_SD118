@@ -7,4 +7,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface ChatLieuRepository extends JpaRepository<ChatLieu,Integer> {
+    boolean existsByTenChatLieuIsLike(String s);
+    boolean existsByMa(String ma);
 }

@@ -75,6 +75,7 @@ const validator = new Validator({
 });
 
 
+
 //js hiện tên file ảnh
 const fileInputs = document.querySelectorAll('.custom-file-input');
 const labelElements = document.querySelectorAll('.custom-file-label');
@@ -94,6 +95,12 @@ $(document).ready(function () {
         allowClear: true,
     });
 });
+$(document).ready(function () {
+    $('#thuong-hieu-select').select2({
+        placeholder: 'Chọn thương hiệu',
+        allowClear: true,
+    });
+});
 
 $(document).ready(function () {
     $('#chatlieu-select').select2({
@@ -109,7 +116,7 @@ $(document).ready(function () {
 });
 $(document).ready(function () {
     $('#loaiday-select').select2({
-        placeholder: 'Chọn kích cỡ',
+        placeholder: 'Chọn loại giày',
         allowClear: true,
     });
 });
@@ -145,15 +152,20 @@ $(document).ready(function () {
     $(document).on('change', '.input-images', function () {
         var files = $(this)[0].files;
         var imageContainer = $(this).siblings('.imageContainer');
+        var currentImages = imageContainer.find('.image-wrapper').length; // Số lượng ảnh hiện tại
 
-        if (files.length > 3) {
-            alert('Vui lòng chọn không quá 3 ảnh.');
+        if (currentImages + files.length > 3) {
+            alert('Vui lòng chọn không quá ' + (3 - currentImages) + ' ảnh.');
             $(this).val(''); // Xóa tất cả các tệp đã chọn
             return;
         }
 
         if (files.length > 0) {
             for (var i = 0; i < files.length; i++) {
+                if (currentImages + i >= 3) {
+                    break; // Đã đạt đến giới hạn 3 ảnh, không thêm nữa
+                }
+
                 var file = files[i];
                 var reader = new FileReader();
 
@@ -187,7 +199,6 @@ $(document).ready(function () {
         $(this).closest('.image-wrapper').remove();
     });
 });
-
 
 //tạo size dựa vào màu sắc
 $(document).ready(function () {

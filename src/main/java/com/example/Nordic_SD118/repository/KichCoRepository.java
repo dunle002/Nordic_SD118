@@ -8,4 +8,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface KichCoRepository extends JpaRepository<KichCo,Integer> {
+    boolean existsBySizeLike(String s);
+    boolean existsByMa(String ma);
 }

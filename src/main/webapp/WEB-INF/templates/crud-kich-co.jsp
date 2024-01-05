@@ -232,94 +232,19 @@
                     <div class="card-body">
                         <div class="table-responsive">
                             <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                                <thead>
-                                <tr>
-                                    <th>STT</th>
-                                    <th>Mã</th>
-                                    <th>Tên sản phẩm</th>
-                                    <th>Thương hiệu</th>
-                                    <th>Ảnh đai điện</th>
-                                    <th>Trạng thái</th>
-                                    <th>Số lượng tồn</th>
-                                    <th>Action</th>
-                                </tr>
-                                </thead>
-                                <tfoot>
-                                <tr>
-                                    <th>STT</th>
-                                    <th>Mã</th>
-                                    <th>Tên sản phẩm</th>
-                                    <th>Thương hiệu</th>
-                                    <th>Ảnh đai điện</th>
-                                    <th>Trạng thái</th>
-                                    <th>Số lượng tồn</th>
-                                    <th>Action</th>
-                                </tr>
-                                </tfoot>
-                                <tbody>
-                                <c:forEach items="${product}" var="pro" varStatus="i">
-                                    <tr>
-                                        <th>${i.index+1}</th>
-                                        <th><a class="column-click" data-product-id="${pro.idProduct}">
-                                                ${pro.ma}
-                                        </a></th>
-                                        <td>${pro.tenSanPham}</td>
-                                        <td>${pro.thuongHieu.tenThuongHieu}</td>
-                                        <td><img src="${pro.imgMain}" width="50px" height="50px"></td>
 
-                                        <td>${pro.trangThai==1?"Hiển thị":"Không hiển thị"}</td>
-                                        <c:set var="totalSoLuong" value="0" />
-                                        <c:forEach var="detail" items="${pro.children}">
-                                            <c:set var="soLuong" value="${detail.soLuong}" />
-                                            <c:set var="totalSoLuong" value="${totalSoLuong + soLuong}" />
-                                        </c:forEach>
-                                        <td>${totalSoLuong==0?'hết hàng':totalSoLuong}</td>
-                                        <td>
-                                            <a class="btn btn-primary btn-detail"
-                                               data-product-id="${pro.idProduct}">
-                                                <i class="fa fa-wrench" aria-hidden="true"></i>
-                                            </a>
-                                        </td>
-
-                                    </tr>
-                                </c:forEach>
-                                </tbody>
 
                             </table>
                         </div>
                     </div>
                 </div>
 
-                <div id="productDetailAll">
-                    <div id="table-body-add"></div>
-                </div>
+
 
 
 
             </div>
             <%--            modal detail--%>
-            <div class="modal fade" id="productDetailModal" tabindex="-1" role="dialog"
-                 aria-labelledby="productDetailModalLabel" aria-hidden="true"
-
-            >
-                <div class="modal-dialog" role="document" style="max-width: 50%;
-                                            margin: 0 auto;">
-                    <div class="modal-content" style="width: 100%">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="productDetailModalLabel">Sản phẩm</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <form:form method="post" action="/product/update" modelAttribute="product"
-                                   enctype="multipart/form-data" id="myForm">
-                            <div class="modal-body" style="width: 100%">
-
-                            </div>
-                        </form:form>
-                    </div>
-                </div>
-            </div>
 
             <!-- /.container-fluid -->
 

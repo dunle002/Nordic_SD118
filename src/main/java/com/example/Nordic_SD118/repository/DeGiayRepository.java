@@ -8,4 +8,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface DeGiayRepository extends JpaRepository<DeGiay,Integer> {
+    boolean existsByLoaiDeLike(String s);
+    boolean existsByMa(String ma);
 }

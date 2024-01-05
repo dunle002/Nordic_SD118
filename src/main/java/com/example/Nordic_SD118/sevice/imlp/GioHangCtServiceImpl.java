@@ -41,72 +41,71 @@ public class GioHangCtServiceImpl implements GioHangCtService {
 
     @Override
     public Boolean addSanPhamVaoGio(Integer id,String hoTen) {
-        List<GioHangChiTiet> listGioHangChiTiets = gioHangCTRepository.findAll();
-        NguoiDung nguoiDung = nguoiDungRepository.findByHoTen("Lê Xuân Dương");
-        GioHangChiTiet gioHangChiTiet = new GioHangChiTiet();
-        Date date = new Date();
-        GioHang gioHang = new GioHang(id,date,date,nguoiDung.getHoTen(),nguoiDung.getSoDienThoai(), nguoiDung.getTrangThai(),nguoiDung);
-        ChiTietSanPham chiTietSanPham = chiTietSPRepository.findById(id).orElse(null);
-
-        if (chiTietSanPham != null) {
-            if (checkTrung(listGioHangChiTiets, id)) {
-                for (GioHangChiTiet gioHangChiTietExisting : listGioHangChiTiets) {
-                    if (gioHangChiTietExisting.getChiTietSanPham().getIdProductDetail().equals(id)) {
-                        Integer soLuong = gioHangChiTietExisting.getSoLuong() + 1;
-                        BigDecimal giaTong = gioHangChiTietExisting.getDonGia().add(chiTietSanPham.getDonGia());
-                        gioHangChiTiet = new GioHangChiTiet(
-                                gioHangChiTietExisting.getId(),
-                                soLuong,
-                                giaTong,
-                                gioHangChiTietExisting.getDonGiaKhiGiam(),
-                                gioHangChiTietExisting.getGioHang(),
-                                chiTietSanPham
-                        );
-                    }
-                }
-            } else {
-                gioHangChiTiet = new GioHangChiTiet(
-                        null,
-                        1,
-                        chiTietSanPham.getDonGia(),
-                        BigDecimal.valueOf(0),
-                        gioHang,
-                        chiTietSanPham
-                );
-            }
-            gioHangRepository.save(gioHang);
-            gioHangCTRepository.save(gioHangChiTiet);
-            return true;
-        } else {
-            return false;
-        }
+//        List<GioHangChiTiet> listGioHangChiTiets = gioHangCTRepository.findAll();
+//        NguoiDung nguoiDung = nguoiDungRepository.findByHoTen("Lê Xuân Dương");
+//        GioHangChiTiet gioHangChiTiet = new GioHangChiTiet();
+//        Date date = new Date();
+//        GioHang gioHang = new GioHang(id,date,date,nguoiDung.getHoTen(),nguoiDung.getSoDienThoai(), nguoiDung.getTrangThai(),nguoiDung);
+//        ChiTietSanPham chiTietSanPham = chiTietSPRepository.findById(id).orElse(null);
+//
+//        if (chiTietSanPham != null) {
+//            if (checkTrung(listGioHangChiTiets, id)) {
+//                for (GioHangChiTiet gioHangChiTietExisting : listGioHangChiTiets) {
+//                    if (gioHangChiTietExisting.getChiTietSanPham().getIdProductDetail().equals(id)) {
+//                        Integer soLuong = gioHangChiTietExisting.getSoLuong() + 1;
+//                        Integer giaTong = gioHangChiTietExisting.getDonGia().add(chiTietSanPham.getDonGia());
+//                        gioHangChiTiet = new GioHangChiTiet(
+//                                gioHangChiTietExisting.getId(),
+//                                soLuong,
+//                                giaTong,
+//                                gioHangChiTietExisting.getDonGiaKhiGiam(),
+//                                gioHangChiTietExisting.getGioHang(),
+//                                chiTietSanPham
+//                        );
+//                    }
+//                }
+//            } else {
+//                gioHangChiTiet = new GioHangChiTiet(
+//                        null,
+//                        1,
+//                        chiTietSanPham.getDonGia(),
+//                        BigDecimal.valueOf(0),
+//                        gioHang,
+//                        chiTietSanPham
+//                );
+//            }
+//            gioHangRepository.save(gioHang);
+//            gioHangCTRepository.save(gioHangChiTiet);
+//            return true;
+//        }
+         return false;
     }
 
     @Override
     public Boolean botSanPhamTrongGio(Integer id) {
-        List<GioHangChiTiet> listGioHangChiTiet = gioHangCTRepository.findAll();
-        ChiTietSanPham chiTietSanPham = chiTietSPRepository.findById(id).get();
-        Integer soLuong;
-        BigDecimal giaTong;
-        NguoiDung nguoiDung = nguoiDungRepository.findByHoTen("Lê Xuân Dương");
-        Date date = new Date();
-        GioHang gioHang;
-        GioHangChiTiet gioHangChiTiet = new GioHangChiTiet();
-        if (checkTrung(listGioHangChiTiet,id)){
-            for (int i = 0; i < listGioHangChiTiet.size(); i++) {
-                if (listGioHangChiTiet.get(i).getChiTietSanPham().getIdProductDetail().equals(id)){
-                    soLuong = listGioHangChiTiet.get(i).getSoLuong();
-                    if (soLuong == 1){
-                        removeSanPhamTrongGio(listGioHangChiTiet.get(i).getId());
-                        return false;
-                    }
-                    giaTong = listGioHangChiTiet.get(i).getDonGia().subtract(chiTietSanPham.getDonGia());
-                    gioHang = new GioHang(listGioHangChiTiet.get(i).getGioHang().getId(),date,date,nguoiDung.getHoTen(),nguoiDung.getSoDienThoai() ,1,nguoiDung);
-                    gioHangChiTiet = new GioHangChiTiet(listGioHangChiTiet.get(i).getId(),soLuong -1,chiTietSanPham.getDonGia(),giaTong,gioHang,chiTietSanPham);
-                }
-            }
-        }
-        gioHangCTRepository.save(gioHangChiTiet);
+//        List<GioHangChiTiet> listGioHangChiTiet = gioHangCTRepository.findAll();
+//        ChiTietSanPham chiTietSanPham = chiTietSPRepository.findById(id).get();
+//        Integer soLuong;
+//        Integer giaTong;
+//        NguoiDung nguoiDung = nguoiDungRepository.findByHoTen("Lê Xuân Dương");
+//        Date date = new Date();
+//        GioHang gioHang;
+//        GioHangChiTiet gioHangChiTiet = new GioHangChiTiet();
+//        if (checkTrung(listGioHangChiTiet,id)){
+//            for (int i = 0; i < listGioHangChiTiet.size(); i++) {
+//                if (listGioHangChiTiet.get(i).getChiTietSanPham().getIdProductDetail().equals(id)){
+//                    soLuong = listGioHangChiTiet.get(i).getSoLuong();
+//                    if (soLuong == 1){
+//                        removeSanPhamTrongGio(listGioHangChiTiet.get(i).getId());
+//                        return false;
+//                    }
+//                    giaTong = listGioHangChiTiet.get(i).getDonGia().subtract(chiTietSanPham.getDonGia());
+//                    gioHang = new GioHang(listGioHangChiTiet.get(i).getGioHang().getId(),date,date,nguoiDung.getHoTen(),nguoiDung.getSoDienThoai() ,1,nguoiDung);
+//                    gioHangChiTiet = new GioHangChiTiet(listGioHangChiTiet.get(i).getId(),soLuong -1,chiTietSanPham.getDonGia(),giaTong,gioHang,chiTietSanPham);
+//                }
+//            }
+//        }
+//        gioHangCTRepository.save(gioHangChiTiet);
         return true;
     }
 

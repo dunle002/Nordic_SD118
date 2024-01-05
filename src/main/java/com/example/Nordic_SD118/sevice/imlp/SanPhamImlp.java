@@ -16,10 +16,10 @@ import com.example.Nordic_SD118.repository.LoaiGiayRepository;
 import com.example.Nordic_SD118.repository.MauSacRepository;
 import com.example.Nordic_SD118.repository.ProductDetailRepositori;
 import com.example.Nordic_SD118.repository.SanPhamRepository;
+import com.example.Nordic_SD118.sevice.ProductDetailSevice;
 import com.example.Nordic_SD118.sevice.SanPhamSevice;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -49,9 +49,11 @@ public class SanPhamImlp implements SanPhamSevice {
     @Autowired
     private DeGiayRepository deGiayRepository;
     @Autowired
-    private ProductMapper mapper;
+    private ProductDetailSevice productDetailSevice;
     @Autowired
     private ImageRepositoriy imageRepositoriy;
+    @Autowired
+    private ProductDetailRepositori getDetailRepo;
     @PersistenceContext
     private EntityManager entityManager;
 
@@ -87,6 +89,7 @@ public class SanPhamImlp implements SanPhamSevice {
 
     @Override
     public SanPham Save(SanPham sanPham) {
+        sanPham.setTenSanPham(sanPham.getTenSanPham().trim());
         return repository.save(sanPham);
     }
 
@@ -98,6 +101,11 @@ public class SanPhamImlp implements SanPhamSevice {
             return repository.save(sanPham);
         }
         return null;
+    }
+
+    @Override
+    public SanPham findSanPhamByTen(String sanPham) {
+        return repository.findSanPhamsByTenSanPhamLike(sanPham);
     }
 
 
@@ -138,10 +146,9 @@ public class SanPhamImlp implements SanPhamSevice {
     }
 
     @Override
-    public String addAllDetail(List<MultipartFile> fileImages, Integer chatLieuGet, Integer deGiayGet, List<Integer> mauSacGet, List<Integer> kichCoGet, List<BigDecimal> giaGet, List<Integer> soLuongGet, SanPham sanPham) {
-        List<ChiTietSanPham> chiTietSanPhams = new ArrayList<>();
+    public List<ChiTietSanPham> addAllDetail(List<MultipartFile> fileImages, Integer chatLieuGet, Integer deGiayGet, List<Integer> mauSacGet, List<Integer> kichCoGet, List<Integer> giaGet, List<Integer> soLuongGet, SanPham sanPham) {
         int additionalListIndex = 0;
-
+        List<ChiTietSanPham> chiTietSanPhams = new ArrayList<>();
 
         //List
         List<String> fileImageName = new ArrayList<>();
@@ -149,7 +156,7 @@ public class SanPhamImlp implements SanPhamSevice {
         mauSac1.addAll(mauSacGet);
         List<Integer> kichCo2 = new ArrayList<>();
         kichCo2.addAll(kichCoGet);
-        List<BigDecimal> donGia3 = new ArrayList<>();
+        List<Integer> donGia3 = new ArrayList<>();
         donGia3.addAll(giaGet);
         List<Integer> soLuong4 = new ArrayList<>();
         soLuong4.addAll(soLuongGet);
@@ -176,17 +183,34 @@ public class SanPhamImlp implements SanPhamSevice {
         for (int i = 0; i < kichCo2.size(); i++) {
             ChiTietSanPham detail = new ChiTietSanPham();
             MauSac mauSac = mauSacRepository.getReferenceById(mauSac1.get(i));
-            detail.setMauSac(mauSac);
             KichCo kichCo = kichCoRepository.getReferenceById(kichCo2.get(i));
-            detail.setKichCo(kichCo);
             ChatLieu chatLieu = chatLieuRepository.getReferenceById(chatLieuGet);
-            detail.setChatLieu(chatLieu);
             DeGiay deGiay = deGiayRepository.getReferenceById(deGiayGet);
+
+            detail.setMauSac(mauSac);
+            detail.setKichCo(kichCo);
+            detail.setChatLieu(chatLieu);
             detail.setDeGiay(deGiay);
-            detail.setDonGia(donGia3.get(i));
-            detail.setSoLuong(soLuong4.get(i));
+            if (soLuong4.get(i) <= -1) {
+                detail.setSoLuong(1);
+            } else {
+                detail.setSoLuong(soLuong4.get(i));
+            }
+            if (donGia3.get(i) <= -1) {
+                detail.setDonGia(10000);
+            } else {
+                detail.setDonGia(donGia3.get(i));
+            }
             detail.setSanPham(sanPham);
-            detailRepo.save(detail);
+            ChiTietSanPham deChiTietSanPham = getDetailRepo.findBySanPhamAndMauSacAndKichCoAndChatLieuAndDeGiay(detail.getSanPham(), detail.getMauSac(), detail.getKichCo(), detail.getChatLieu(), detail.getDeGiay());
+            if(deChiTietSanPham!=null){
+              ChiTietSanPham chiTietSanPham = productDetailSevice.getOne(deChiTietSanPham.getIdProductDetail());
+              chiTietSanPham.setSoLuong(deChiTietSanPham.getSoLuong()+detail.getSoLuong());
+              detailRepo.save(chiTietSanPham);
+            }else{
+                detailRepo.save(detail);
+                chiTietSanPhams.add(detail);
+            }
             if (additionalListIndex < fileImageSets.size()) {
                 List<String> additionalList = fileImageSets.get(additionalListIndex);
                 System.out.println(additionalList);
@@ -201,20 +225,17 @@ public class SanPhamImlp implements SanPhamSevice {
             }
 
         }
-        for (Images ac : imagesList
-        ) {
-            System.out.println("url: " + ac.getUrl() + ", ctsp:" + ac.getDetail().getIdProductDetail());
-        }
+
         imageRepositoriy.saveAll(imagesList);
 
-        return "Thành công";
+        return chiTietSanPhams;
     }
 
     @Override
     public String checkNameProduct(String s) {
-        if(repository.existsByTenSanPhamIsLike(s.trim())){
+        if (repository.existsByTenSanPhamIsLike(s.trim())) {
             return "Sản phẩm đã có sẵn";
-        }else{
+        } else {
             return "Thêm thành công";
         }
     }
@@ -226,13 +247,13 @@ public class SanPhamImlp implements SanPhamSevice {
         StringBuilder randomCode = new StringBuilder();
 
         // Sinh ra 2 số ngẫu nhiên
-        for (int i = 0; i < 2; i++) {
+        for (int i = 0; i < 5; i++) {
             int randomIndex = (int) (Math.random() * numbers.length());
             randomCode.append(numbers.charAt(randomIndex));
         }
 
         // Sinh ra 2 chữ ngẫu nhiên
-        for (int i = 0; i < 2; i++) {
+        for (int i = 0; i < 5; i++) {
             int randomIndex = (int) (Math.random() * letters.length());
             randomCode.append(letters.charAt(randomIndex));
         }

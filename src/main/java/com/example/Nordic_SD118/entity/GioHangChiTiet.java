@@ -22,9 +22,9 @@ public class GioHangChiTiet {
     @Column(name = "so_luong")
     private Integer soLuong;
     @Column(name = "don_gia")
-    private BigDecimal donGia;
+    private Integer donGia;
     @Column(name = "don_gia_khi_giam")
-    private BigDecimal donGiaKhiGiam;
+    private Integer donGiaKhiGiam;
     @ManyToOne
     @JoinColumn(name = "id_gio_hang")
     private GioHang gioHang;
