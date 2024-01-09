@@ -58,13 +58,12 @@ public class ProductConttroller {
     private DeGiayRepository deGiayRepository;
     @Autowired
     private ProductMapper mapper;
-    @Autowired
-    private ImageRepositoriy imageRepositoriy;
+
 
 
     @Autowired
     private ThuongHieuRepo thuongHieuRepo;
-    private final ScheduledExecutorService executorService = Executors.newSingleThreadScheduledExecutor();
+
 
     @RequestMapping("/view")
     public String shopHome(Model model
@@ -87,7 +86,6 @@ public class ProductConttroller {
         List<MauSac> mauSacList = mauSacRepository.findAll();
         List<KichCo> coList = kichCoRepository.findAll();
         List<DeGiay> deGiayList = deGiayRepository.findAll();
-        List<ChiTietSanPham> list = serviceDetail.getAll();
         List<SanPham> listSP = service.getAll();
         List<ThuongHieu> thuongHieuList = thuongHieuRepo.findAll();
         model.addAttribute("tenSanPham", listSP);
@@ -183,7 +181,9 @@ public class ProductConttroller {
     public String getProductDetail(@RequestParam("id") Integer id, Model model) {
         // Gọi phương thức trong ProductService để lấy thông tin chi tiết sản phẩm dựa trên id
         SanPham product = service.getOne(id);
-        model.addAttribute("productct", product);
+        List<ChiTietSanPham> chiTietSanPhams = product.getChildren();
+        Collections.sort(chiTietSanPhams, (obj1, obj2) -> Integer.compare(obj2.getIdProductDetail(), obj1.getIdProductDetail()));
+        model.addAttribute("productct", chiTietSanPhams);
         return "list-detail-product";
     }
 

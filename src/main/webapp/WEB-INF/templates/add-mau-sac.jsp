@@ -78,8 +78,7 @@
 <%--<script src="../../js/custom-js.js"></script>--%>
 <script src="../../js/demo/modal-add.js"></script>
 <script >
-    // Sử dụng lớp NumericInput
-    // var numericInput = new NumericInput(document.getElementById('numericInput'));
+
 </script>
 
 

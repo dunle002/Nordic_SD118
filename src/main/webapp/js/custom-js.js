@@ -273,15 +273,15 @@ $(document).ready(function () {
         var inputChatGiay = $('<input>').attr('type', 'hidden').attr('value', $('#chatlieu-select option:selected').val()).attr('name', 'chatLieu');
         var inputKichCo = $('<input>').attr('type', 'hidden').attr('value', $('#kichco-select option[value="' + size + '"]:selected').val()).attr('name', 'kichCo');
         var tr = $('<tr>');
-        var checkbox = $('<input>').attr('type', 'checkbox');
+        var checkbox = $('<input>').attr('type', 'checkbox').attr('name','id-check');
         var productName = $('<td>').text($('#productAddName').val() + ' [' + selectedColorText + '] [' + $('#kichco-select option[value="' + size + '"]:selected').text() + ']');
         var loaiGiayCell = $('<td>').text($('#loaiday-select option:selected').text());
         var chatLieuCell = $('<td>').text($('#chatlieu-select option:selected').text());
         var deGiayCell = $('<td>').text($('#degiay-select option:selected').text());
         var sizeCell = $('<td>').text($('#kichco-select option[value="' + size + '"]:selected').text());
-        var priceInput = $('<input>').attr('type', 'text').addClass('form-control').attr('value', '150000').attr('aria-label', 'Giá').attr('aria-describedby', 'addon-wrapping').attr('name', 'donGia');
+        var priceInput = $('<input>').attr('type', 'text').addClass('form-control').attr('value', '150000').attr('aria-label', 'Giá').attr('aria-describedby', 'addon-wrapping').attr('name', 'donGia').addClass('numberGia');
         priceInput.css('width', '100px')
-        var quantityInput = $('<input>').attr('type', 'text').addClass('form-control').attr('value', '10').attr('aria-label', 'Số lượng').attr('aria-describedby', 'addon-wrapping').attr('name', 'soLuong');
+        var quantityInput = $('<input>').attr('type', 'text').addClass('form-control').attr('value', '10').attr('aria-label', 'Số lượng').attr('aria-describedby', 'addon-wrapping').attr('name', 'soLuong').addClass('numberSoLuong');
         quantityInput.css('width', '80px')
         var status = $('input[name="trangThai"]:checked').next('label').text();
         var deleteIcon = $('<i>').addClass('fa fa-trash').attr('aria-hidden', 'true');
@@ -291,6 +291,7 @@ $(document).ready(function () {
         productName.append(inputKichCo);
         productName.append(inputMau);
         var thImage = createImageCell();
+
         tr.append(
             $('<th>').append(checkbox),
             productName,

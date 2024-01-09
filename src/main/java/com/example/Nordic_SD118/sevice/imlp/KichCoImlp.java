@@ -1,13 +1,8 @@
 package com.example.Nordic_SD118.sevice.imlp;
 
-import com.example.Nordic_SD118.entity.DeGiay;
 import com.example.Nordic_SD118.entity.KichCo;
-import com.example.Nordic_SD118.entity.MauSac;
 import com.example.Nordic_SD118.repository.KichCoRepository;
-import com.example.Nordic_SD118.repository.MauSacRepository;
 import com.example.Nordic_SD118.sevice.KichCoSevice;
-import com.example.Nordic_SD118.sevice.MauSacSevice;
-import com.example.Nordic_SD118.sevice.SanPhamSevice;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,35 +13,48 @@ public class KichCoImlp implements KichCoSevice {
 
     @Autowired
     KichCoRepository repository;
+
     @Override
     public List<KichCo> getAll() {
         return repository.findAll();
     }
 
     @Override
-    public Optional<KichCo> getOne(Integer id) {
-        return repository.findById(id);
-    }
-
-    @Override
-    public boolean add(KichCo id) {
-        KichCo kichCo = new KichCo();
-        kichCo.setSize(id.getSize().trim());
-        kichCo.setMa(generateUniqueProductCode());
-        kichCo.setTrangThai(id.getTrangThai());
-        if(repository.existsBySizeLike(kichCo.getSize().trim())){
-            return false;
-        }else {
-            repository.save(kichCo);
-            return true;
+    public KichCo getOne(Integer id) {
+        Optional<KichCo> kichCo = repository.findById(id);
+        if (kichCo.isPresent()) {
+            return kichCo.get();
+        } else {
+            return null;
         }
 
     }
 
     @Override
-    public void remove(KichCo id) {
+    public boolean add(KichCo id) {
+        KichCo kichCo = new KichCo();
+        kichCo.setId(id.getId());
+        kichCo.setSize(id.getSize().trim());
+        kichCo.setMa(generateUniqueProductCode());
+        kichCo.setTrangThai(id.getTrangThai());
+        if (repository.existsBySizeLike(kichCo.getSize().trim())) {
+            if (kichCo.getId() == null) {
+                return false;
+            } else {
+                repository.save(kichCo);
+            }
+        } else {
+            repository.save(kichCo);
 
+        }
+        return true;
     }
+
+    @Override
+    public void remove(KichCo id) {
+        repository.delete(id);
+    }
+
     public String generateUniqueProductCode() {
         String prefix = "SP";
         String productCode;
@@ -56,7 +64,9 @@ public class KichCoImlp implements KichCoSevice {
         } while (repository.existsByMa(productCode));
 
         return productCode;
-    }private String generateRandomCode() {
+    }
+
+    private String generateRandomCode() {
         String numbers = "0123456789";
         String letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 

@@ -8,7 +8,7 @@ import java.util.Optional;
 
 public interface ThuongHieuSevice {
     public List<ThuongHieu> getAll();
-    public Optional<ThuongHieu> getOne(Integer id);
+    public ThuongHieu getOne(Integer id);
     public boolean add(ThuongHieu id);
     public void remove(ThuongHieu id);
 }

@@ -121,12 +121,7 @@
                     <div class="collapse-divider"></div>
                     <a class="collapse-item" href="/product/view-add">Tạo sản phẩm</a>
                     <h6 class="collapse-header">Thuộc tính</h6>
-                    <a class="collapse-item" href="/chat-lieu/view">Chất liệu</a>
-                    <a class="collapse-item" href="/kich-co/view">Kích cỡ</a>
-                    <a class="collapse-item" href="/loai-giay/view">Loại giày</a>
-                    <a class="collapse-item" href="/de-giay/view">Đế giày</a>
-                    <a class="collapse-item" href="/mau-sac/view">Màu sắc</a>
-                    <a class="collapse-item" href="/thuong-hieu/view">Thương hiệu</a>
+                    <a class="collapse-item" href="/thuoc-tinh/view">Quản lí thuộc tính</a>
                 </div>
             </div>
         </li>
@@ -273,7 +268,7 @@
                                             <c:set var="soLuong" value="${detail.soLuong}" />
                                             <c:set var="totalSoLuong" value="${totalSoLuong + soLuong}" />
                                         </c:forEach>
-                                        <td>${totalSoLuong==0?'hết hàng':totalSoLuong}</td>
+                                        <td>${totalSoLuong<=0?'hết hàng':totalSoLuong}</td>
                                         <td>
                                             <a class="btn btn-primary btn-detail"
                                                data-product-id="${pro.idProduct}">
@@ -385,7 +380,13 @@
 <script src="../../js/custom-page-san-pham.js">
 
 </script>
-
+<script>
+    <c:if test="${not empty alertType}">
+    window.onload = function () {
+        alert("${alertMessage}");
+    };
+    </c:if>
+</script>
 
 </body>
 

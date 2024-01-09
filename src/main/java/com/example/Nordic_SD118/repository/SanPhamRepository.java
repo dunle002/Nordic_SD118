@@ -10,4 +10,5 @@ public interface SanPhamRepository extends JpaRepository<SanPham,Integer> {
     boolean existsByMa(String ma);
     boolean existsByTenSanPhamIsLike(String ten);
     SanPham findSanPhamsByTenSanPhamLike(String ten);
+
 }

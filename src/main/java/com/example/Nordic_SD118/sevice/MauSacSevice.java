@@ -7,7 +7,7 @@ import java.util.Optional;
 
 public interface MauSacSevice {
     public List<MauSac> getAll();
-    public Optional<MauSac> getOne(Integer id);
+    public MauSac getOne(Integer id);
 
     public boolean add(MauSac id);
     public void remove(MauSac id);

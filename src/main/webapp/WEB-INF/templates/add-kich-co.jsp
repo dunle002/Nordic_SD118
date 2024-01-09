@@ -44,14 +44,14 @@
                     <label>Trạng thái:</label>
                     <div class="form-check-inline">
                         <input class="form-check-input" type="radio"
-                               value=1 name="trangThai">
+                               value=1 name="trangThai" ${kichCo.trangThai==1?"checked":""}>
                         <label class="form-check-label">
                             Hiển thị
                         </label>
                     </div>
                     <div class="form-check-inline">
                         <input class="form-check-input" type="radio"
-                               value=0 name="trangThai" >
+                               value=0 name="trangThai" ${kichCo.trangThai==0?"checked":""}>
                         <label class="form-check-label">
                             Không hiển thị
                         </label>

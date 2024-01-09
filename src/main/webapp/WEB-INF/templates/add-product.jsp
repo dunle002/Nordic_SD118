@@ -130,12 +130,8 @@
                     <div class="collapse-divider"></div>
                     <a class="collapse-item" href="/product/view-add">Tạo sản phẩm</a>
                     <h6 class="collapse-header">Thuộc tính</h6>
-                    <a class="collapse-item" href="/chat-lieu/view">Chất liệu</a>
-                    <a class="collapse-item" href="/kich-co/view">Kích cỡ</a>
-                    <a class="collapse-item" href="/loai-giay/view">Loại giày</a>
-                    <a class="collapse-item" href="/de-giay/view">Đế giày</a>
-                    <a class="collapse-item" href="/mau-sac/view">Màu sắc</a>
-                    <a class="collapse-item" href="/thuong-hieu/view">Thương hiệu</a>
+                    <a class="collapse-item" href="/thuoc-tinh/view">Quản lí thuộc tính</a>
+
                 </div>
             </div>
         </li>
@@ -474,8 +470,11 @@
                                 <h6 class="m-0 font-weight-bold text-primary">CHI TIẾT SẢN PHẨM</h6>
                             </div>
                             <button type="submit" class="btn-primary"
-                                    style="width: 120px;float: right; border-radius: 2px;margin-right: 20px">Thêm
+                                    style="width: 120px;float: right; border-radius: 2px;padding-right: 20px">Thêm
                             </button>
+                            <a class="btn-primary" id="editButton"
+                                    style="width: 120px;height: 30px;float: right;margin-right: 10px;padding-bottom: 10px;text-align: center">Chỉnh sửa
+                            </a>
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
@@ -495,6 +494,8 @@
                                     </tr>
                                     </thead>
                                     <tbody>
+
+
 
                                     </tbody>
                                 </table>
@@ -688,6 +689,46 @@
     </div>
 </div>
 
+<div class="modal fade" id="editModal" tabindex="-1" role="dialog"
+     aria-labelledby="productDetailModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document" style="max-width: 50%;
+                                            margin: 0 auto;">
+        <div class="modal-content" style="width: 100%">
+            <div class="modal-header">
+                <h5 class="modal-title" id="productDetailModalLabel">Chỉnh sửa</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div style="justify-content: center">
+                <div class="modal-body" style="justify-content: center">
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="basic-addon1">Số lượng</span>
+                        </div>
+                        <input type="text" class="form-control" id="editQuantity" name="editQuantity"
+                               aria-label="Username"
+                               aria-describedby="basic-addon1">
+                    </div>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="basic-addon2">Đơn giá</span>
+                        </div>
+                        <input type="text" class="form-control" aria-label="Username"
+                               aria-describedby="basic-addon2" id="editPrice" name="editPrice">
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="modal-footer " style="justify-content: center">
+                <button class="btn btn-primary" id="saveButton" type="button" data-dismiss="modal">Sửa</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
 <!-- Bootstrap core JavaScript-->
 <script src="../../vendor/jquery/jquery.min.js"></script>
 <script src="../../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -708,6 +749,19 @@
 
 </script>
 <script>
+    // var fomatSoLuong = new NumericInput();
+
+    document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('input', function(event) {
+            var target = event.target;
+            if (target.classList.contains('numberGia') && !target.fomatDonGia) {
+                target.fomatDonGia = new FomatDonGia(target);
+            }else if(target.classList.contains('numberSoLuong') && !target.fomatDonGia) {
+                target.fomatDonGia = new FomatDonGia(target);
+            }
+        });
+    });
+
     <c:if test="${not empty alertType}">
     window.onload = function () {
         alert("${alertMessage}");
@@ -755,7 +809,37 @@
         });
     });
 </script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var editModal = document.getElementById('editModal');
+        var editButton = document.getElementById('editButton');
+        var saveButton = document.getElementById('saveButton');
+        var editQuantityInput = document.getElementById('editQuantity');
+        var editPriceInput = document.getElementById('editPrice');
 
+        editButton.addEventListener('click', function () {
+            $(editModal).modal('show');
+        });
+
+        saveButton.addEventListener('click', function () {
+            var selectedCheckboxes = document.querySelectorAll('input[name="id-check"]:checked');
+            var editQuantity = editQuantityInput.value;
+            var editPrice = editPriceInput.value;
+
+            for (var i = 0; i < selectedCheckboxes.length; i++) {
+                var row = selectedCheckboxes[i].parentNode.parentNode;
+                var quantityInput = row.querySelector('input[name="soLuong"]');
+                var priceInput = row.querySelector('input[name="donGia"]');
+
+                quantityInput.value = editQuantity;
+                priceInput.value = editPrice;
+            }
+
+            $(editModal).modal('hide');
+        });
+    });
+
+</script>
 </body>
 
 </html>

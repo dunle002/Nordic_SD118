@@ -6,6 +6,7 @@ import com.example.Nordic_SD118.entity.SanPham;
 import java.util.List;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.web.multipart.MultipartFile;
 
 public interface ProductDetailSevice {
     public List<ChiTietSanPham> getAll();
@@ -14,5 +15,5 @@ public interface ProductDetailSevice {
     public  void delete (ChiTietSanPham id);
     public ChiTietSanPham Save(ChiTietSanPham detail);
     public List<ChiTietSanPham> SaveAll(List<ChiTietSanPham> detail);
-    public ChiTietSanPham update(ChiTietSanPham detail);
+    public boolean update(ChiTietSanPham detail);
 }

@@ -15,22 +15,32 @@ public class ThuongHieuImlp implements ThuongHieuSevice {
 
     @Override
     public List<ThuongHieu> getAll() {
-        return null;
+        return thuongHieuRepo.findAll();
     }
 
     @Override
-    public Optional<ThuongHieu> getOne(Integer id) {
-        return Optional.empty();
+    public ThuongHieu getOne(Integer id) {
+        Optional<ThuongHieu> kichCo = thuongHieuRepo.findById(id);
+        if (kichCo.isPresent()) {
+            return kichCo.get();
+        } else {
+            return null;
+        }
     }
 
     @Override
     public boolean add(ThuongHieu id) {
         ThuongHieu thuongHieu = new ThuongHieu();
+        thuongHieu.setId(id.getId());
         thuongHieu.setTenThuongHieu(id.getTenThuongHieu().trim());
         thuongHieu.setTrangThai(id.getTrangThai());
-        if(thuongHieuRepo.existsByTenThuongHieuLike(thuongHieu.getTenThuongHieu().trim())){
-            return false;
-        }{
+        if (thuongHieuRepo.existsByTenThuongHieuLike(thuongHieu.getTenThuongHieu().trim())) {
+            if (thuongHieu.getId() == null) {
+                return false;
+            } else {
+                thuongHieuRepo.save(thuongHieu);
+            }
+        } else {
             thuongHieuRepo.save(thuongHieu);
 
         }
@@ -39,7 +49,7 @@ public class ThuongHieuImlp implements ThuongHieuSevice {
 
     @Override
     public void remove(ThuongHieu id) {
-
+        thuongHieuRepo.delete(id);
     }
 
 

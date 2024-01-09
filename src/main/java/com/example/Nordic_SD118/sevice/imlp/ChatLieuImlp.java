@@ -1,13 +1,8 @@
 package com.example.Nordic_SD118.sevice.imlp;
 
 import com.example.Nordic_SD118.entity.ChatLieu;
-import com.example.Nordic_SD118.entity.KichCo;
-import com.example.Nordic_SD118.entity.MauSac;
 import com.example.Nordic_SD118.repository.ChatLieuRepository;
-import com.example.Nordic_SD118.repository.MauSacRepository;
 import com.example.Nordic_SD118.sevice.ChatLieuSevice;
-import com.example.Nordic_SD118.sevice.MauSacSevice;
-import com.example.Nordic_SD118.sevice.SanPhamSevice;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,19 +20,29 @@ public class ChatLieuImlp implements ChatLieuSevice {
     }
 
     @Override
-    public Optional<ChatLieu> getOne(Integer id) {
-        return repository.findById(id);
+    public ChatLieu getOne(Integer id) {
+        Optional<ChatLieu> kichCo = repository.findById(id);
+        if (kichCo.isPresent()) {
+            return kichCo.get();
+        } else {
+            return null;
+        }
     }
 
     @Override
     public boolean add(ChatLieu id) {
         ChatLieu kichCo = new ChatLieu();
+        kichCo.setId(id.getId());
         kichCo.setTenChatLieu(id.getTenChatLieu().trim());
         kichCo.setMa(generateUniqueProductCode());
         kichCo.setTrangThai(id.getTrangThai());
-        if(repository.existsByTenChatLieuIsLike(kichCo.getTenChatLieu().trim())){
-            return false;
-        }else {
+        if (repository.existsByTenChatLieuIsLike(kichCo.getTenChatLieu().trim())) {
+            if(kichCo.getId()==null){
+                return false;
+            }else{
+                repository.save(kichCo);
+            }
+        } else {
             repository.save(kichCo);
         }
         return true;
@@ -45,8 +50,9 @@ public class ChatLieuImlp implements ChatLieuSevice {
 
     @Override
     public void remove(ChatLieu id) {
-
+        repository.delete(id);
     }
+
     public String generateUniqueProductCode() {
         String prefix = "SP";
         String productCode;
@@ -56,7 +62,9 @@ public class ChatLieuImlp implements ChatLieuSevice {
         } while (repository.existsByMa(productCode));
 
         return productCode;
-    }private String generateRandomCode() {
+    }
+
+    private String generateRandomCode() {
         String numbers = "0123456789";
         String letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 

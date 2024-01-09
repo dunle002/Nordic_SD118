@@ -122,3 +122,28 @@ class NumericInput {
         }
     }
 }
+class FomatDonGia {
+    constructor(inputElement) {
+        this.inputElement = inputElement;
+        this.maxLength = 8;
+
+        this.inputElement.addEventListener('input', this.handleInput.bind(this));
+        this.inputElement.addEventListener('keydown', this.handleKeydown.bind(this));
+    }
+
+    handleInput(event) {
+        var value = event.target.value;
+        var sanitizedValue = value.replace(/[^0-9]/g, '');
+        var truncatedValue = sanitizedValue.slice(0, this.maxLength);
+        event.target.value = truncatedValue;
+    }
+
+    handleKeydown(event) {
+        var valueLength = event.target.value.length;
+        var isBackspaceOrDelete = (event.key === 'Backspace' || event.key === 'Delete');
+
+        if (valueLength >= this.maxLength && !isBackspaceOrDelete) {
+            event.preventDefault();
+        }
+    }
+}

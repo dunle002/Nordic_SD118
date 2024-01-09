@@ -2,7 +2,6 @@ $(document).ready(function() {
     $(document).on("click", ".column-click", function(event) {
         event.preventDefault();
         var productId = $(this).data("product-id");
-        console.log(productId);
         $.ajax({
             url: "/product/getDetail",
             type: "GET",
@@ -35,3 +34,4 @@ $(document).ready(function () {
         });
     });
 });
+

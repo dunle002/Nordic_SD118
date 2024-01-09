@@ -53,7 +53,7 @@ public class SanPham {
     @JoinColumn(name = "id_thuong_hieu")
     private ThuongHieu thuongHieu;
 
-    @OneToMany(mappedBy = "sanPham", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "sanPham")
     private List<ChiTietSanPham> children;
 
 

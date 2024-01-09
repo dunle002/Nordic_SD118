@@ -2,7 +2,7 @@ package com.example.Nordic_SD118.sevice.imlp;
 
 import com.example.Nordic_SD118.entity.ChiTietSanPham;
 import com.example.Nordic_SD118.repository.ProductDetailRepositori;
-
+import com.example.Nordic_SD118.sevice.ImageSevice;
 import com.example.Nordic_SD118.sevice.ProductDetailSevice;
 import java.util.List;
 import java.util.Optional;
@@ -16,6 +16,8 @@ public class DetailProductImlp implements ProductDetailSevice {
 
     @Autowired
     ProductDetailRepositori repository;
+    @Autowired
+    ImageSevice imageSevice;
 
     @Override
     public List<ChiTietSanPham> getAll() {
@@ -52,19 +54,25 @@ public class DetailProductImlp implements ProductDetailSevice {
     }
 
 
-
     @Override
     public List<ChiTietSanPham> SaveAll(List<ChiTietSanPham> detail) {
         return repository.saveAll(detail);
     }
 
     @Override
-    public ChiTietSanPham update(ChiTietSanPham chiTietSanPham) {
-        Integer idSanPham = chiTietSanPham.getIdProductDetail();
-        Boolean idSpNoExis = repository.existsById(idSanPham);
-        if (idSpNoExis) {
-            return repository.save(chiTietSanPham);
+    public boolean update(ChiTietSanPham chiTietSanPham) {
+
+        ChiTietSanPham ctsp = repository.findBySanPhamAndMauSacAndKichCoAndChatLieuAndDeGiay(chiTietSanPham.getSanPham(), chiTietSanPham.getMauSac(),
+                chiTietSanPham.getKichCo(),
+                chiTietSanPham.getChatLieu(),
+                chiTietSanPham.getDeGiay());
+        if (ctsp != null) {
+            if (ctsp.getIdProductDetail() != chiTietSanPham.getIdProductDetail()) {
+                return false;
+            }else{
+                repository.save(chiTietSanPham);
+            }
         }
-        return null;
+        return true;
     }
 }

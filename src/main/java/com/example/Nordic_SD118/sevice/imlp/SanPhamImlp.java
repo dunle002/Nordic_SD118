@@ -7,7 +7,6 @@ import com.example.Nordic_SD118.entity.Images;
 import com.example.Nordic_SD118.entity.KichCo;
 import com.example.Nordic_SD118.entity.MauSac;
 import com.example.Nordic_SD118.entity.SanPham;
-import com.example.Nordic_SD118.mapper.ProductMapper;
 import com.example.Nordic_SD118.repository.ChatLieuRepository;
 import com.example.Nordic_SD118.repository.DeGiayRepository;
 import com.example.Nordic_SD118.repository.ImageRepositoriy;
@@ -203,30 +202,35 @@ public class SanPhamImlp implements SanPhamSevice {
             }
             detail.setSanPham(sanPham);
             ChiTietSanPham deChiTietSanPham = getDetailRepo.findBySanPhamAndMauSacAndKichCoAndChatLieuAndDeGiay(detail.getSanPham(), detail.getMauSac(), detail.getKichCo(), detail.getChatLieu(), detail.getDeGiay());
-            if(deChiTietSanPham!=null){
-              ChiTietSanPham chiTietSanPham = productDetailSevice.getOne(deChiTietSanPham.getIdProductDetail());
-              chiTietSanPham.setSoLuong(deChiTietSanPham.getSoLuong()+detail.getSoLuong());
-              detailRepo.save(chiTietSanPham);
-            }else{
+            if (deChiTietSanPham != null) {
+                ChiTietSanPham chiTietSanPham = productDetailSevice.getOne(deChiTietSanPham.getIdProductDetail());
+                chiTietSanPham.setSoLuong(deChiTietSanPham.getSoLuong() + detail.getSoLuong());
+                detailRepo.save(chiTietSanPham);
+            } else {
                 detailRepo.save(detail);
                 chiTietSanPhams.add(detail);
-            }
-            if (additionalListIndex < fileImageSets.size()) {
-                List<String> additionalList = fileImageSets.get(additionalListIndex);
-                System.out.println(additionalList);
-                for (int abc = 0; abc < additionalList.size(); abc++) {
-                    Images images = new Images();
-                    images.setUrl(additionalList.get(abc));
-                    images.setDetail(detail);
-                    imagesList.add(images);
-                }
+                if (additionalListIndex < fileImageSets.size()) {
+                    List<String> additionalList = fileImageSets.get(additionalListIndex);
+                    System.out.println(additionalList);
+                    for (int abc = 0; abc < additionalList.size(); abc++) {
+                        Images images = new Images();
+                        images.setUrl(additionalList.get(abc));
+                        images.setDetail(detail);
+                        imagesList.add(images);
+                    }
 
-                additionalListIndex++;
+                    additionalListIndex++;
+                }
             }
+
 
         }
+        if (imagesList.isEmpty()) {
+            System.out.println("ảnh rỗng");
+        } else {
+            imageRepositoriy.saveAll(imagesList);
+        }
 
-        imageRepositoriy.saveAll(imagesList);
 
         return chiTietSanPhams;
     }

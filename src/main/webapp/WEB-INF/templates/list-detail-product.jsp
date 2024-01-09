@@ -20,11 +20,18 @@
     <link href="../../css/css/mixins/_text-hide.css" rel="stylesheet">
 </head>
 <body>
+<form:form action="/detail/chi-tiet/update-gia" method="post">
 <div class="card shadow mb-4">
     <div class="card-header py-3">
-        <button class="btn-primary" id="editButton"
-                style="width: 100px;height: 30px;float: right;padding-right: 10px;padding-bottom: 10px">Chỉnh sửa nhiều
+        <button class="btn-primary" type="submit"
+                style="width: 100px; height: 40px; float: right; border-radius: 1px; display: flex; align-items: center; margin-left: 10px">
+            <span style="text-align: center; margin-left: 5px">Chỉnh sửa</span>
         </button>
+        <a class="btn-primary" id="editButton"
+           style="width: 240px; height: 40px; float: right; border-radius: 1px; display: flex; align-items: center;">
+            <span style="text-align: center; margin-left: 5px">Chỉnh sửa số lượng và giá chung</span>
+        </a>
+
         <h6 class="m-0 font-weight-bold text-primary">Chi tiết sản phẩm</h6>
     </div>
     <div class="card-body">
@@ -57,8 +64,9 @@
                     <th>Action</th>
                 </tr>
                 </tfoot>
+
                 <tbody>
-                <c:forEach items="${productct.children}" var="pro" varStatus="i">
+                <c:forEach items="${productct}" var="pro" varStatus="i">
                     <tr>
                         <th><input type="checkbox" name="id-check" value="${pro.idProductDetail}"></th>
                         <th>${i.index+1}</th>
@@ -71,7 +79,7 @@
                         <td>${pro.chatLieu.tenChatLieu}</td>
                         <td>${pro.deGiay.loaiDe}</td>
                         <td>
-                            <a class="btn btn-primary"
+                            <a class="btn btn-primary btn-chi-tiet"  data-product-id="${pro.idProductDetail}"
                             >
                                 <i class="fa fa-wrench" aria-hidden="true"></i>
                             </a>
@@ -87,14 +95,13 @@
 
     </div>
 </div>
-
 <div class="modal fade" id="editModal" tabindex="-1" role="dialog"
      aria-labelledby="productDetailModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document" style="max-width: 50%;
                                             margin: 0 auto;">
         <div class="modal-content" style="width: 100%">
             <div class="modal-header">
-                <h5 class="modal-title" id="productDetailModalLabel">Chỉnh sửa</h5>
+                <h5 class="modal-title" id="productDetailModalLabel">Chỉnh sửa số lượng và giá chung</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -106,14 +113,14 @@
                             <span class="input-group-text" id="basic-addon1">Số lượng</span>
                         </div>
                         <input type="text" class="form-control" id="editQuantity" name="editQuantity"
-                               placeholder="Username" aria-label="Username"
+                               aria-label="Username"
                                aria-describedby="basic-addon1">
                     </div>
                     <div class="input-group mb-3">
                         <div class="input-group-prepend">
                             <span class="input-group-text" id="basic-addon2">Đơn giá</span>
                         </div>
-                        <input type="text" class="form-control" placeholder="Username" aria-label="Username"
+                        <input type="text" class="form-control" aria-label="Username"
                                aria-describedby="basic-addon2" id="editPrice" name="editPrice">
                     </div>
 
@@ -124,6 +131,30 @@
                 <button class="btn btn-primary" id="saveButton" type="button" data-dismiss="modal">Sửa</button>
             </div>
 
+        </div>
+    </div>
+</div>
+</form:form>
+
+<div class="modal fade" id="chiTietSpModal" tabindex="-1" role="dialog"
+     aria-labelledby="productDetailModalLabel" aria-hidden="true"
+
+>
+    <div class="modal-dialog" role="document" style="max-width: 50%;
+                                            margin: 0 auto;">
+        <div class="modal-content" style="width: 100%">
+            <div class="modal-header">
+                <h5 class="modal-title">Chi Tiết Sản Phẩm</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form:form method="post" action="/detail/chi-tiet/update" modelAttribute="chiTietUpdate"
+                       enctype="multipart/form-data">
+                <div class="modal-body" style="width: 100%">
+
+                </div>
+            </form:form>
         </div>
     </div>
 </div>
@@ -143,6 +174,13 @@
 
 
 <script>
+    <c:if test="${not empty alertType}">
+    window.onload = function () {
+        alert("${alertMessage}");
+    };
+    </c:if>
+
+
     $(document).ready(function () {
         $('#dataTable1').DataTable();
     });
@@ -172,6 +210,24 @@
         }
 
         $(editModal).modal('hide');
+    });
+    $(document).ready(function () {
+        $(document).on("click", ".btn-chi-tiet", function(event) {
+            event.preventDefault();
+            var productId = $(this).data('product-id');
+            $.ajax({
+                url: "/detail/detai-update/view",
+                type: "GET",
+                data: {id: productId},
+                success: function (data) {
+                    $('#chiTietSpModal .modal-body').html(data);
+                    $('#chiTietSpModal').modal('show');
+                },
+                error: function () {
+                    alert("Lỗi khi tải sản phẩm.");
+                }
+            });
+        });
     });
 </script>
 

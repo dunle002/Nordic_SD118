@@ -35,7 +35,7 @@
                                                 <span class="input-group-text"><i
                                                         class="fas fa-solid fa-id-card"></i></span>
                     </div>
-                    <input type="text" class="form-control" id="numericInput"
+                    <input type="text" class="form-control"
                            value="${deGiay.loaiDe}"
                            aria-label="Username" aria-describedby="addon-wrapping" name="loaiDe">
                 </div>
@@ -78,8 +78,6 @@
 <%--<script src="../../js/custom-js.js"></script>--%>
 <script src="../../js/demo/modal-add.js"></script>
 <script >
-    // Sử dụng lớp NumericInput
-    // var numericInput = new NumericInput(document.getElementById('numericInput'));
 </script>
 
 

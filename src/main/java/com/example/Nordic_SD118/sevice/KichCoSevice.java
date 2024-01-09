@@ -8,7 +8,7 @@ import java.util.Optional;
 
 public interface KichCoSevice {
     public List<KichCo> getAll();
-    public Optional<KichCo> getOne(Integer id);
+    public KichCo getOne(Integer id);
     public boolean add(KichCo id);
     public void remove(KichCo id);
 }

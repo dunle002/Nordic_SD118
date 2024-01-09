@@ -7,7 +7,7 @@ import java.util.Optional;
 
 public interface LoaiGiaySevice {
     public List<LoaiGiay> getAll();
-    public Optional<LoaiGiay> getOne(Integer id);
+    public LoaiGiay getOne(Integer id);
     public boolean add(LoaiGiay id);
     public void remove(LoaiGiay id);
 }

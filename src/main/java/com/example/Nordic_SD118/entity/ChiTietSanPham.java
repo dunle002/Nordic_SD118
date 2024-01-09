@@ -61,7 +61,7 @@ public class ChiTietSanPham {
     @JoinColumn(name = "id_de_giay")
     private DeGiay deGiay;
 
-    @OneToMany(mappedBy = "detail", cascade = CascadeType.ALL,orphanRemoval = true)
+    @OneToMany(mappedBy = "detail")
     private List<Images> image;
 
     public void addChildEntity(Images childEntity) {

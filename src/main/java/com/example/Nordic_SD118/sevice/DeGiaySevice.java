@@ -8,7 +8,7 @@ import java.util.Optional;
 
 public interface DeGiaySevice {
     public List<DeGiay> getAll();
-    public Optional<DeGiay> getOne(Integer id);
+    public DeGiay getOne(Integer id);
     public boolean add(DeGiay id);
     public void remove(DeGiay id);
 }
